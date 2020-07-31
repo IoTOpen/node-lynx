@@ -1,0 +1,21 @@
+{
+  "name": "lynx",
+  "version": "1.0.0",
+  "description": "IoT Open Lynx API package",
+  "main": "client.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git@git.iotopen.se:lib/node-lynx.git"
+  },
+  "keywords": [
+    "lynx",
+    "iot",
+    "IoT Open"
+  ],
+  "author": "IoT Open",
+  "license": "NONE",
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  }
+}
