@@ -6,7 +6,7 @@
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git@git.iotopen.se:lib/node-lynx.git"
+    "url": "https://github.com/IoTOpen/node-lynx.git"
   },
   "keywords": [
     "lynx",
@@ -14,7 +14,7 @@
     "IoT Open"
   ],
   "author": "IoT Open",
-  "license": "NONE",
+  "license": "Apache 2.0",
   "dependencies": {
     "node-fetch": "^2.6.0"
   }
