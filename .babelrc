@@ -1,0 +1,4 @@
+{
+  "plugins": ["transform-class-properties", "@babel/plugin-transform-spread"],
+  "presets": ["@babel/preset-env"]
+}

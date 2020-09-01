@@ -2,8 +2,10 @@
   "name": "@iotopen/node-lynx",
   "version": "1.0.1",
   "description": "IoT Open Lynx API package for node",
-  "main": "client.js",
-  "scripts": {},
+  "main": "lib/client.js",
+  "scripts": {
+    "prepublish": "babel client.js --out-dir lib"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/IoTOpen/node-lynx.git"
@@ -17,5 +19,12 @@
   "license": "Apache 2.0",
   "dependencies": {
     "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.11.5",
+    "@babel/core": "^7.11.5",
+    "@babel/plugin-transform-spread": "^7.11.0",
+    "@babel/preset-env": "^7.11.5",
+    "babel-plugin-transform-class-properties": "^6.24.1"
   }
 }

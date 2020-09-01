@@ -1,7 +1,5 @@
-'use strict';
-
 const fetch = require("node-fetch");
-const querystring = require("querystring")
+const querystring = require("querystring");
 
 const Endpoints = {
     FunctionX: '/api/v2/functionx/',
