@@ -34,10 +34,15 @@ class LynxClient {
             });
     };
 
-    getFunctions = (installationID, filter) => {
+    getFunctions = (installationId, filter) => {
         let qs = filter ? "?" + querystring.stringify(filter) : "";
-        let url = Endpoints.FunctionX + installationID + qs;
+        let url = Endpoints.FunctionX + installationId + qs;
         return this.request(url, {})
+    };
+
+    getFunction = (installationId, functionId) => {
+        let url = Endpoints.FunctionX + installationId + "/" + functionId;
+        return this.request(url, {});
     };
 
     getInstallations = () => this.request(Endpoints.InstallationInfo, {});
