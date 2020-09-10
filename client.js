@@ -30,7 +30,7 @@ class LynxClient {
                     return res.json();
                 }
 
-                throw new Error(res);
+                throw new Error(res.status + ":" + res.statusText);
             });
     };
 
