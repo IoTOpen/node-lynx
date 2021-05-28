@@ -3,6 +3,7 @@ const querystring = require("querystring");
 
 const Endpoints = {
     FunctionX: '/api/v2/functionx/',
+    Status: '/api/v2/status/',
     InstallationInfo: '/api/v2/installationinfo',
 }
 
@@ -46,6 +47,17 @@ class LynxClient {
     };
 
     getInstallations = () => this.request(Endpoints.InstallationInfo, {});
+
+    getStatus = (installationId, topicFilter) => {
+        let qs = topicFilter ? "?" + topicFilter.reduce((prev, cur, id) => {
+            if (id !== 0) {
+                prev += "&"
+            }
+            return prev + "topics=" + cur
+        }, "") : ""
+        let url = Endpoints.Status + installationId + qs
+        return this.request(url, {})
+    }
 }
 
 module.exports.LynxClient = LynxClient;
