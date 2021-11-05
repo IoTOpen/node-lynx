@@ -1,4 +1,3 @@
-import querystring from "querystring";
 import {GetFunction, GetFunctions} from "./functionx";
 import {GetDevice, GetDevices} from "./devicex";
 import {
@@ -26,6 +25,8 @@ import {
     GetEdgeApps,
     GetEdgeAppVersions
 } from "./edge_app";
+import {Login, Login2FA, Logout, ResetPassword, ResetPasswordUpdate} from "./auth";
+import {connectionOptions} from "./util";
 
 export const LogOrder = {
     Desc: 'desc',
@@ -33,10 +34,16 @@ export const LogOrder = {
 }
 
 class LynxClient {
-    constructor(baseURL, apiKey) {
-        this.baseURL = baseURL.replace(/\/$/, "");
-        this.apiKey = apiKey;
+    constructor(base, apiKey) {
+        connectionOptions.baseURL = base.replace(/\/$/, "");
+        connectionOptions.apiKey = apiKey;
     }
+
+    login = Login;
+    login2fa = Login2FA;
+    logout = Logout;
+    resetPassword = ResetPassword;
+    resetPasswordUpdate = ResetPasswordUpdate;
 
     getFunctions = GetFunctions;
     getFunction = GetFunction;
