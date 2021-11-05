@@ -16,4 +16,4 @@ export const GetEdgeAppConfigOptions = (id, version) => {
 
 export const GetConfiguredEdgeApps = (installationId) => request(Endpoints.EdgeApp + '/configured/' + installationId, {});
 
-export const GetEdgeAppInstance = (installationId, instanceId) => request(Endpoints.EdgeApp + '/configured/' + installationId + '/' + instanceId, {})
+export const GetEdgeAppInstance = (installationId, instanceId) => request(Endpoints.EdgeApp + '/configured/' + installationId + '/' + instanceId, {});

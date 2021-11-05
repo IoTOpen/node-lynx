@@ -5,4 +5,4 @@ export const GetOrganizations = (minimal) => {
     return request(Endpoints.Organization + qs, {});
 }
 
-export const GetOrganization = (id) => request(Endpoints.Organization + '/' + id, {})
+export const GetOrganization = (id) => request(Endpoints.Organization + '/' + id, {});

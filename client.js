@@ -54,9 +54,9 @@ class LynxClient {
     getLog = GetLog;
 
     getNotificationMessage = GetNotificationMessage;
-    getNotificationOutput = GetNotificationOutput
-    getNotificationOutputExecutors = GetNotificationOutputExecutors
-    getNotificationOutputExecutor = GetNotificationOutputExecutor
+    getNotificationOutput = GetNotificationOutput;
+    getNotificationOutputExecutors = GetNotificationOutputExecutors;
+    getNotificationOutputExecutor = GetNotificationOutputExecutor;
 
     getOrganizations = GetOrganizations;
     getOrganization = GetOrganization;
@@ -69,7 +69,7 @@ class LynxClient {
     getUsers = GetUsers;
 
     getEdgeApps = GetEdgeApps;
-    getEdgeApp = GetEdgeApp
+    getEdgeApp = GetEdgeApp;
     getEdgeAppVersions = GetEdgeAppVersions;
     getEdgeAppConfigOptions = GetEdgeAppConfigOptions;
     getConfiguredEdgeApps = GetConfiguredEdgeApps;
