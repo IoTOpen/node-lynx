@@ -1,6 +1,7 @@
 import fetch from "node-fetch";
 
 export const Endpoints = {
+    Auth: '/api/v2/auth',
     FunctionX: '/api/v2/functionx/',
     DeviceX: '/api/v2/devicex/',
     Status: '/api/v2/status/',
@@ -14,11 +15,16 @@ export const Endpoints = {
     EdgeApp: '/api/v2/edge/app',
 }
 
+export let connectionOptions = {
+    apiKey: '',
+    baseURL: ''
+}
+
 export const request = (endpoint, options) => {
-    let url = this.baseURL + endpoint;
+    let url = connectionOptions.baseURL + endpoint;
     let headers = {
         'Content-Type': 'application/json',
-        'X-API-Key': this.apiKey
+        'X-API-Key': connectionOptions.apiKey
     }
 
     let config = {
