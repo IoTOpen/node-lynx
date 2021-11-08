@@ -4,7 +4,7 @@
   "description": "IoT Open Lynx API package for node",
   "main": "lib/client.js",
   "scripts": {
-    "prepublish": "babel client.js --out-dir lib"
+    "prepublish": "babel *.js --out-dir lib"
   },
   "repository": {
     "type": "git",
