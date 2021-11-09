@@ -1,5 +1,6 @@
 import fetch from "node-fetch";
 import {Endpoints, request} from "./util";
+import base64 from 'base-64';
 
 export const Login = (username, password) => {
     let headers = {
