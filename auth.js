@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import {Endpoints, request} from "./util";
+import {connectionOptions, Endpoints, request} from "./util";
 import base64 from 'base-64';
 
 export const Login = (username, password) => {
@@ -10,7 +10,7 @@ export const Login = (username, password) => {
         method: 'POST',
         headers: headers
     }
-    return fetch(Endpoints.Auth, config)
+    return fetch(connectionOptions.baseURL + Endpoints.Auth, config)
         .then(res => {
             if (res.ok) {
                 return res.json();
@@ -33,7 +33,7 @@ export const Login2FA = (token, challenge) => {
         }
     }
 
-    return fetch(Endpoints.Auth, config)
+    return fetch(connectionOptions.baseURL + Endpoints.Auth, config)
         .then(res => {
             if (res.ok) {
                 return res.json()
