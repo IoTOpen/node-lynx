@@ -1,5 +1,5 @@
-import {GetFunction, GetFunctions} from "./functionx";
-import {GetDevice, GetDevices} from "./devicex";
+import {CreateFunction, DeleteFunction, GetFunction, GetFunctions, UpdateFunction} from "./functionx";
+import {CreateDevice, DeleteDevice, GetDevice, GetDevices, UpdateDevice} from "./devicex";
 import {
     GetInstallation,
     GetInstallationByClientId,
@@ -47,9 +47,15 @@ class LynxClient {
 
     getFunctions = GetFunctions;
     getFunction = GetFunction;
+    createFunction = CreateFunction;
+    updateFunction = UpdateFunction;
+    deleteFunction = DeleteFunction;
 
     getDevices = GetDevices;
     getDevice = GetDevice;
+    createDevice = CreateDevice;
+    updateDevice = UpdateDevice;
+    deleteDevice = DeleteDevice;
 
     getInstallations = GetInstallations;
     getInstallationRow = GetInstallationRow;
