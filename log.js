@@ -19,7 +19,6 @@ export const GetLog = (installationId, from, to, limit, offset, order, topics) =
     limit = limit ? limit : 500;
     offset = offset ? offset : 0;
     order = order ? order : LogOrder.Desc;
-    topics = topics ? topics : '';
 
     let params = {
         from: from,
@@ -27,8 +26,11 @@ export const GetLog = (installationId, from, to, limit, offset, order, topics) =
         limit: limit,
         offset: offset,
         order: order,
-        topics: topics
     };
+
+    if (topics) {
+        params.topics = topics
+    }
     let qs = '?' + querystring.stringify(params);
     return request(Endpoints.LogV3 + installationId + qs, {});
 }
