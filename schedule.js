@@ -7,7 +7,7 @@ export const GetSchedules = (installationId, executor) => {
 
 export const GetSchedule = (installationId, id) => request(Endpoints.Schedule + '/' + installationId + '/' + id, {});
 
-export const CreateSchedule = (schedule) => request(Endpoints.Schedule, {
+export const CreateSchedule = (schedule) => request(Endpoints.Schedule + '/' + schedule.installation_id, {
     method: 'POST', body: JSON.stringify(schedule)
 });
 
