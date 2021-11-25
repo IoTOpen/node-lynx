@@ -1,36 +1,38 @@
 import {CreateFunction, DeleteFunction, GetFunction, GetFunctions, UpdateFunction} from "./functionx";
 import {CreateDevice, DeleteDevice, GetDevice, GetDevices, UpdateDevice} from "./devicex";
 import {
+    CreateInstallation,
+    DeleteInstallation,
     GetInstallation,
     GetInstallationByClientId,
     GetInstallationRow,
     GetInstallations,
-    ListInstallations
+    ListInstallations,
+    UpdateInstallation
 } from "./installation";
 import {GetLog, GetStatus} from "./log";
 import {
+    CreateNotificationOutput,
+    DeleteNotificationOutput,
     GetNotificationMessage,
     GetNotificationOutput,
     GetNotificationOutputExecutor,
-    GetNotificationOutputExecutors
+    GetNotificationOutputExecutors,
+    UpdateNotificationOutput
 } from "./notification";
-import {GetOrganization, GetOrganizations} from "./organization";
-import {GetSchedule, GetSchedules} from "./schedule";
-import {GetMe, GetUser, GetUsers} from "./user";
 import {
-    GetConfiguredEdgeApps,
-    GetEdgeApp,
-    GetEdgeAppConfigOptions,
-    GetEdgeAppInstance,
-    GetEdgeApps,
-    GetEdgeAppVersions
+    CreateOrganization, DeleteOrganization, GetOrganization, GetOrganizations, UpdateOrganization
+} from "./organization";
+import {CreateSchedule, DeleteSchedule, GetSchedule, GetSchedules, UpdateSchedule} from "./schedule";
+import {CreateUser, DeleteUser, GetMe, GetUser, GetUsers, UpdateUser} from "./user";
+import {
+    GetConfiguredEdgeApps, GetEdgeApp, GetEdgeAppConfigOptions, GetEdgeAppInstance, GetEdgeApps, GetEdgeAppVersions
 } from "./edge_app";
 import {Login, Login2FA, Logout, ResetPassword, ResetPasswordUpdate} from "./auth";
 import {connectionOptions} from "./util";
 
 export const LogOrder = {
-    Desc: 'desc',
-    Asc: 'asc'
+    Desc: 'desc', Asc: 'asc'
 }
 
 class LynxClient {
@@ -62,24 +64,39 @@ class LynxClient {
     getInstallation = GetInstallation;
     getInstallationByClientId = GetInstallationByClientId;
     listInstallations = ListInstallations;
+    createInstallation = CreateInstallation;
+    updateInstallation = UpdateInstallation;
+    deleteInstallation = DeleteInstallation;
 
     getStatus = GetStatus;
     getLog = GetLog;
 
     getNotificationMessage = GetNotificationMessage;
     getNotificationOutput = GetNotificationOutput;
+    createNotificationOutput = CreateNotificationOutput;
+    updateNotificationOutput = UpdateNotificationOutput;
+    deleteNotificationOutput = DeleteNotificationOutput;
     getNotificationOutputExecutors = GetNotificationOutputExecutors;
     getNotificationOutputExecutor = GetNotificationOutputExecutor;
 
     getOrganizations = GetOrganizations;
     getOrganization = GetOrganization;
+    createOrganization = CreateOrganization;
+    updateOrganization = UpdateOrganization;
+    deleteOrganization = DeleteOrganization;
 
     getSchedules = GetSchedules;
     getSchedule = GetSchedule;
+    createSchedule = CreateSchedule;
+    updateSchedule = UpdateSchedule;
+    deleteSchedule = DeleteSchedule;
 
     getMe = GetMe;
     getUser = GetUser;
     getUsers = GetUsers;
+    createUser = CreateUser;
+    updateUser = UpdateUser;
+    deleteUser = DeleteUser;
 
     getEdgeApps = GetEdgeApps;
     getEdgeApp = GetEdgeApp;
