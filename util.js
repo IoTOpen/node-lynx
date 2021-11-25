@@ -10,7 +10,7 @@ export const Endpoints = {
     Installation: '/api/v2/installation',
     Notification: '/api/v2/notification/',
     Organization: '/api/v2/organization',
-    Schedule: '/api/v2/schedule/',
+    Schedule: '/api/v2/schedule',
     User: '/api/v2/user',
     EdgeApp: '/api/v2/edge/app',
 }

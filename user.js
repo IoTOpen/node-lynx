@@ -10,3 +10,14 @@ export const GetUsers = (filter) => {
     return request(Endpoints.User + qs, {});
 }
 
+export const CreateUser = (user) => request(Endpoints.User, {
+    method: 'POST', body: JSON.stringify(user)
+});
+
+export const UpdateUser = (user) => request(Endpoints.User + '/' + user.id, {
+    method: 'PUT', body: JSON.stringify(user)
+});
+
+export const DeleteUser = (user) => request(Endpoints.User + '/' + user.id, {
+    method: 'DELETE'
+});

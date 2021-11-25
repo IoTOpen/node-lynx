@@ -30,3 +30,15 @@ export const GetInstallationByClientId = (clientId, assignedOnly) => {
     let qs = assignedOnly ? '?assigned=' + assignedOnly : '';
     return request(Endpoints.InstallationInfo + '/' + clientId + qs, {});
 }
+
+export const CreateInstallation = (installation) => request(Endpoints.Installation, {
+    method: 'POST', body: JSON.stringify(installation)
+});
+
+export const UpdateInstallation = (installation) => request(Endpoints.Installation + '/' + installation.id, {
+    method: 'PUT', body: JSON.stringify(installation)
+});
+
+export const DeleteInstallation = (installation) => request(Endpoints.Installation + '/' + installation.id, {
+    method: 'DELETE'
+});
