@@ -9,7 +9,7 @@ export const GetStatus = (installationId, topicFilter) => {
         }
         return prev + 'topics=' + cur;
     }, '') : '';
-    return request(Endpoints.Status + installationId + qs, {});
+    return request(Endpoints.Status + '/' + installationId + qs, {});
 }
 
 export const GetLog = (installationId, from, to, limit, offset, order, topics) => {
@@ -21,16 +21,12 @@ export const GetLog = (installationId, from, to, limit, offset, order, topics) =
     order = order ? order : LogOrder.Desc;
 
     let params = {
-        from: from,
-        to: to,
-        limit: limit,
-        offset: offset,
-        order: order,
+        from: from, to: to, limit: limit, offset: offset, order: order,
     };
 
     if (topics) {
         params.topics = topics
     }
     let qs = '?' + querystring.stringify(params);
-    return request(Endpoints.LogV3 + installationId + qs, {});
+    return request(Endpoints.LogV3 + '/' + installationId + qs, {});
 }

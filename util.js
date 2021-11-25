@@ -2,13 +2,13 @@ import fetch from "node-fetch";
 
 export const Endpoints = {
     Auth: '/api/v2/auth',
-    FunctionX: '/api/v2/functionx/',
-    DeviceX: '/api/v2/devicex/',
-    Status: '/api/v2/status/',
+    FunctionX: '/api/v2/functionx',
+    DeviceX: '/api/v2/devicex',
+    Status: '/api/v2/status',
     LogV3: '/api/v3beta/log/',
     InstallationInfo: '/api/v2/installationinfo',
     Installation: '/api/v2/installation',
-    Notification: '/api/v2/notification/',
+    Notification: '/api/v2/notification',
     Organization: '/api/v2/organization',
     Schedule: '/api/v2/schedule',
     User: '/api/v2/user',
