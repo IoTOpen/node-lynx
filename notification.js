@@ -8,11 +8,11 @@ export const CreateNotificationMessage = (notificationMessage) => request(Endpoi
     method: 'POST', body: JSON.stringify(notificationMessage)
 });
 
-export const DeleteNotificationMessage = (notificationMessage) => request(Endpoints.Notification + '/' + notificationMessage.installation_id + '/message/' + message_id, {
-    method: 'DELETE', body: JSON(stringify(notificationMessage))
+export const DeleteNotificationMessage = (notificationMessage) => request(Endpoints.Notification + '/' + notificationMessage.installation_id + '/message/' + notificationMessage.id, {
+    method: 'DELETE'
 });
 
-export const UpdateNotificationMessage = (notificationMessage) => request(Endpoints.Notification + '/' + notificationMessage.installation_id + '/message/' + message_id, {
+export const UpdateNotificationMessage = (notificationMessage) => request(Endpoints.Notification + '/' + notificationMessage.installation_id + '/message/' + notificationMessage.id, {
     method: 'PUT', body: JSON.stringify(notificationMessage)
 });
 
@@ -25,7 +25,7 @@ export const CreateNotificationOutput = (notificationOutput) => request(Endpoint
 });
 
 export const DeleteNotificationOutput = (notificationOutput) => request(Endpoints.Notification + '/' + notificationOutput.installation_id + '/output/' + notificationOutput.id, {
-    method: 'DELETE', body: JSON.stringify(notificationOutput)
+    method: 'DELETE'
 });
 
 export const UpdateNotificationOutput = (notificationOutput) => request(Endpoints.Notification + '/' + notificationOutput.installation_id + '/output/' + notificationOutput.id, {
