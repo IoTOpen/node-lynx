@@ -13,6 +13,8 @@ export const Endpoints = {
     Schedule: '/api/v2/schedule',
     User: '/api/v2/user',
     EdgeApp: '/api/v2/edge/app',
+    Role: '/api/v2/role',
+    Permission: '/api/v2/permission'
 }
 
 export let connectionOptions = {

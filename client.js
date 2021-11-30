@@ -30,6 +30,8 @@ import {
 } from "./edge_app";
 import {Login, Login2FA, Logout, ResetPassword, ResetPasswordUpdate} from "./auth";
 import {connectionOptions} from "./util";
+import {CreateRole, DeleteRole, GetRole, GetRoles, UpdateRole} from "./role";
+import {GetPermissions} from "./permission";
 
 export const LogOrder = {
     Desc: 'desc', Asc: 'asc'
@@ -104,6 +106,14 @@ class LynxClient {
     getEdgeAppConfigOptions = GetEdgeAppConfigOptions;
     getConfiguredEdgeApps = GetConfiguredEdgeApps;
     getEdgeAppInstance = GetEdgeAppInstance;
+
+    getRoles = GetRoles;
+    getRole = GetRole;
+    createRole = CreateRole;
+    updateRole = UpdateRole;
+    deleteRole = DeleteRole;
+
+    getPermissions = GetPermissions;
 }
 
 module.exports.LynxClient = LynxClient;
