@@ -14,11 +14,17 @@ import {GetLog, GetStatus} from "./log";
 import {
     CreateNotificationOutput,
     DeleteNotificationOutput,
+    GetNotificationMessages,
     GetNotificationMessage,
+    DeleteNotificationMessage,
+    GetNotificationOutputs,
     GetNotificationOutput,
     GetNotificationOutputExecutor,
     GetNotificationOutputExecutors,
-    UpdateNotificationOutput
+    UpdateNotificationOutput,
+    SendNotification,
+    CreateNotificationMessage,
+    UpdateNotificationMessage
 } from "./notification";
 import {
     CreateOrganization, DeleteOrganization, GetOrganization, GetOrganizations, UpdateOrganization
@@ -72,20 +78,25 @@ class LynxClient {
 
     getStatus = GetStatus;
     getLog = GetLog;
-
+    getNotificationMessages = GetNotificationMessages;
     getNotificationMessage = GetNotificationMessage;
+    deleteNotificationMessage = DeleteNotificationMessage;
+    getNotificationOutputs = GetNotificationOutputs;
     getNotificationOutput = GetNotificationOutput;
     createNotificationOutput = CreateNotificationOutput;
     updateNotificationOutput = UpdateNotificationOutput;
     deleteNotificationOutput = DeleteNotificationOutput;
     getNotificationOutputExecutors = GetNotificationOutputExecutors;
     getNotificationOutputExecutor = GetNotificationOutputExecutor;
-
+    sendNotification = SendNotification;
     getOrganizations = GetOrganizations;
     getOrganization = GetOrganization;
     createOrganization = CreateOrganization;
     updateOrganization = UpdateOrganization;
     deleteOrganization = DeleteOrganization;
+
+    createNotificationMessage = CreateNotificationMessage;
+    updateNotificationMessage = UpdateNotificationMessage;
 
     getSchedules = GetSchedules;
     getSchedule = GetSchedule;
