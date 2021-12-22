@@ -34,12 +34,12 @@ export const request = (endpoint, options) => {
         headers: headers
     }
 
-    return fetch(url, config)
-        .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-
-            throw new Error(res.status + ':' + res.statusText);
-        });
+    return fetch(url, config) .then(async res => {
+        if (res.status !== 200) {
+            let error = await res.json();
+            error.status = res.status;
+            return Promise.reject(error);
+        }
+        return res.json();
+    });
 };
