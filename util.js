@@ -5,7 +5,7 @@ export const Endpoints = {
     FunctionX: '/api/v2/functionx',
     DeviceX: '/api/v2/devicex',
     Status: '/api/v2/status',
-    LogV3: '/api/v3beta/log/',
+    LogV3: '/api/v3beta/log',
     InstallationInfo: '/api/v2/installationinfo',
     Installation: '/api/v2/installation',
     Notification: '/api/v2/notification',
