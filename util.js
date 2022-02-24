@@ -15,7 +15,7 @@ export const Endpoints = {
     EdgeApp: '/api/v2/edge/app',
     Role: '/api/v2/role',
     Permission: '/api/v2/permission',
-    Token: '/api/user/me/security/token',
+    Token: '/api/v2/user/me/security/token',
 }
 
 export let connectionOptions = {
