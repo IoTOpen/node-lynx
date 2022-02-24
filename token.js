@@ -9,4 +9,4 @@ export const DeleteToken = (token) => request(Endpoints.Token + "/" + token.id, 
 export const CreateToken = (token) => request(Endpoints.Token, {
     method: 'POST',
     body: JSON.stringify(token),
-})
+});
