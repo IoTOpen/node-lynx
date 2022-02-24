@@ -21,3 +21,8 @@ export const UpdateUser = (user) => request(Endpoints.User + '/' + user.id, {
 export const DeleteUser = (user) => request(Endpoints.User + '/' + user.id, {
     method: 'DELETE'
 });
+
+export const ChangePassword = (passwordData) => request(Endpoints.User + '/password', {
+    method: 'PUT',
+    body: JSON.stringify(passwordData),
+})

@@ -30,7 +30,7 @@ import {
     CreateOrganization, DeleteOrganization, GetOrganization, GetOrganizations, UpdateOrganization
 } from "./organization";
 import {CreateSchedule, DeleteSchedule, GetSchedule, GetSchedules, UpdateSchedule} from "./schedule";
-import {CreateUser, DeleteUser, GetMe, GetUser, GetUsers, UpdateUser} from "./user";
+import {ChangePassword, CreateUser, DeleteUser, GetMe, GetUser, GetUsers, UpdateUser} from "./user";
 import {
     GetConfiguredEdgeApps, GetEdgeApp, GetEdgeAppConfigOptions, GetEdgeAppInstance, GetEdgeApps, GetEdgeAppVersions
 } from "./edge_app";
@@ -111,6 +111,7 @@ class LynxClient {
     createUser = CreateUser;
     updateUser = UpdateUser;
     deleteUser = DeleteUser;
+    changePassword = ChangePassword;
 
     getEdgeApps = GetEdgeApps;
     getEdgeApp = GetEdgeApp;
