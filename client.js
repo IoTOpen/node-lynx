@@ -38,6 +38,7 @@ import {Login, Login2FA, Logout, ResetPassword, ResetPasswordUpdate} from "./aut
 import {connectionOptions} from "./util";
 import {CreateRole, DeleteRole, GetRole, GetRoles, UpdateRole} from "./role";
 import {GetPermissions} from "./permission";
+import {CreateToken, DeleteToken, GetTokens} from "./token";
 
 export const LogOrder = {
     Desc: 'desc', Asc: 'asc'
@@ -125,6 +126,10 @@ class LynxClient {
     deleteRole = DeleteRole;
 
     getPermissions = GetPermissions;
+
+    createToken = CreateToken;
+    deleteToken = DeleteToken;
+    getTokens = GetTokens;
 }
 
 module.exports.LynxClient = LynxClient;
