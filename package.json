@@ -5,7 +5,7 @@
   "main": "lib/client.js",
   "scripts": {
     "prepublish": "babel *.js --out-dir lib",
-	"prepare": "babel *.js --out-dir lib"
+    "prepare": "babel *.js --out-dir lib"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   "license": "Apache 2.0",
   "dependencies": {
     "base-64": "^1.0.0",
+    "mqtt": "^4.3.6",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
