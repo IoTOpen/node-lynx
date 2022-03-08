@@ -22,7 +22,7 @@ export const MQTTConnect = (onConnectCallback) => {
     }
     client.on('message', function (topic, payload) {
         let callback = callbacks[topic]
-        let jsonPayload = JSON.stringify(payload.toString())
+        let jsonPayload = JSON.parse(payload.toString())
         if (callback === undefined) {
             Object.entries(callbacks).forEach(entry => {
                 const [filter, cb] = entry;
