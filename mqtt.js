@@ -9,32 +9,33 @@ const match = (filter, topic) => {
     const topicArr = topic.split('/')
 
     for (let i = 0; i < filterArr.length; i++) {
-        if (filterArr[i] === '#') return filterArr.length <= topicArr.length - 1
+        if (filterArr[i] === '#') return filterArr.length - 1 <= topicArr.length
         if (filterArr[i] !== '+' && filterArr[i] !== topicArr[i]) return false 
     }
     return filterArr.length === topicArr.length
 }
 
-export const MQTTConnect = () => {
+export const MQTTConnect = (onConnectCallback) => {
     client = connect(connectionOptions.mqttOpts)
-    client.on('connect', function () {
-        console.log('Mqtt: Connected')
-    })
+    if (typeof onConnectCallback === 'function') {
+        client.on('connect', onConnectCallback)
+    }
     client.on('message', function (topic, payload) {
         let callback = callbacks[topic]
+        let jsonPayload = JSON.stringify(payload.toString())
         if (callback === undefined) {
             Object.entries(callbacks).forEach(entry => {
-                const [key, value] = entry;
-                if (match(key, topic)) {
-                    callback = value
-                    return
+                const [filter, cb] = entry;
+                if (match(filter, topic) && typeof cb === 'function') {
+                    cb(jsonPayload)
                 }
             });
+            return
         }
         if (typeof callback !== 'function') {
             return
         }
-        callback(payload)
+        callback(jsonPayload)
     });
 }
 
@@ -60,6 +61,9 @@ export const Unsubscribe = (topic) => {
 
 export const Publish = (topic, payload) => {
     if (client) {
+        if (typeof payload === 'object') {
+            payload = JSON.stringify(payload)
+        }
         client.publish(topic, payload)
     }
 }
