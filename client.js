@@ -48,9 +48,11 @@ class LynxClient {
     constructor(base, apiKey, mqttOpts) {
         connectionOptions.baseURL = base.replace(/\/$/, "");
         connectionOptions.apiKey = apiKey;
-        mqttOpts.username = "apikey";
-        mqttOpts.password = apiKey;
-        connectionOptions.mqttOpts = mqttOpts;
+        if (mqttOpts) {
+            mqttOpts.username = "apikey";
+            mqttOpts.password = apiKey;
+            connectionOptions.mqttOpts = mqttOpts;
+        }
     }
     mqttConnect = MQTTConnect;
     mqttDisconnect = MQTTDisconnect;
