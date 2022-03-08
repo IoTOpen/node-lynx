@@ -20,7 +20,8 @@ export const Endpoints = {
 
 export let connectionOptions = {
     apiKey: '',
-    baseURL: ''
+    baseURL: '',
+    mqttOpts: {}
 }
 
 export const request = (endpoint, options) => {

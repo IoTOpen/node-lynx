@@ -39,17 +39,24 @@ import {connectionOptions} from "./util";
 import {CreateRole, DeleteRole, GetRole, GetRoles, UpdateRole} from "./role";
 import {GetPermissions} from "./permission";
 import {CreateToken, DeleteToken, GetTokens} from "./token";
-
+import { MQTTConnect, MQTTDisconnect, Subscribe, Unsubscribe, Publish } from "./mqtt"
 export const LogOrder = {
     Desc: 'desc', Asc: 'asc'
 }
 
 class LynxClient {
-    constructor(base, apiKey) {
+    constructor(base, apiKey, mqttOpts) {
         connectionOptions.baseURL = base.replace(/\/$/, "");
         connectionOptions.apiKey = apiKey;
+        mqttOpts.username = "apikey";
+        mqttOpts.password = apiKey;
+        connectionOptions.mqttOpts = mqttOpts;
     }
-
+    mqttConnect = MQTTConnect;
+    mqttDisconnect = MQTTDisconnect;
+    subscribe = Subscribe;
+    unsubscribe = Unsubscribe;
+    publish = Publish;
     login = Login;
     login2fa = Login2FA;
     logout = Logout;
