@@ -130,3 +130,5 @@ const Permissions = {
     userSecurityTokenListAll: 'user/security/token/list/all',
 }
 export default Permissions;
+
+module.exports.LynxPermissions = Permissions;

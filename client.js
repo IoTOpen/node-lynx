@@ -48,7 +48,7 @@ import {
     UpdateUserRegistrationPolicy,
     DeleteUserRegistrationPolicy
 } from "./user_registration_policy";
-
+import Permissions from "./permissions";
 export const LogOrder = {
     Desc: 'desc', Asc: 'asc'
 }
@@ -63,6 +63,7 @@ class LynxClient {
             connectionOptions.mqttOpts = mqttOpts;
         }
     }
+    permissions = Permissions;
 
     mqttConnect = MQTTConnect;
     mqttDisconnect = MQTTDisconnect;
@@ -159,7 +160,6 @@ class LynxClient {
     createUserRegistrationPolicy = CreateUserRegistrationPolicy;
     deleteUserRegistrationPolicy = DeleteUserRegistrationPolicy;
     updateUserRegistrationPolicy = UpdateUserRegistrationPolicy;
-
 }
 
 module.exports.LynxClient = LynxClient;
