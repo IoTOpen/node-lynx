@@ -39,7 +39,16 @@ import {connectionOptions} from "./util";
 import {CreateRole, DeleteRole, GetRole, GetRoles, UpdateRole} from "./role";
 import {GetPermissions} from "./permission";
 import {CreateToken, DeleteToken, GetTokens} from "./token";
-import { MQTTConnect, MQTTDisconnect, Subscribe, Unsubscribe, Publish } from "./mqtt"
+import {MQTTConnect, MQTTDisconnect, Subscribe, Unsubscribe, Publish} from "./mqtt"
+import {GetGatewayRegistrationPolicy, SetGatewayRegistrationPolicy} from "./gateway_registration_policy";
+import {
+    CreateUserRegistrationPolicy,
+    GetUserRegistrationPolicies,
+    GetUserRegistrationPolicy,
+    UpdateUserRegistrationPolicy,
+    DeleteUserRegistrationPolicy
+} from "./user_registration_policy";
+
 export const LogOrder = {
     Desc: 'desc', Asc: 'asc'
 }
@@ -54,6 +63,7 @@ class LynxClient {
             connectionOptions.mqttOpts = mqttOpts;
         }
     }
+
     mqttConnect = MQTTConnect;
     mqttDisconnect = MQTTDisconnect;
     subscribe = Subscribe;
@@ -140,6 +150,16 @@ class LynxClient {
     createToken = CreateToken;
     deleteToken = DeleteToken;
     getTokens = GetTokens;
+
+    getGatewayRegistrationPolicy = GetGatewayRegistrationPolicy;
+    setGatewayRegistrationPolicy = SetGatewayRegistrationPolicy;
+
+    getUserRegistrationPolicies = GetUserRegistrationPolicies;
+    getUserRegistrationPolicy = GetUserRegistrationPolicy;
+    createUserRegistrationPolicy = CreateUserRegistrationPolicy;
+    deleteUserRegistrationPolicy = DeleteUserRegistrationPolicy;
+    updateUserRegistrationPolicy = UpdateUserRegistrationPolicy;
+
 }
 
 module.exports.LynxClient = LynxClient;

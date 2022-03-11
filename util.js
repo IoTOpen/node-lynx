@@ -16,6 +16,8 @@ export const Endpoints = {
     Role: '/api/v2/role',
     Permission: '/api/v2/permission',
     Token: '/api/v2/user/me/security/token',
+    GatewayRegistrationPolicy: '/api/v2/gateway/registration/policy',
+    UserRegistrationPolicy: '/api/v2/user/registration/policy'
 }
 
 export let connectionOptions = {
