@@ -10,7 +10,7 @@ export const DeleteUserRegistrationPolicy = (policy) => request(Endpoints.UserRe
 export const GetUserRegistrationPolicies = () => request(Endpoints.UserRegistrationPolicy, {});
 export const GetUserRegistrationPolicy = (id) => request(Endpoints.UserRegistrationPolicy + '/' + id, {});
 
-export const UpdateUserRegistrationPolicy = (policy) => request(Endpoints.UserRegistrationPolicy, {
+export const UpdateUserRegistrationPolicy = (policy) => request(Endpoints.UserRegistrationPolicy + "/" + policy.id, {
     method: 'PUT', body: JSON.stringify(policy),
 });
 
