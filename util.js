@@ -9,6 +9,7 @@ export const Endpoints = {
     InstallationInfo: '/api/v2/installationinfo',
     Installation: '/api/v2/installation',
     Notification: '/api/v2/notification',
+    NotificationExecutorAdmin: '/api/v2/admin/notification/executor',
     Organization: '/api/v2/organization',
     Schedule: '/api/v2/schedule',
     User: '/api/v2/user',

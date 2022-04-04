@@ -24,7 +24,11 @@ import {
     UpdateNotificationOutput,
     SendNotification,
     CreateNotificationMessage,
-    UpdateNotificationMessage
+    UpdateNotificationMessage,
+    GetNotificationsExecutorsAdmin,
+    GetNotificationExecutorAdmin,
+    CreateNotificationExecutorAdmin,
+    UpdateNotificationExecutorAdmin
 } from "./notification";
 import {
     CreateOrganization, DeleteOrganization, GetOrganization, GetOrganizations, UpdateOrganization
@@ -110,6 +114,11 @@ class LynxClient {
     getNotificationOutputExecutors = GetNotificationOutputExecutors;
     getNotificationOutputExecutor = GetNotificationOutputExecutor;
     sendNotification = SendNotification;
+    getNotificationsExecutorsAdmin =  GetNotificationsExecutorsAdmin;
+    getNotificationExecutorAdmin = GetNotificationExecutorAdmin;
+    createNotificationExecutorAdmin =  CreateNotificationExecutorAdmin;
+    updateNotificationExecutorAdmin =  UpdateNotificationExecutorAdmin;
+
     getOrganizations = GetOrganizations;
     getOrganization = GetOrganization;
     createOrganization = CreateOrganization;
