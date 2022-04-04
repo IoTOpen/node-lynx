@@ -39,3 +39,15 @@ export const GetNotificationOutputExecutor = (installationId, id) => request(End
 export const SendNotification = (installationId, outputId, data) => request(Endpoints.Notification + '/' + installationId + '/output/' + outputId + '/send', {
     method: 'POST', body: JSON.stringify(data)
 });
+
+export const GetNotificationsExecutorsAdmin = () => request(Endpoints.NotificationExecutorAdmin, {});
+
+export const GetNotificationExecutorAdmin = (outputId) => request(Endpoints.NotificationExecutorAdmin + '/' + outputId, {});
+
+export const CreateNotificationExecutorAdmin = (notificationExecutor) => request(Endpoints.NotificationExecutorAdmin, {
+    method: 'POST', body: JSON.stringify(notificationExecutor)
+});
+
+export const UpdateNotificationExecutorAdmin = (notificationExecutor) => request(Endpoints.notificationExecutor + '/' + notificationExecutor.id, {
+    method: 'PUT', body: JSON.stringify(notificationExecutor)
+});
