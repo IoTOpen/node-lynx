@@ -48,6 +48,6 @@ export const CreateNotificationExecutorAdmin = (notificationExecutor) => request
     method: 'POST', body: JSON.stringify(notificationExecutor)
 });
 
-export const UpdateNotificationExecutorAdmin = (notificationExecutor) => request(Endpoints.notificationExecutor + '/' + notificationExecutor.id, {
+export const UpdateNotificationExecutorAdmin = (notificationExecutor) => request(Endpoints.NotificationExecutorAdmin + '/' + notificationExecutor.id, {
     method: 'PUT', body: JSON.stringify(notificationExecutor)
 });
