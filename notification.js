@@ -51,3 +51,7 @@ export const CreateNotificationExecutorAdmin = (notificationExecutor) => request
 export const UpdateNotificationExecutorAdmin = (notificationExecutor) => request(Endpoints.NotificationExecutorAdmin + '/' + notificationExecutor.id, {
     method: 'PUT', body: JSON.stringify(notificationExecutor)
 });
+
+export const DeleteNotificationExecutorAdmin = (notificationExecutor) => request(Endpoints.NotificationExecutorAdmin + '/' + notificationExecutor.id, {
+    method: 'DELETE'
+});

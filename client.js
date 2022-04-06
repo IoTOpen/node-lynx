@@ -28,7 +28,8 @@ import {
     GetNotificationsExecutorsAdmin,
     GetNotificationExecutorAdmin,
     CreateNotificationExecutorAdmin,
-    UpdateNotificationExecutorAdmin
+    UpdateNotificationExecutorAdmin,
+    DeleteNotificationExecutorAdmin
 } from "./notification";
 import {
     CreateOrganization, DeleteOrganization, GetOrganization, GetOrganizations, UpdateOrganization
@@ -118,6 +119,7 @@ class LynxClient {
     getNotificationExecutorAdmin = GetNotificationExecutorAdmin;
     createNotificationExecutorAdmin =  CreateNotificationExecutorAdmin;
     updateNotificationExecutorAdmin =  UpdateNotificationExecutorAdmin;
+    deleteNotificationExecutorAdmin = DeleteNotificationExecutorAdmin;
 
     getOrganizations = GetOrganizations;
     getOrganization = GetOrganization;
