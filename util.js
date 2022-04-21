@@ -22,29 +22,29 @@ export const Endpoints = {
 }
 
 export let connectionOptions = {
-    apiKey: '',
-    baseURL: '',
-    mqttOpts: {}
+    apiKey: '', baseURL: '', mqttOpts: {}
 }
 
 export const request = (endpoint, options) => {
     let url = connectionOptions.baseURL + endpoint;
     let headers = {
-        'Content-Type': 'application/json',
-        'X-API-Key': connectionOptions.apiKey
+        'Content-Type': 'application/json', 'X-API-Key': connectionOptions.apiKey
     }
 
     let config = {
-        ...options,
-        headers: headers
+        ...options, headers: headers
     }
 
-    return fetch(url, config) .then(async res => {
+    return fetch(url, config).then(async res => {
         if (res.status !== 200) {
             let error = await res.json();
             error.status = res.status;
             return Promise.reject(error);
         }
-        return res.json();
+        try {
+            return res.json();
+        } catch (e) {
+            return res.text();
+        }
     });
 };
