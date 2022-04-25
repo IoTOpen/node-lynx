@@ -45,7 +45,7 @@ import {CreateRole, DeleteRole, GetRole, GetRoles, UpdateRole} from "./role";
 import {GetPermissions} from "./permission";
 import {CreateToken, DeleteToken, GetTokens} from "./token";
 import {MQTTConnect, MQTTDisconnect, Subscribe, Unsubscribe, Publish} from "./mqtt"
-import {GetGatewayRegistrationPolicy, SetGatewayRegistrationPolicy} from "./gateway_registration_policy";
+import {GetGatewayRegistrationPolicy, ResetGatewayPassword, SetGatewayRegistrationPolicy} from "./gateway";
 import {
     CreateUserRegistrationPolicy,
     GetUserRegistrationPolicies,
@@ -54,6 +54,7 @@ import {
     DeleteUserRegistrationPolicy
 } from "./user_registration_policy";
 import Permissions from "./permissions";
+
 export const LogOrder = {
     Desc: 'desc', Asc: 'asc'
 }
@@ -68,6 +69,7 @@ class LynxClient {
             connectionOptions.mqttOpts = mqttOpts;
         }
     }
+
     permissions = Permissions;
 
     mqttConnect = MQTTConnect;
@@ -115,10 +117,10 @@ class LynxClient {
     getNotificationOutputExecutors = GetNotificationOutputExecutors;
     getNotificationOutputExecutor = GetNotificationOutputExecutor;
     sendNotification = SendNotification;
-    getNotificationsExecutorsAdmin =  GetNotificationsExecutorsAdmin;
+    getNotificationsExecutorsAdmin = GetNotificationsExecutorsAdmin;
     getNotificationExecutorAdmin = GetNotificationExecutorAdmin;
-    createNotificationExecutorAdmin =  CreateNotificationExecutorAdmin;
-    updateNotificationExecutorAdmin =  UpdateNotificationExecutorAdmin;
+    createNotificationExecutorAdmin = CreateNotificationExecutorAdmin;
+    updateNotificationExecutorAdmin = UpdateNotificationExecutorAdmin;
     deleteNotificationExecutorAdmin = DeleteNotificationExecutorAdmin;
 
     getOrganizations = GetOrganizations;
@@ -165,6 +167,7 @@ class LynxClient {
 
     getGatewayRegistrationPolicy = GetGatewayRegistrationPolicy;
     setGatewayRegistrationPolicy = SetGatewayRegistrationPolicy;
+    resetGatewayPassword = ResetGatewayPassword;
 
     getUserRegistrationPolicies = GetUserRegistrationPolicies;
     getUserRegistrationPolicy = GetUserRegistrationPolicy;
