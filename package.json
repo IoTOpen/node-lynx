@@ -1,6 +1,6 @@
 {
   "name": "@iotopen/node-lynx",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "IoT Open Lynx API package for node",
   "main": "lib/client.js",
   "scripts": {
