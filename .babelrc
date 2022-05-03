@@ -1,4 +1,4 @@
 {
-  "plugins": ["transform-class-properties", "@babel/plugin-transform-spread"],
+  "plugins": ["transform-class-properties", "@babel/plugin-transform-spread", "@babel/plugin-transform-runtime", "@babel/plugin-transform-regenerator"],
   "presets": ["@babel/preset-env"]
 }
