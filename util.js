@@ -35,7 +35,7 @@ export const request = (endpoint, options) => {
     let headers = {
         'X-API-Key': connectionOptions.apiKey
     }
-    if (options.headers) {
+    if (options && options.headers) {
         headers = {...headers, ...options.headers};
     }
 
