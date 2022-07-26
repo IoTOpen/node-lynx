@@ -54,6 +54,18 @@ import {
     DeleteUserRegistrationPolicy
 } from "./user_registration_policy";
 import Permissions from "./permissions";
+import {
+    CreateFileInstallation,
+    CreateFileOrganization,
+    DeleteFileInstallation,
+    DeleteFileOrganization, DownloadFile,
+    GetFileInstallation,
+    GetFileOrganization,
+    GetFilesInstallation,
+    GetFilesOrganization,
+    UpdateFileInstallation,
+    UpdateFileOrganization
+} from "./file";
 
 export const LogOrder = {
     Desc: 'desc', Asc: 'asc'
@@ -71,6 +83,10 @@ class LynxClient {
     }
 
     permissions = Permissions;
+
+    getBaseURL = () => {
+        return connectionOptions.baseURL;
+    };
 
     mqttConnect = MQTTConnect;
     mqttDisconnect = MQTTDisconnect;
@@ -174,6 +190,18 @@ class LynxClient {
     createUserRegistrationPolicy = CreateUserRegistrationPolicy;
     deleteUserRegistrationPolicy = DeleteUserRegistrationPolicy;
     updateUserRegistrationPolicy = UpdateUserRegistrationPolicy;
+
+    getFilesInstallation = GetFilesInstallation;
+    getFilesOrganization = GetFilesOrganization;
+    getFileInstallation = GetFileInstallation;
+    getFileOrganization = GetFileOrganization;
+    createFileInstallation = CreateFileInstallation;
+    createFileOrganization = CreateFileOrganization;
+    updateFileInstallation = UpdateFileInstallation;
+    updateFileOrganization = UpdateFileOrganization;
+    deleteFileInstallation = DeleteFileInstallation;
+    deleteFileOrganization = DeleteFileOrganization;
+    downloadFile = DownloadFile;
 }
 
 module.exports.LynxClient = LynxClient;

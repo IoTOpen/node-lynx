@@ -19,6 +19,7 @@ export const Endpoints = {
     Token: '/api/v2/user/me/security/token',
     Gateway: '/api/v2/gateway',
     UserRegistrationPolicy: '/api/v2/user/registration/policy',
+    File: '/api/v2/file'
 }
 
 export let connectionOptions = {
@@ -28,7 +29,7 @@ export let connectionOptions = {
 export const request = (endpoint, options) => {
     let url = connectionOptions.baseURL + endpoint;
     let headers = {
-        'Content-Type': 'application/json', 'X-API-Key': connectionOptions.apiKey
+        'X-API-Key': connectionOptions.apiKey, ...options.headers
     }
 
     let config = {
@@ -44,7 +45,7 @@ export const request = (endpoint, options) => {
         try {
             return res.json();
         } catch (e) {
-            return res.text();
+            return res;
         }
     });
 };
