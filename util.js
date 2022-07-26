@@ -26,6 +26,10 @@ export let connectionOptions = {
     apiKey: '', baseURL: '', mqttOpts: {}
 }
 
+const verifyStatus = () => {
+
+};
+
 export const request = (endpoint, options) => {
     let url = connectionOptions.baseURL + endpoint;
     let headers = {
@@ -46,7 +50,7 @@ export const request = (endpoint, options) => {
             return Promise.reject(error);
         }
         try {
-            return res.json();
+            return await res.clone().json();
         } catch (e) {
             return res;
         }
