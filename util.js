@@ -29,7 +29,10 @@ export let connectionOptions = {
 export const request = (endpoint, options) => {
     let url = connectionOptions.baseURL + endpoint;
     let headers = {
-        'X-API-Key': connectionOptions.apiKey, ...options.headers
+        'X-API-Key': connectionOptions.apiKey
+    }
+    if (options.headers) {
+        headers = {...headers, ...options.headers};
     }
 
     let config = {

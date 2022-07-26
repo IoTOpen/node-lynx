@@ -61,5 +61,5 @@ export const DeleteFileOrganization = (organizationId, fileId) => {
 }
 
 export const DownloadFile = (hash) => {
-    return request(Endpoints.File + '/download/' + hash);
+    return request(Endpoints.File + '/download/' + hash, {});
 }
