@@ -1,5 +1,4 @@
 import {Endpoints, request} from "./util";
-import {re} from "@babel/core/lib/vendor/import-meta-resolve";
 
 export const GetFilesInstallation = (installationId) => {
     return request(Endpoints.File + '/installation/' + installationId, {});
