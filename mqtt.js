@@ -1,5 +1,5 @@
-import { connect } from 'mqtt'
-import { connectionOptions } from "./util";
+import {connect} from 'mqtt/dist/mqtt'
+import {connectionOptions} from "./util";
 
 let client = undefined
 let callbacks = {}
@@ -10,7 +10,7 @@ const match = (filter, topic) => {
 
     for (let i = 0; i < filterArr.length; i++) {
         if (filterArr[i] === '#') return filterArr.length - 1 <= topicArr.length
-        if (filterArr[i] !== '+' && filterArr[i] !== topicArr[i]) return false 
+        if (filterArr[i] !== '+' && filterArr[i] !== topicArr[i]) return false
     }
     return filterArr.length === topicArr.length
 }

@@ -1,5 +1,3 @@
-import fetch from "node-fetch";
-
 export const Endpoints = {
     Auth: '/api/v2/auth',
     FunctionX: '/api/v2/functionx',

@@ -21,8 +21,7 @@
   "dependencies": {
     "@babel/runtime": "^7.18.9",
     "base-64": "^1.0.0",
-    "mqtt": "^4.3.7",
-    "node-fetch": "^3.2.9"
+    "mqtt": "^4.3.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.18.9",
