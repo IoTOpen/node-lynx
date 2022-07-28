@@ -1,8 +1,7 @@
-import querystring from "querystring";
 import {Endpoints, request} from "./util";
 
 export const GetFunctions = (installationId, filter) => {
-    let qs = filter ? '?' + querystring.stringify(filter) : '';
+    let qs = filter ? '?' + new URLSearchParams(filter).toString() : '';
     let url = Endpoints.FunctionX + '/' + installationId + qs;
     return request(url, {});
 };

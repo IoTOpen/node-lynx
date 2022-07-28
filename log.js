@@ -1,4 +1,3 @@
-import querystring from "querystring";
 import {LogOrder} from "./client";
 import {Endpoints, request} from "./util";
 
@@ -27,6 +26,6 @@ export const GetLog = (installationId, from, to, limit, offset, order, topics) =
     if (topics) {
         params.topics = topics
     }
-    let qs = '?' + querystring.stringify(params);
+    let qs = '?' + new URLSearchParams(params).toString();
     return request(Endpoints.LogV3 + '/' + installationId + qs, {});
 }

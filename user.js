@@ -1,4 +1,3 @@
-import querystring from "querystring";
 import {Endpoints, request} from "./util";
 
 export const GetMe = () => request(Endpoints.User + '/me', {});
@@ -6,7 +5,7 @@ export const GetMe = () => request(Endpoints.User + '/me', {});
 export const GetUser = (id) => request(Endpoints.User + '/' + id, {});
 
 export const GetUsers = (filter) => {
-    let qs = filter ? '?' + querystring.stringify(filter) : '';
+    let qs = filter ? '?' + new URLSearchParams(filter).toString() : '';
     return request(Endpoints.User + qs, {});
 }
 

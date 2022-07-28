@@ -1,8 +1,7 @@
-import querystring from "querystring";
 import {Endpoints, request} from "./util";
 
 export const GetDevices = (installationId, filter) => {
-    let qs = filter ? '?' + querystring.stringify(filter) : '';
+    let qs = filter ? '?' + new URLSearchParams(filter).toString() : '';
     let url = Endpoints.DeviceX + '/' + installationId + qs;
     return request(url, {});
 };

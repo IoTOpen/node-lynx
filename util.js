@@ -26,10 +26,6 @@ export let connectionOptions = {
     apiKey: '', baseURL: '', mqttOpts: {}
 }
 
-const verifyStatus = () => {
-
-};
-
 export const request = (endpoint, options) => {
     let url = connectionOptions.baseURL + endpoint;
     let headers = {

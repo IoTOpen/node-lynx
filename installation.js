@@ -1,4 +1,3 @@
-import querystring from "querystring";
 import {Endpoints, request} from "./util";
 
 export const GetInstallations = (assignedOnly) => {
@@ -9,7 +8,7 @@ export const GetInstallations = (assignedOnly) => {
 export const GetInstallationRow = (installationId) => request(Endpoints.Installation + '/' + installationId, {});
 
 export const ListInstallations = (filter) => {
-    let qs = filter ? '?' + querystring.stringify(filter) : '';
+    let qs = filter ? '?' + new URLSearchParams(filter).toString() : '';
     let url = Endpoints.Installation + qs;
     return request(url, {});
 }
