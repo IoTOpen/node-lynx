@@ -37,7 +37,13 @@ import {
 import {CreateSchedule, DeleteSchedule, GetSchedule, GetSchedules, UpdateSchedule} from "./schedule";
 import {ChangePassword, CreateUser, DeleteUser, GetMe, GetUser, GetUsers, UpdateUser} from "./user";
 import {
-    GetConfiguredEdgeApps, GetEdgeApp, GetEdgeAppConfigOptions, GetEdgeAppInstance, GetEdgeApps, GetEdgeAppVersions, UpdateEdgeAppInstance
+    CreateEdgeAppInstance, GetConfiguredEdgeApps,
+    GetEdgeApp,
+    GetEdgeAppConfigOptions,
+    GetEdgeAppInstance,
+    GetEdgeApps,
+    GetEdgeAppVersions,
+    UpdateEdgeAppInstance
 } from "./edge_app";
 import {Login, Login2FA, Logout, ResetPassword, ResetPasswordUpdate} from "./auth";
 import {connectionOptions} from "./util";
@@ -168,6 +174,7 @@ class LynxClient {
     getEdgeAppConfigOptions = GetEdgeAppConfigOptions;
     getConfiguredEdgeApps = GetConfiguredEdgeApps;
     getEdgeAppInstance = GetEdgeAppInstance;
+    createEdgeAppInstance = CreateEdgeAppInstance;
     updateEdgeAppInstance = UpdateEdgeAppInstance;
 
     getRoles = GetRoles;

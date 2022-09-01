@@ -6,7 +6,7 @@ export const GetEdgeApp = (id) => request(Endpoints.EdgeApp + '/' + id, {});
 
 export const GetEdgeAppVersions = (appId, untagged) => {
     let qs = untagged ? '?untagged=' + untagged : '';
-    return request(Endpoints.EdgeApp + '/' + appId + '/versions', {});
+    return request(Endpoints.EdgeApp + '/' + appId + '/versions' + qs, {});
 }
 
 export const GetEdgeAppConfigOptions = (id, version) => {
@@ -18,4 +18,10 @@ export const GetConfiguredEdgeApps = (installationId) => request(Endpoints.EdgeA
 
 export const GetEdgeAppInstance = (installationId, instanceId) => request(Endpoints.EdgeApp + '/configured/' + installationId + '/' + instanceId, {});
 
-export const UpdateEdgeAppInstance = (instanceData) => request(Endpoints.EdgeApp + '/configured/' + instanceData.installation_id + '/' + instanceData.id, {method: 'PUT', body: JSON.stringify(instanceData)});
+export const CreateEdgeAppInstance = (instanceData) => request(Endpoints.EdgeApp + '/configured/' + instanceData.installation_id, {
+    method: 'POST', body: JSON.stringify(instanceData)
+});
+
+export const UpdateEdgeAppInstance = (instanceData) => request(Endpoints.EdgeApp + '/configured/' + instanceData.installation_id + '/' + instanceData.id, {
+    method: 'PUT', body: JSON.stringify(instanceData)
+});
