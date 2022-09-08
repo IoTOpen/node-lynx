@@ -17,7 +17,8 @@ export const Endpoints = {
     Token: '/api/v2/user/me/security/token',
     Gateway: '/api/v2/gateway',
     UserRegistrationPolicy: '/api/v2/user/registration/policy',
-    File: '/api/v2/file'
+    File: '/api/v2/file',
+    Trace: '/api/v2/trace'
 }
 
 export let connectionOptions = {

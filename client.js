@@ -51,7 +51,12 @@ import {CreateRole, DeleteRole, GetRole, GetRoles, UpdateRole} from "./role";
 import {GetPermissions} from "./permission";
 import {CreateToken, DeleteToken, GetTokens} from "./token";
 import {MQTTConnect, MQTTDisconnect, Subscribe, Unsubscribe, Publish} from "./mqtt"
-import {GetGatewayRegistrationPolicy, ResetGatewayPassword, SetGatewayRegistrationPolicy} from "./gateway";
+import {
+    CreateGatewayCredentials,
+    GetGatewayRegistrationPolicy,
+    ResetGatewayPassword,
+    SetGatewayRegistrationPolicy
+} from "./gateway";
 import {
     CreateUserRegistrationPolicy,
     GetUserRegistrationPolicies,
@@ -72,6 +77,7 @@ import {
     UpdateFileInstallation,
     UpdateFileOrganization
 } from "./file";
+import {GetTrace} from "./trace";
 
 export const LogOrder = {
     Desc: 'desc', Asc: 'asc'
@@ -192,6 +198,7 @@ class LynxClient {
     getGatewayRegistrationPolicy = GetGatewayRegistrationPolicy;
     setGatewayRegistrationPolicy = SetGatewayRegistrationPolicy;
     resetGatewayPassword = ResetGatewayPassword;
+    createGatewayCredentials = CreateGatewayCredentials;
 
     getUserRegistrationPolicies = GetUserRegistrationPolicies;
     getUserRegistrationPolicy = GetUserRegistrationPolicy;
@@ -210,6 +217,8 @@ class LynxClient {
     deleteFileInstallation = DeleteFileInstallation;
     deleteFileOrganization = DeleteFileOrganization;
     downloadFile = DownloadFile;
+
+    getTrace = GetTrace;
 }
 
 module.exports.LynxClient = LynxClient;
