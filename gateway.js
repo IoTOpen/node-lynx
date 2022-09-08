@@ -8,4 +8,8 @@ export const SetGatewayRegistrationPolicy = (policy) => request(`${Endpoints.Gat
 
 export const ResetGatewayPassword = (installationId) => request(`${Endpoints.Gateway}/reset/${installationId}`, {
     method: 'POST',
-})
+});
+
+export const CreateGatewayCredentials = (installationId) => request(`${Endpoints.Gateway}/credentials/${installationId}`, {
+   method: 'POST'
+});
