@@ -2,10 +2,13 @@
   "name": "@iotopen/node-lynx",
   "version": "1.4.3",
   "description": "IoT Open Lynx API package for node",
-  "main": "lib/client.js",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "scripts": {
-    "prepublish": "babel *.js --out-dir lib",
-    "prepare": "babel *.js --out-dir lib"
+    "prepare": "npm run build:ts",
+    "lint": "eslint --ext js,ts,tsx --max-warnings 0 src",
+    "build:ts": "rollup -c",
+    "dev:ts": "rollup -c -w"
   },
   "repository": {
     "type": "git",
@@ -18,18 +21,21 @@
   ],
   "author": "IoT Open",
   "license": "Apache 2.0",
-  "dependencies": {
-    "@babel/runtime": "^7.18.9",
-    "base-64": "^1.0.0",
-    "mqtt": "^4.3.7"
-  },
   "devDependencies": {
-    "@babel/cli": "^7.18.9",
-    "@babel/core": "^7.18.9",
-    "@babel/plugin-transform-regenerator": "^7.18.6",
-    "@babel/plugin-transform-runtime": "^7.18.9",
-    "@babel/plugin-transform-spread": "^7.18.9",
-    "@babel/preset-env": "^7.18.9",
-    "babel-plugin-transform-class-properties": "^6.24.1"
+    "@rollup/plugin-commonjs": "^22.0.2",
+    "@rollup/plugin-node-resolve": "^14.0.1",
+    "@rollup/plugin-typescript": "^8.5.0",
+    "@types/base-64": "^1.0.0",
+    "@types/mqtt": "^2.5.0",
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.36.2",
+    "base-64": "^1.0.0",
+    "eslint": "^7.32.0",
+    "mqtt": "^4.3.7",
+    "rollup": "^2.79.0",
+    "rollup-plugin-dts": "^4.2.2",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-terser": "^7.0.2",
+    "typescript": "^4.8.3"
   }
 }
