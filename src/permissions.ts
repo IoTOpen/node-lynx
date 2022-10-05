@@ -1,4 +1,4 @@
-enum Permissions {
+export enum Permissions {
     installationListAll = 'installation/list/all',
     installationListAssigned = 'installation/list/assigned',
     installationCreate = 'installation/create',
@@ -125,5 +125,3 @@ enum Permissions {
     userSecurityTokenCreateDelete = 'user/security/token/create_delete',
     userSecurityTokenListAll = 'user/security/token/list/all',
 }
-
-export default Permissions;

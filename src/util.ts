@@ -24,7 +24,7 @@ export enum Endpoints {
 }
 
 export const connectionOptions = {
-    apiKey: '', baseURL: '', mqttOpts: {}
+    apiKey: '', baseURL: ''
 };
 
 export const request = <T>(endpoint: string, options: RequestInit): Promise<RequestResponse<T>> => {

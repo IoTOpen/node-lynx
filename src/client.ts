@@ -50,7 +50,6 @@ import {connectionOptions} from './util';
 import {CreateRole, DeleteRole, GetRole, GetRoles, UpdateRole} from './role';
 import {GetPermissions} from './permission';
 import {CreateToken, DeleteToken, GetTokens} from './token';
-import {MQTTConnect, MQTTDisconnect, Subscribe, Unsubscribe, Publish} from './mqtt';
 import {
     CreateGatewayCredentials,
     GetGatewayRegistrationPolicy,
@@ -64,7 +63,6 @@ import {
     UpdateUserRegistrationPolicy,
     DeleteUserRegistrationPolicy
 } from './user_registration_policy';
-import Permissions from './permissions';
 import {
     CreateFileInstallation,
     CreateFileOrganization,
@@ -80,27 +78,15 @@ import {
 import {GetTrace} from './trace';
 
 export class LynxClient {
-    constructor(base: string, apiKey: string, mqttOpts: any) {
+    constructor(base: string, apiKey: string) {
         connectionOptions.baseURL = base.replace(/\/$/, '');
         connectionOptions.apiKey = apiKey;
-        if (mqttOpts) {
-            mqttOpts.username = 'apikey';
-            mqttOpts.password = apiKey;
-            connectionOptions.mqttOpts = mqttOpts;
-        }
     }
-
-    permissions = Permissions;
 
     getBaseURL = () => {
         return connectionOptions.baseURL;
     };
 
-    mqttConnect = MQTTConnect;
-    mqttDisconnect = MQTTDisconnect;
-    subscribe = Subscribe;
-    unsubscribe = Unsubscribe;
-    publish = Publish;
     login = Login;
     login2fa = Login2FA;
     logout = Logout;
@@ -216,5 +202,3 @@ export class LynxClient {
 
     getTrace = GetTrace;
 }
-
-module.exports.LynxClient = LynxClient;
