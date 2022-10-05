@@ -1,5 +1,5 @@
-import {CreateFunction, DeleteFunction, GetFunction, GetFunctions, UpdateFunction} from "./functionx";
-import {CreateDevice, DeleteDevice, GetDevice, GetDevices, UpdateDevice} from "./devicex";
+import {CreateFunction, DeleteFunction, GetFunction, GetFunctions, UpdateFunction} from './functionx';
+import {CreateDevice, DeleteDevice, GetDevice, GetDevices, UpdateDevice} from './devicex';
 import {
     CreateInstallation,
     DeleteInstallation,
@@ -9,8 +9,8 @@ import {
     GetInstallations,
     ListInstallations,
     UpdateInstallation
-} from "./installation";
-import {GetLog, GetStatus} from "./log";
+} from './installation';
+import {GetLog, GetStatus} from './log';
 import {
     CreateNotificationOutput,
     DeleteNotificationOutput,
@@ -30,12 +30,12 @@ import {
     CreateNotificationExecutorAdmin,
     UpdateNotificationExecutorAdmin,
     DeleteNotificationExecutorAdmin
-} from "./notification";
+} from './notification';
 import {
     CreateOrganization, DeleteOrganization, GetOrganization, GetOrganizations, UpdateOrganization
-} from "./organization";
-import {CreateSchedule, DeleteSchedule, GetSchedule, GetSchedules, UpdateSchedule} from "./schedule";
-import {ChangePassword, CreateUser, DeleteUser, GetMe, GetUser, GetUsers, UpdateUser} from "./user";
+} from './organization';
+import {CreateSchedule, DeleteSchedule, GetSchedule, GetSchedules, UpdateSchedule} from './schedule';
+import {ChangePassword, CreateUser, DeleteUser, GetMe, GetUser, GetUsers, UpdateUser} from './user';
 import {
     CreateEdgeAppInstance, GetConfiguredEdgeApps,
     GetEdgeApp,
@@ -44,27 +44,27 @@ import {
     GetEdgeApps,
     GetEdgeAppVersions,
     UpdateEdgeAppInstance
-} from "./edge_app";
-import {Login, Login2FA, Logout, ResetPassword, ResetPasswordUpdate} from "./auth";
-import {connectionOptions} from "./util";
-import {CreateRole, DeleteRole, GetRole, GetRoles, UpdateRole} from "./role";
-import {GetPermissions} from "./permission";
-import {CreateToken, DeleteToken, GetTokens} from "./token";
-import {MQTTConnect, MQTTDisconnect, Subscribe, Unsubscribe, Publish} from "./mqtt"
+} from './edge_app';
+import {Login, Login2FA, Logout, ResetPassword, ResetPasswordUpdate} from './auth';
+import {connectionOptions} from './util';
+import {CreateRole, DeleteRole, GetRole, GetRoles, UpdateRole} from './role';
+import {GetPermissions} from './permission';
+import {CreateToken, DeleteToken, GetTokens} from './token';
+import {MQTTConnect, MQTTDisconnect, Subscribe, Unsubscribe, Publish} from './mqtt';
 import {
     CreateGatewayCredentials,
     GetGatewayRegistrationPolicy,
     ResetGatewayPassword,
     SetGatewayRegistrationPolicy
-} from "./gateway";
+} from './gateway';
 import {
     CreateUserRegistrationPolicy,
     GetUserRegistrationPolicies,
     GetUserRegistrationPolicy,
     UpdateUserRegistrationPolicy,
     DeleteUserRegistrationPolicy
-} from "./user_registration_policy";
-import Permissions from "./permissions";
+} from './user_registration_policy';
+import Permissions from './permissions';
 import {
     CreateFileInstallation,
     CreateFileOrganization,
@@ -76,19 +76,15 @@ import {
     GetFilesOrganization,
     UpdateFileInstallation,
     UpdateFileOrganization
-} from "./file";
-import {GetTrace} from "./trace";
+} from './file';
+import {GetTrace} from './trace';
 
-export const LogOrder = {
-    Desc: 'desc', Asc: 'asc'
-}
-
-class LynxClient {
-    constructor(base, apiKey, mqttOpts) {
-        connectionOptions.baseURL = base.replace(/\/$/, "");
+export class LynxClient {
+    constructor(base: string, apiKey: string, mqttOpts: any) {
+        connectionOptions.baseURL = base.replace(/\/$/, '');
         connectionOptions.apiKey = apiKey;
         if (mqttOpts) {
-            mqttOpts.username = "apikey";
+            mqttOpts.username = 'apikey';
             mqttOpts.password = apiKey;
             connectionOptions.mqttOpts = mqttOpts;
         }
