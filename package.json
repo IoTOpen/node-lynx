@@ -23,18 +23,18 @@
   "license": "Apache 2.0",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^22.0.2",
-    "@rollup/plugin-node-resolve": "^14.0.1",
+    "@rollup/plugin-node-resolve": "^14.1.0",
     "@rollup/plugin-typescript": "^8.5.0",
     "@types/base-64": "^1.0.0",
     "@types/mqtt": "^2.5.0",
-    "@typescript-eslint/eslint-plugin": "^5.36.2",
-    "@typescript-eslint/parser": "^5.36.2",
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
+    "@typescript-eslint/parser": "^5.39.0",
     "eslint": "^7.32.0",
     "mqtt": "^4.3.7",
-    "rollup": "^2.79.0",
+    "rollup": "^2.79.1",
     "rollup-plugin-dts": "^4.2.2",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-terser": "^7.0.2",
-    "typescript": "^4.8.3"
+    "typescript": "^4.8.4"
   }
 }
