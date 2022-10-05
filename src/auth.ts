@@ -1,5 +1,4 @@
 import {connectionOptions, Endpoints, request} from './util';
-import base64 from 'base-64';
 import {OKResponse, RequestResponse} from './types';
 
 export type LoginResult = {
@@ -9,7 +8,7 @@ export type LoginResult = {
 
 export const Login = (username: string, password: string): Promise<RequestResponse<LoginResult>> => {
     const headers = {
-        'Authorization': 'Basic ' + base64.encode(username + ':' + password)
+        'Authorization': Buffer.from('Basic ' + (username + ':' + password)).toString('base64')
     };
     const config = {
         method: 'POST', headers: headers
