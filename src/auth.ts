@@ -8,7 +8,7 @@ export type LoginResult = {
 
 export const Login = (username: string, password: string): Promise<RequestResponse<LoginResult>> => {
     const headers = {
-        'Authorization': Buffer.from('Basic ' + (username + ':' + password)).toString('base64')
+        'Authorization': 'Basic ' + btoa (username + ':' + password)
     };
     const config = {
         method: 'POST', headers: headers
