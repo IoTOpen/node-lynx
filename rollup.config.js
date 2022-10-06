@@ -8,7 +8,7 @@ import * as packageJson from './package.json';
 
 export default [
     {
-        input: 'src/client.ts',
+        input: 'src/index.ts',
         output: [
             {
                 file: packageJson.main,
