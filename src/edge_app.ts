@@ -27,7 +27,7 @@ export const GetEdgeApp = (id: number) => request<EdgeApp>(Endpoints.EdgeApp + '
 
 export const GetEdgeAppVersions = (appId: number, untagged?: boolean) => {
     const qs = untagged ? '?untagged=' + untagged : '';
-    return request(Endpoints.EdgeApp + '/' + appId + '/versions' + qs, {});
+    return request(Endpoints.EdgeApp + '/' + appId + '/version' + qs, {});
 };
 
 export const GetEdgeAppConfigOptions = (id: number, version: string) => {
