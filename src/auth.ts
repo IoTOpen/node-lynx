@@ -54,7 +54,7 @@ export const ResetPassword = (email: string): Promise<RequestResponse<OKResponse
     const config = {
         method: 'POST', body: JSON.stringify(data)
     };
-    return fetch(Endpoints.Auth + '/reset_password', config)
+    return fetch(connectionOptions.baseURL + '/reset_password', config)
         .then(async res => {
             if (res.status !== 200) {
                 const error = await res.json();
@@ -74,7 +74,7 @@ export const ResetPasswordUpdate = (token: string, password: string): Promise<Re
             'X-API-Key': token
         }
     };
-    return fetch(Endpoints.Auth + '/reset_password', config)
+    return fetch(connectionOptions.baseURL + Endpoints.Auth + '/reset_password', config)
         .then(async res => {
             if (res.status !== 200) {
                 const error = await res.json();
