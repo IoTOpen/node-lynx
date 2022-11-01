@@ -60,7 +60,7 @@ export const UpdateEdgeAppInstance = (instanceData: EdgeAppInstance) => request(
     });
 
 export const RemoveEdgeAppInstance = (installationId: number, instanceId: number) => request<OKResponse>(
-    Endpoints.EdgeApp + '/configured' + installationId + '/' + instanceId, {
+    Endpoints.EdgeApp + '/configured/' + installationId + '/' + instanceId, {
         method: 'DELETE'
     }
 );
