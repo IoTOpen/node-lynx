@@ -1,5 +1,5 @@
 import {Endpoints, request} from './util';
-import {CreationDate, Identifier} from './types';
+import {CreationDate, Identifier, OKResponse} from './types';
 
 export type Publisher = {
     id: number
@@ -58,3 +58,9 @@ export const UpdateEdgeAppInstance = (instanceData: EdgeAppInstance) => request(
     Endpoints.EdgeApp + '/configured/' + instanceData.installation_id + '/' + instanceData.id, {
         method: 'PUT', body: JSON.stringify(instanceData)
     });
+
+export const RemoveEdgeAppInstance = (installationId: number, instanceId: number) => request<OKResponse>(
+    Endpoints.EdgeApp + '/configured/' + installationId + '/' + instanceId, {
+        method: 'DELETE'
+    }
+);
