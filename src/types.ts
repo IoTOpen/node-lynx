@@ -1,5 +1,4 @@
-
-export type Metadata = {[key: string]: string}
+export type Metadata = { [key: string]: string }
 
 export type Address = {
     address: string
@@ -28,8 +27,14 @@ export type ErrorResponse = {
     message: string
     status: number
 }
+
 export type OKResponse = {
     message: string
 }
 
 export type RequestResponse<T> = T | Response | ErrorResponse
+
+export type MetaObject = {
+    value: string
+    protected: boolean
+}
