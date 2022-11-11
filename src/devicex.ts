@@ -35,12 +35,12 @@ export const DeleteDevice = (dev: Devicex) => request<OKResponse>(
     });
 
 export const GetDeviceMeta = (installationID: number, deviceID: number, key: string) => request<MetaObject>(
-    Endpoints.DeviceX + '/' + installationID + '/' + deviceID + '/meta/' + key, {});
+    Endpoints.DeviceX + '/' + installationID + '/' + deviceID + '/meta/' + encodeURIComponent(key), {});
 
 export const CreateDeviceMeta = (installationID: number, deviceID: number, key: string, data: MetaObject, silent = false) => {
     const params: { [key: string]: string } = {silent: String(silent)};
     const qs = '?' + new URLSearchParams(params).toString();
-    const path = Endpoints.DeviceX + '/' + installationID + '/' + deviceID + '/meta/' + key + qs;
+    const path = Endpoints.DeviceX + '/' + installationID + '/' + deviceID + '/meta/' + encodeURIComponent(key) + qs;
 
     return request<MetaObject>(path, {
         method: 'POST', body: JSON.stringify(data)
@@ -50,7 +50,7 @@ export const CreateDeviceMeta = (installationID: number, deviceID: number, key: 
 export const UpdateDeviceMeta = (installationID: number, deviceID: number, key: string, data: MetaObject, silent = false) => {
     const params: { [key: string]: string } = {silent: String(silent)};
     const qs = '?' + new URLSearchParams(params).toString();
-    const path = Endpoints.DeviceX + '/' + installationID + '/' + deviceID + '/meta/' + key + qs;
+    const path = Endpoints.DeviceX + '/' + installationID + '/' + deviceID + '/meta/' + encodeURIComponent(key) + qs;
 
     return request<MetaObject>(path, {
         method: 'PUT', body: JSON.stringify(data)
@@ -60,7 +60,7 @@ export const UpdateDeviceMeta = (installationID: number, deviceID: number, key: 
 export const DeleteDeviceMeta = (installationID: number, deviceID: number, key: string, silent = false) => {
     const params: { [key: string]: string } = {silent: String(silent)};
     const qs = '?' + new URLSearchParams(params).toString();
-    const path = Endpoints.DeviceX + '/' + installationID + '/' + deviceID + '/meta/' + key + qs;
+    const path = Endpoints.DeviceX + '/' + installationID + '/' + deviceID + '/meta/' + encodeURIComponent(key) + qs;
 
     return request<MetaObject>(path, {
         method: 'DELETE'

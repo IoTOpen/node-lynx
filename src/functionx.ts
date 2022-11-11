@@ -35,12 +35,12 @@ export const DeleteFunction = (func: Functionx) => request<OKResponse>(
     });
 
 export const GetFunctionMeta = (installationID: number, functionID: number, key: string) => request<MetaObject>(
-    Endpoints.FunctionX + '/' + installationID + '/' + functionID + '/meta/' + key, {});
+    Endpoints.FunctionX + '/' + installationID + '/' + functionID + '/meta/' + encodeURIComponent(key), {});
 
 export const CreateFunctionMeta = (installationID: number, functionID: number, key: string, data: MetaObject, silent = false) => {
     const params: { [key: string]: string } = {silent: String(silent)};
     const qs = '?' + new URLSearchParams(params).toString();
-    const path = Endpoints.FunctionX + '/' + installationID + '/' + functionID + '/meta/' + key + qs;
+    const path = Endpoints.FunctionX + '/' + installationID + '/' + functionID + '/meta/' + encodeURIComponent(key) + qs;
 
     return request<MetaObject>(path, {
         method: 'POST', body: JSON.stringify(data)
@@ -50,7 +50,7 @@ export const CreateFunctionMeta = (installationID: number, functionID: number, k
 export const UpdateFunctionMeta = (installationID: number, functionID: number, key: string, data: MetaObject, silent = false) => {
     const params: { [key: string]: string } = {silent: String(silent)};
     const qs = '?' + new URLSearchParams(params).toString();
-    const path = Endpoints.FunctionX + '/' + installationID + '/' + functionID + '/meta/' + key + qs;
+    const path = Endpoints.FunctionX + '/' + installationID + '/' + functionID + '/meta/' + encodeURIComponent(key) + qs;
 
     return request<MetaObject>(path, {
         method: 'PUT', body: JSON.stringify(data)
@@ -60,7 +60,7 @@ export const UpdateFunctionMeta = (installationID: number, functionID: number, k
 export const DeleteFunctionMeta = (installationID: number, functionID: number, key: string, silent = false) => {
     const params: { [key: string]: string } = {silent: String(silent)};
     const qs = '?' + new URLSearchParams(params).toString();
-    const path = Endpoints.FunctionX + '/' + installationID + '/' + functionID + '/meta/' + key + qs;
+    const path = Endpoints.FunctionX + '/' + installationID + '/' + functionID + '/meta/' + encodeURIComponent(key) + qs;
 
     return request<MetaObject>(path, {
         method: 'DELETE'
