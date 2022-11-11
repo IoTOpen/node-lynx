@@ -1,5 +1,21 @@
-import {CreateFunction, DeleteFunction, GetFunction, GetFunctions, UpdateFunction} from './functionx';
-import {CreateDevice, DeleteDevice, GetDevice, GetDevices, UpdateDevice} from './devicex';
+import {
+    CreateFunction,
+    CreateFunctionMeta,
+    DeleteFunction, DeleteFunctionMeta,
+    GetFunction,
+    GetFunctionMeta,
+    GetFunctions,
+    UpdateFunction, UpdateFunctionMeta
+} from './functionx';
+import {
+    CreateDevice,
+    CreateDeviceMeta,
+    DeleteDevice, DeleteDeviceMeta,
+    GetDevice,
+    GetDeviceMeta,
+    GetDevices,
+    UpdateDevice, UpdateDeviceMeta
+} from './devicex';
 import {
     CreateInstallation,
     DeleteInstallation,
@@ -98,12 +114,20 @@ export class LynxClient {
     createFunction = CreateFunction;
     updateFunction = UpdateFunction;
     deleteFunction = DeleteFunction;
+    getFunctionMeta = GetFunctionMeta;
+    createFunctionMeta = CreateFunctionMeta;
+    updateFunctionMeta = UpdateFunctionMeta;
+    deleteFunctionMeta = DeleteFunctionMeta;
 
     getDevices = GetDevices;
     getDevice = GetDevice;
     createDevice = CreateDevice;
     updateDevice = UpdateDevice;
     deleteDevice = DeleteDevice;
+    getDeviceMeta = GetDeviceMeta;
+    createDeviceMeta = CreateDeviceMeta;
+    updateDeviceMeta = UpdateDeviceMeta;
+    deleteDeviceMeta = DeleteDeviceMeta;
 
     getInstallations = GetInstallations;
     getInstallationRow = GetInstallationRow;
