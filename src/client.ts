@@ -59,7 +59,8 @@ import {
     GetEdgeAppInstance,
     GetEdgeApps,
     GetEdgeAppVersions,
-    UpdateEdgeAppInstance
+    UpdateEdgeAppInstance,
+	RemoveEdgeAppInstance
 } from './edge_app';
 import {Login, Login2FA, Logout, ResetPassword, ResetPasswordUpdate} from './auth';
 import {connectionOptions} from './util';
@@ -188,6 +189,7 @@ export class LynxClient {
     getEdgeAppInstance = GetEdgeAppInstance;
     createEdgeAppInstance = CreateEdgeAppInstance;
     updateEdgeAppInstance = UpdateEdgeAppInstance;
+	removeEdgeAppInstance = RemoveEdgeAppInstance;
 
     getRoles = GetRoles;
     getRole = GetRole;
