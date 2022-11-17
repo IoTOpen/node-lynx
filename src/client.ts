@@ -93,6 +93,7 @@ import {
     UpdateFileOrganization
 } from './file';
 import {GetTrace} from './trace';
+import {Register} from './register';
 
 export class LynxClient {
     constructor(base: string, apiKey: string) {
@@ -227,4 +228,6 @@ export class LynxClient {
     downloadFile = DownloadFile;
 
     getTrace = GetTrace;
+
+    register = Register;
 }
