@@ -8,7 +8,9 @@ export type UserRegistration = {
     address?: Address
 }
 
-export const Register = (registrationData: UserRegistration) => request<OKResponse>(
-    Endpoints.User + '/register', {
-        method: 'POST', body: JSON.stringify(registrationData)
-    });
+export function Register(registrationData: UserRegistration) {
+    return request<OKResponse>(
+        `${Endpoints.User}/register`, {
+            method: 'POST', body: JSON.stringify(registrationData)
+        });
+}
