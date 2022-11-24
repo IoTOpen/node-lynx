@@ -24,7 +24,7 @@ export type Installation = EmptyInstallation & Identifier & { client_id: number,
 
 export function GetInstallations(this: LynxClient, assignedOnly?: boolean) {
     const qs = assignedOnly ? `?assigned=${assignedOnly}` : '';
-    return this.requestJson<InstallationInfo>(`${Endpoints.InstallationInfo}${qs}`);
+    return this.requestJson<InstallationInfo[]>(`${Endpoints.InstallationInfo}${qs}`);
 }
 
 export function GetInstallationRow(this: LynxClient, installationId: number) {
