@@ -24,13 +24,19 @@ export type Token = EmptyToken & Identifier & {
     agent: string
 }
 
-export const GetTokens = () => request<Token[]>(Endpoints.Token, {});
+export function GetTokens () {
+    return request<Token[]>(Endpoints.Token, {});
+}
 
-export const DeleteToken = (token: Token) => request<OKResponse>(Endpoints.Token + '/' + token.id, {
-    method: 'DELETE',
-});
+export function DeleteToken(token: Token) {
+    return request<OKResponse>(`${Endpoints.Token}/${token.id}`, {
+        method: 'DELETE',
+    });
+}
 
-export const CreateToken = (token: EmptyToken) => request<Token>(Endpoints.Token, {
-    method: 'POST',
-    body: JSON.stringify(token),
-});
+export function CreateToken(token: EmptyToken) {
+    return request<Token>(Endpoints.Token, {
+        method: 'POST',
+        body: JSON.stringify(token),
+    });
+}
