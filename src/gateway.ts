@@ -18,20 +18,29 @@ export type GatewayRegistrationPolicy = {
     default_organization_id: 10
 }
 
-export const GetGatewayRegistrationPolicy = () => request<GatewayRegistrationPolicy>(
-    `${Endpoints.Gateway}/registration/policy`, {});
-export const SetGatewayRegistrationPolicy = (policy: GatewayRegistrationPolicy) => request<GatewayRegistrationPolicy>(
-    `${Endpoints.Gateway}/registration/policy`, {
-        method: 'PUT',
-        body: JSON.stringify(policy),
-    });
+export function GetGatewayRegistrationPolicy() {
+    return request<GatewayRegistrationPolicy>(
+        `${Endpoints.Gateway}/registration/policy`, {});
+}
 
-export const ResetGatewayPassword = (installationId: number) => request<OKResponse>(
-    `${Endpoints.Gateway}/reset/${installationId}`, {
-        method: 'POST',
-    });
+export function SetGatewayRegistrationPolicy(policy: GatewayRegistrationPolicy) {
+    return request<GatewayRegistrationPolicy>(
+        `${Endpoints.Gateway}/registration/policy`, {
+            method: 'PUT',
+            body: JSON.stringify(policy),
+        });
+}
 
-export const CreateGatewayCredentials = (installationId: number) => request<GatewayInformation>(
-    `${Endpoints.Gateway}/credentials/${installationId}`, {
-        method: 'POST'
-    });
+export function ResetGatewayPassword(installationId: number) {
+    return request<OKResponse>(
+        `${Endpoints.Gateway}/reset/${installationId}`, {
+            method: 'POST',
+        });
+}
+
+export function CreateGatewayCredentials(installationId: number) {
+    return request<GatewayInformation>(
+        `${Endpoints.Gateway}/credentials/${installationId}`, {
+            method: 'POST'
+        });
+}
