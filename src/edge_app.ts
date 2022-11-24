@@ -1,5 +1,6 @@
-import {Endpoints, request} from './util';
+import {Endpoints} from './util';
 import {CreationDate, Identifier, OKResponse} from './types';
+import {LynxClient} from './client';
 
 export type Publisher = {
     id: number
@@ -21,23 +22,31 @@ export type EmptyEdgeApp = {
 
 export type EdgeApp = EmptyEdgeApp & Identifier & CreationDate
 
-export const GetEdgeApps = () => request<EdgeApp[]>(Endpoints.EdgeApp, {});
+export function GetEdgeApps(this: LynxClient) {
+    return this.request<EdgeApp[]>(Endpoints.EdgeApp, {});
+}
 
-export const GetEdgeApp = (id: number) => request<EdgeApp>(Endpoints.EdgeApp + '/' + id, {});
+export function GetEdgeApp(this: LynxClient, id: number) {
+    return this.request<EdgeApp>(`${Endpoints.EdgeApp}/${id}`, {});
+}
 
-export const GetEdgeAppVersions = (appId: number, untagged?: boolean) => {
-    const qs = untagged ? '?untagged=' + untagged : '';
-    return request(Endpoints.EdgeApp + '/' + appId + '/version' + qs, {});
-};
+export function GetEdgeAppVersions(this: LynxClient, appId: number, untagged?: boolean) {
+    const qs = untagged ? `?untagged=${untagged}` : '';
+    return this.request(`${Endpoints.EdgeApp}/${appId}/version${qs}`, {});
+}
 
-export const GetEdgeAppConfigOptions = (id: number, version: string) => {
-    const qs = '?version=' + version;
-    return request<any>(Endpoints.EdgeApp + '/' + id + '/configure' + qs, {});
-};
+export function GetEdgeAppConfigOptions(this: LynxClient, id: number, version: string) {
+    const qs = `?version=${version}`;
+    return this.request<any>(`${Endpoints.EdgeApp}/${id}/configure${qs}`, {});
+}
 
-export const GetConfiguredEdgeApps = (installationId: number) => request(Endpoints.EdgeApp + '/configured/' + installationId, {});
+export function GetConfiguredEdgeApps(this: LynxClient, installationId: number) {
+    return this.request(`${Endpoints.EdgeApp}/configured/${installationId}`, {});
+}
 
-export const GetEdgeAppInstance = (installationId: number, instanceId: number) => request(Endpoints.EdgeApp + '/configured/' + installationId + '/' + instanceId, {});
+export function GetEdgeAppInstance(this: LynxClient, installationId: number, instanceId: number) {
+    return this.request(`${Endpoints.EdgeApp}/configured/${installationId}/${instanceId}`, {});
+}
 
 export type EmptyEdgeAppInstance = {
     app_id: number
@@ -49,18 +58,24 @@ export type EmptyEdgeAppInstance = {
 
 export type EdgeAppInstance = EmptyEdgeAppInstance & Identifier & CreationDate
 
-export const CreateEdgeAppInstance = (instanceData: EmptyEdgeAppInstance) => request(
-    Endpoints.EdgeApp + '/configured/' + instanceData.installation_id, {
-        method: 'POST', body: JSON.stringify(instanceData)
-    });
+export function CreateEdgeAppInstance(this: LynxClient, instanceData: EmptyEdgeAppInstance) {
+    return this.request(
+        `${Endpoints.EdgeApp}/configured/${instanceData.installation_id}`, {
+            method: 'POST', body: JSON.stringify(instanceData)
+        });
+}
 
-export const UpdateEdgeAppInstance = (instanceData: EdgeAppInstance) => request(
-    Endpoints.EdgeApp + '/configured/' + instanceData.installation_id + '/' + instanceData.id, {
-        method: 'PUT', body: JSON.stringify(instanceData)
-    });
+export function UpdateEdgeAppInstance(this: LynxClient, instanceData: EdgeAppInstance) {
+    return this.request(
+        `${Endpoints.EdgeApp}/configured/${instanceData.installation_id}/${instanceData.id}`, {
+            method: 'PUT', body: JSON.stringify(instanceData)
+        });
+}
 
-export const RemoveEdgeAppInstance = (installationId: number, instanceId: number) => request<OKResponse>(
-    Endpoints.EdgeApp + '/configured/' + installationId + '/' + instanceId, {
-        method: 'DELETE'
-    }
-);
+export function RemoveEdgeAppInstance(this: LynxClient, installationId: number, instanceId: number) {
+    return this.request<OKResponse>(
+        `${Endpoints.EdgeApp}/configured/${installationId}/${instanceId}`, {
+            method: 'DELETE'
+        }
+    );
+}

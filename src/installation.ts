@@ -1,5 +1,6 @@
-import {Endpoints, request} from './util';
+import {Endpoints} from './util';
 import {Identifier, Metadata, OKResponse} from './types';
+import {LynxClient} from './client';
 
 export type InstallationInfo = {
     id: number
@@ -21,22 +22,23 @@ export type EmptyInstallation = {
 
 export type Installation = EmptyInstallation & Identifier & { client_id: number, created: number }
 
-export const GetInstallations = (assignedOnly?: boolean) => {
-    const qs = assignedOnly ? '?assigned=' + assignedOnly : '';
-    return request<InstallationInfo>(Endpoints.InstallationInfo + qs, {});
-};
+export function GetInstallations(this: LynxClient, assignedOnly?: boolean) {
+    const qs = assignedOnly ? `?assigned=${assignedOnly}` : '';
+    return this.request<InstallationInfo>(`${Endpoints.InstallationInfo}${qs}`, {});
+}
 
-export const GetInstallationRow = (installationId: number) => request<Installation>(
-    Endpoints.Installation + '/' + installationId, {});
+export function GetInstallationRow(this: LynxClient, installationId: number) {
+    return this.request<Installation>(
+        `${Endpoints.Installation}/${installationId}`, {});
+}
 
-export const ListInstallations = (filter?: Metadata) => {
-    const qs = filter ? '?' + new URLSearchParams(filter).toString() : '';
-    const url = Endpoints.Installation + qs;
-    return request<Installation[]>(url, {});
-};
+export function ListInstallations(this: LynxClient, filter?: Metadata) {
+    const qs = filter ? `?${new URLSearchParams(filter).toString()}` : '';
+    return this.request<Installation[]>(`${Endpoints.Installation}${qs}`, {});
+}
 
-export const GetInstallation = (id: number) => {
-    return request<InstallationInfo[]>(Endpoints.InstallationInfo + '?assigned=false', {})
+export function GetInstallation(this: LynxClient, id: number) {
+    return this.request<InstallationInfo[]>(`${Endpoints.InstallationInfo}?assigned=false`, {})
         .then((res) => {
             const installations = res as InstallationInfo[];
             for (const installation of installations) {
@@ -46,24 +48,30 @@ export const GetInstallation = (id: number) => {
             }
             return null;
         });
-};
+}
 
-export const GetInstallationByClientId = (clientId: number, assignedOnly?: boolean) => {
-    const qs = assignedOnly ? '?assigned=' + assignedOnly : '';
-    return request<InstallationInfo>(Endpoints.InstallationInfo + '/' + clientId + qs, {});
-};
+export function GetInstallationByClientId(this: LynxClient, clientId: number, assignedOnly?: boolean) {
+    const qs = assignedOnly ? `?assigned=${assignedOnly}` : '';
+    return this.request<InstallationInfo>(`${Endpoints.InstallationInfo}/${clientId}${qs}`, {});
+}
 
-export const CreateInstallation = (installation: EmptyInstallation) => request<Installation>(
-    Endpoints.Installation, {
-        method: 'POST', body: JSON.stringify(installation)
-    });
+export function CreateInstallation(this: LynxClient, installation: EmptyInstallation) {
+    return this.request<Installation>(
+        Endpoints.Installation, {
+            method: 'POST', body: JSON.stringify(installation)
+        });
+}
 
-export const UpdateInstallation = (installation: Installation) => request<Installation>(
-    Endpoints.Installation + '/' + installation.id, {
-        method: 'PUT', body: JSON.stringify(installation)
-    });
+export function UpdateInstallation(this: LynxClient, installation: Installation) {
+    return this.request<Installation>(
+        `${Endpoints.Installation}/${installation.id}`, {
+            method: 'PUT', body: JSON.stringify(installation)
+        });
+}
 
-export const DeleteInstallation = (installation: Installation) => request<OKResponse>(
-    Endpoints.Installation + '/' + installation.id, {
-        method: 'DELETE'
-    });
+export function DeleteInstallation(this: LynxClient, installation: Installation) {
+    return this.request<OKResponse>(
+        `${Endpoints.Installation}/${installation.id}`, {
+            method: 'DELETE'
+        });
+}

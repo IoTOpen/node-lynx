@@ -1,5 +1,6 @@
-import {Endpoints, request} from './util';
+import {Endpoints} from './util';
 import {CreationDate, Identifier, OKResponse} from './types';
+import {LynxClient} from './client';
 
 export type EmptyFile = {
     hash: string
@@ -11,66 +12,66 @@ export type EmptyFile = {
 
 export type File = EmptyFile & Identifier & CreationDate
 
-export const GetFilesInstallation = (installationId: number) => {
-    return request<File[]>(Endpoints.File + '/installation/' + installationId, {});
-};
+export function GetFilesInstallation(this: LynxClient, installationId: number) {
+    return this.request<File[]>(`${Endpoints.File}/installation/${installationId}`, {});
+}
 
-export const GetFileInstallation = (installationId: number, fileId: number) => {
-    return request<File>(Endpoints.File + '/installation/' + installationId + '/' + fileId, {});
-};
+export function GetFileInstallation(this: LynxClient, installationId: number, fileId: number) {
+    return this.request<File>(`${Endpoints.File}/installation/${installationId}/${fileId}`, {});
+}
 
-export const CreateFileInstallation = (installationId: number, file: Blob) => {
+export function CreateFileInstallation(this: LynxClient, installationId: number, file: Blob) {
     const formData = new FormData();
     formData.append('file', file);
-    return request<File>(Endpoints.File + '/installation/' + installationId, {
+    return this.request<File>(`${Endpoints.File}/installation/${installationId}`, {
         method: 'POST', body: formData
     });
-};
+}
 
-export const UpdateFileInstallation = (installationId: number, fileId: number, file: Blob) => {
+export function UpdateFileInstallation(this: LynxClient, installationId: number, fileId: number, file: Blob){
     const formData = new FormData();
     formData.append('file', file);
-    return request<File>(Endpoints.File + '/installation/' + installationId + '/' + fileId, {
+    return this.request<File>(`${Endpoints.File}/installation/${installationId}/${fileId}`, {
         method: 'PUT', body: formData
     });
-};
+}
 
-export const DeleteFileInstallation = (installationId: number, fileId: number) => {
-    return request<OKResponse>(Endpoints.File + '/installation/' + installationId + '/' + fileId, {
+export function DeleteFileInstallation (this: LynxClient, installationId: number, fileId: number){
+    return this.request<OKResponse>(`${Endpoints.File}/installation/${installationId}/${fileId}`, {
         method: 'DELETE'
     });
-};
+}
 
-export const GetFilesOrganization = (organizationId: number) => {
-    return request<File[]>(Endpoints.File + '/organization/' + organizationId, {});
-};
+export function GetFilesOrganization(this: LynxClient, organizationId: number){
+    return this.request<File[]>(`${Endpoints.File}/organization/${organizationId}`, {});
+}
 
-export const GetFileOrganization = (organizationId: number, fileId: number) => {
-    return request<File>(Endpoints.File + '/organization/' + organizationId + '/' + fileId, {});
-};
+export function GetFileOrganization(this: LynxClient, organizationId: number, fileId: number){
+    return this.request<File>(`${Endpoints.File}/organization/${organizationId}/${fileId}`, {});
+}
 
-export const CreateFileOrganization = (organizationId: number, file: Blob) => {
+export function CreateFileOrganization(this: LynxClient, organizationId: number, file: Blob){
     const formData = new FormData();
     formData.append('file', file);
-    return request<File>(Endpoints.File + '/organization/' + organizationId, {
+    return this.request<File>(`${Endpoints.File}/organization/${organizationId}`, {
         method: 'POST', body: formData
     });
-};
+}
 
-export const UpdateFileOrganization = (organizationId: number, fileId: number, file: Blob) => {
+export function UpdateFileOrganization(this: LynxClient, organizationId: number, fileId: number, file: Blob){
     const formData = new FormData();
     formData.append('file', file);
-    return request<File>(Endpoints.File + '/organization/' + organizationId + '/' + fileId, {
+    return this.request<File>(`${Endpoints.File}/organization/${organizationId}/${fileId}`, {
         method: 'PUT', body: formData
     });
-};
+}
 
-export const DeleteFileOrganization = (organizationId: number, fileId: number) => {
-    return request<OKResponse>(Endpoints.File + '/organization/' + organizationId + '/' + fileId, {
+export function DeleteFileOrganization(this: LynxClient, organizationId: number, fileId: number){
+    return this.request<OKResponse>(`${Endpoints.File}/organization/${organizationId}/${fileId}`, {
         method: 'DELETE'
     });
-};
+}
 
-export const DownloadFile = (hash: string) => {
-    return request(Endpoints.File + '/download/' + hash, {});
-};
+export function DownloadFile(this: LynxClient, hash: string){
+    return this.request(`${Endpoints.File}/download/${hash}`, {});
+}

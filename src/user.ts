@@ -1,5 +1,6 @@
-import {Endpoints, request} from './util';
+import {Endpoints} from './util';
 import {Address, Identifier, Metadata, OKResponse} from './types';
+import {LynxClient} from './client';
 
 export type EmptyUser = {
     email: number
@@ -19,33 +20,45 @@ export type EmptyUser = {
 
 export type User = EmptyUser & Identifier
 
-export const GetMe = () => request<User>(Endpoints.User + '/me', {});
+export function GetMe(this: LynxClient) {
+    return this.request<User>(`${Endpoints.User}/me`, {});
+}
 
-export const GetUser = (id: number) => request<User>(Endpoints.User + '/' + id, {});
+export function GetUser(this: LynxClient, id: number) {
+    return this.request<User>(`${Endpoints.User}/${id}`, {});
+}
 
-export const GetUsers = (filter?: Metadata) => {
-    const qs = filter ? '?' + new URLSearchParams(filter).toString() : '';
-    return request<User[]>(Endpoints.User + qs, {});
-};
+export function GetUsers(this: LynxClient, filter?: Metadata) {
+    const qs = filter ? `?${new URLSearchParams(filter).toString()}` : '';
+    return this.request<User[]>(`${Endpoints.User}${qs}`, {});
+}
 
-export const CreateUser = (user: EmptyUser) => request<User>(Endpoints.User, {
-    method: 'POST', body: JSON.stringify(user)
-});
+export function CreateUser(this: LynxClient, user: EmptyUser) {
+    return this.request<User>(Endpoints.User, {
+        method: 'POST', body: JSON.stringify(user)
+    });
+}
 
-export const UpdateUser = (user: User) => request<User>(Endpoints.User + '/' + user.id, {
-    method: 'PUT', body: JSON.stringify(user)
-});
+export function UpdateUser(this: LynxClient, user: User) {
+    return this.request<User>(`${Endpoints.User}/${user.id}`, {
+        method: 'PUT', body: JSON.stringify(user)
+    });
+}
 
-export const DeleteUser = (user: User) => request<OKResponse>(Endpoints.User + '/' + user.id, {
-    method: 'DELETE'
-});
+export function DeleteUser(this: LynxClient, user: User) {
+    return this.request<OKResponse>(`${Endpoints.User}/${user.id}`, {
+        method: 'DELETE'
+    });
+}
 
 export type ChangePasswordData = {
     current_password: string
     new_password: string
 }
 
-export const ChangePassword = (passwordData: ChangePasswordData) => request<OKResponse>(Endpoints.User + '/password', {
-    method: 'PUT',
-    body: JSON.stringify(passwordData),
-});
+export function ChangePassword(this: LynxClient, passwordData: ChangePasswordData) {
+    return this.request<OKResponse>(`${Endpoints.User}/password`, {
+        method: 'PUT',
+        body: JSON.stringify(passwordData),
+    });
+}

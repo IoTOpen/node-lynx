@@ -1,3 +1,6 @@
-import {Endpoints, request} from './util';
+import {Endpoints} from './util';
+import {LynxClient} from './client';
 
-export const GetPermissions = () => request<{[key: string]: boolean}>(Endpoints.Permission, {});
+export function GetPermissions (this: LynxClient) {
+    return this.request<{[key: string]: boolean}>(Endpoints.Permission, {});
+}

@@ -1,5 +1,6 @@
-import {Endpoints, request} from './util';
+import {Endpoints} from './util';
 import {Identifier, OKResponse} from './types';
+import {LynxClient} from './client';
 
 export type EmptyUserRegistrationPolicy = {
     email_pattern: string
@@ -10,24 +11,33 @@ export type EmptyUserRegistrationPolicy = {
 
 export type UserRegistrationPolicy = EmptyUserRegistrationPolicy & Identifier
 
-export const CreateUserRegistrationPolicy = (policy: UserRegistrationPolicy) => request<UserRegistrationPolicy>(
-    Endpoints.UserRegistrationPolicy, {
-        method: 'POST', body: JSON.stringify(policy),
-    });
+export function CreateUserRegistrationPolicy(this: LynxClient, policy: UserRegistrationPolicy) {
+    return this.request<UserRegistrationPolicy>(
+        Endpoints.UserRegistrationPolicy, {
+            method: 'POST', body: JSON.stringify(policy),
+        });
+}
 
-export const DeleteUserRegistrationPolicy = (policy: UserRegistrationPolicy) => request<OKResponse>(
-    Endpoints.UserRegistrationPolicy + '/' + policy.id, {
-        method: 'DELETE',
-    });
+export function DeleteUserRegistrationPolicy(this: LynxClient, policy: UserRegistrationPolicy) {
+    return this.request<OKResponse>(
+        `${Endpoints.UserRegistrationPolicy}/${policy.id}`, {
+            method: 'DELETE',
+        });
+}
 
-export const GetUserRegistrationPolicies = () => request<UserRegistrationPolicy[]>(
-    Endpoints.UserRegistrationPolicy, {});
+export function GetUserRegistrationPolicies(this: LynxClient) {
+    return this.request<UserRegistrationPolicy[]>(
+        Endpoints.UserRegistrationPolicy, {});
+}
 
-export const GetUserRegistrationPolicy = (id: number) => request<UserRegistrationPolicy>(
-    Endpoints.UserRegistrationPolicy + '/' + id, {});
+export function GetUserRegistrationPolicy(this: LynxClient, id: number) {
+    return this.request<UserRegistrationPolicy>(
+        `${Endpoints.UserRegistrationPolicy}/${id}`, {});
+}
 
-export const UpdateUserRegistrationPolicy = (policy: UserRegistrationPolicy) => request<UserRegistrationPolicy>(
-    Endpoints.UserRegistrationPolicy + '/' + policy.id, {
-        method: 'PUT', body: JSON.stringify(policy),
-    });
-
+export function UpdateUserRegistrationPolicy(this: LynxClient, policy: UserRegistrationPolicy) {
+    return this.request<UserRegistrationPolicy>(
+        `${Endpoints.UserRegistrationPolicy}/${policy.id}`, {
+            method: 'PUT', body: JSON.stringify(policy),
+        });
+}

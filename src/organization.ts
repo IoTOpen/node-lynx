@@ -1,5 +1,6 @@
-import {Endpoints, request} from './util';
+import {Endpoints} from './util';
 import {Address, Identifier, Metadata, OKResponse} from './types';
+import {LynxClient} from './client';
 
 export type OrganizationChild = {
     id: number
@@ -27,28 +28,36 @@ export type EmptyOrganization = {
 
 export type Organization = EmptyOrganization & Identifier
 
-export const GetOrganizations = (minimal?: boolean) => {
+export function GetOrganizations(this: LynxClient, minimal?: boolean) {
     if (minimal) {
-        const qs = '?minimal=' + minimal;
-        return request<OrganizationSimple[]>(Endpoints.Organization + qs, {});
+        const qs = `?minimal=${minimal}`;
+        return this.request<OrganizationSimple[]>(`${Endpoints.Organization}${qs}`, {});
     }
-    return request<Organization[]>(Endpoints.Organization , {});
-};
+    return this.request<Organization[]>(Endpoints.Organization, {});
+}
 
-export const GetOrganization = (id: number) => request<Organization>(
-    Endpoints.Organization + '/' + id, {});
+export function GetOrganization(this: LynxClient, id: number) {
+    return this.request<Organization>(
+        `${Endpoints.Organization}/${id}`, {});
+}
 
-export const CreateOrganization = (org: EmptyOrganization) => request<Organization>(
-    Endpoints.Organization, {
-        method: 'POST', body: JSON.stringify(org)
-    });
+export function CreateOrganization(this: LynxClient, org: EmptyOrganization) {
+    return this.request<Organization>(
+        Endpoints.Organization, {
+            method: 'POST', body: JSON.stringify(org)
+        });
+}
 
-export const UpdateOrganization = (org: Organization) => request<Organization>(
-    Endpoints.Organization + '/' + org.id, {
-        method: 'PUT', body: JSON.stringify(org)
-    });
+export function UpdateOrganization(this: LynxClient, org: Organization) {
+    return this.request<Organization>(
+        `${Endpoints.Organization}/${org.id}`, {
+            method: 'PUT', body: JSON.stringify(org)
+        });
+}
 
-export const DeleteOrganization = (org: Organization) => request<OKResponse>(
-    Endpoints.Organization + '/' + org.id, {
-        method: 'DELETE'
-    });
+export function DeleteOrganization(this: LynxClient, org: Organization) {
+    return this.request<OKResponse>(
+        `${Endpoints.Organization}/${org.id}`, {
+            method: 'DELETE'
+        });
+}

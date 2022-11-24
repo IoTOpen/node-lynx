@@ -1,5 +1,6 @@
-import {Endpoints, request} from './util';
+import {Endpoints} from './util';
 import {OKResponse} from './types';
+import {LynxClient} from './client';
 
 export type GatewayInformation = {
     client_id: number
@@ -18,20 +19,29 @@ export type GatewayRegistrationPolicy = {
     default_organization_id: 10
 }
 
-export const GetGatewayRegistrationPolicy = () => request<GatewayRegistrationPolicy>(
-    `${Endpoints.Gateway}/registration/policy`, {});
-export const SetGatewayRegistrationPolicy = (policy: GatewayRegistrationPolicy) => request<GatewayRegistrationPolicy>(
-    `${Endpoints.Gateway}/registration/policy`, {
-        method: 'PUT',
-        body: JSON.stringify(policy),
-    });
+export function GetGatewayRegistrationPolicy(this: LynxClient) {
+    return this.request<GatewayRegistrationPolicy>(
+        `${Endpoints.Gateway}/registration/policy`, {});
+}
 
-export const ResetGatewayPassword = (installationId: number) => request<OKResponse>(
-    `${Endpoints.Gateway}/reset/${installationId}`, {
-        method: 'POST',
-    });
+export function SetGatewayRegistrationPolicy(this: LynxClient, policy: GatewayRegistrationPolicy) {
+    return this.request<GatewayRegistrationPolicy>(
+        `${Endpoints.Gateway}/registration/policy`, {
+            method: 'PUT',
+            body: JSON.stringify(policy),
+        });
+}
 
-export const CreateGatewayCredentials = (installationId: number) => request<GatewayInformation>(
-    `${Endpoints.Gateway}/credentials/${installationId}`, {
-        method: 'POST'
-    });
+export function ResetGatewayPassword(this: LynxClient, installationId: number) {
+    return this.request<OKResponse>(
+        `${Endpoints.Gateway}/reset/${installationId}`, {
+            method: 'POST',
+        });
+}
+
+export function CreateGatewayCredentials(this: LynxClient, installationId: number) {
+    return this.request<GatewayInformation>(
+        `${Endpoints.Gateway}/credentials/${installationId}`, {
+            method: 'POST'
+        });
+}

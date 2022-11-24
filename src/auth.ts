@@ -1,19 +1,20 @@
-import {connectionOptions, Endpoints, request} from './util';
+import {Endpoints} from './util';
 import {OKResponse, RequestResponse} from './types';
+import {LynxClient} from './client';
 
 export type LoginResult = {
     token: string
     next_step?: string
 }
 
-export const Login = (username: string, password: string): Promise<RequestResponse<LoginResult>> => {
+export function Login (this: LynxClient, username: string, password: string): Promise<RequestResponse<LoginResult>> {
     const headers = {
-        'Authorization': 'Basic ' + btoa (username + ':' + password)
+        'Authorization': `Basic ${btoa (`${username}:${password}`)}`
     };
     const config = {
         method: 'POST', headers: headers
     };
-    return fetch(connectionOptions.baseURL + Endpoints.Auth, config)
+    return fetch(`${this.baseURL}${Endpoints.Auth}`, config)
         .then(async res => {
             if (res.status !== 200) {
                 const error = await res.json();
@@ -22,11 +23,13 @@ export const Login = (username: string, password: string): Promise<RequestRespon
             }
             return res.json();
         });
-};
+}
 
-export const Logout = () => request<RequestResponse<OKResponse>>(Endpoints.Auth, {method: 'DELETE'});
+export function Logout (this: LynxClient) {
+    return this.request<RequestResponse<OKResponse>>(Endpoints.Auth, {method: 'DELETE'});
+}
 
-export const Login2FA = (token: string, challenge: string): Promise<RequestResponse<LoginResult>> => {
+export function Login2FA (this: LynxClient, token: string, challenge: string): Promise<RequestResponse<LoginResult>> {
     const data = {
         challenge: challenge
     };
@@ -36,7 +39,7 @@ export const Login2FA = (token: string, challenge: string): Promise<RequestRespo
         }
     };
 
-    return fetch(connectionOptions.baseURL + Endpoints.Auth, config)
+    return fetch(`${this.baseURL}${Endpoints.Auth}`, config)
         .then(async res => {
             if (res.status !== 200) {
                 const error = await res.json();
@@ -45,16 +48,16 @@ export const Login2FA = (token: string, challenge: string): Promise<RequestRespo
             }
             return res.json();
         });
-};
+}
 
-export const ResetPassword = (email: string): Promise<RequestResponse<OKResponse>> => {
+export function ResetPassword(this: LynxClient, email: string): Promise<RequestResponse<OKResponse>> {
     const data = {
         email: email
     };
     const config = {
         method: 'POST', body: JSON.stringify(data)
     };
-    return fetch(connectionOptions.baseURL +  Endpoints.Auth + '/reset_password', config)
+    return fetch(`${this.baseURL}${Endpoints.Auth}/reset_password`, config)
         .then(async res => {
             if (res.status !== 200) {
                 const error = await res.json();
@@ -63,9 +66,9 @@ export const ResetPassword = (email: string): Promise<RequestResponse<OKResponse
             }
             return res.json();
         });
-};
+}
 
-export const ResetPasswordUpdate = (token: string, password: string): Promise<RequestResponse<OKResponse>> => {
+export function ResetPasswordUpdate(this: LynxClient, token: string, password: string): Promise<RequestResponse<OKResponse>> {
     const data = {
         password: password
     };
@@ -74,7 +77,7 @@ export const ResetPasswordUpdate = (token: string, password: string): Promise<Re
             'X-API-Key': token
         }
     };
-    return fetch(connectionOptions.baseURL + Endpoints.Auth + '/reset_password', config)
+    return fetch(`${this.baseURL}${Endpoints.Auth}/reset_password`, config)
         .then(async res => {
             if (res.status !== 200) {
                 const error = await res.json();
@@ -83,4 +86,4 @@ export const ResetPasswordUpdate = (token: string, password: string): Promise<Re
             }
             return res.json();
         });
-};
+}

@@ -1,5 +1,6 @@
 import {Address, OKResponse} from './types';
-import {Endpoints, request} from './util';
+import {Endpoints} from './util';
+import {LynxClient} from './client';
 
 export type UserRegistration = {
     first_name: string
@@ -8,7 +9,9 @@ export type UserRegistration = {
     address?: Address
 }
 
-export const Register = (registrationData: UserRegistration) => request<OKResponse>(
-    Endpoints.User + '/register', {
-        method: 'POST', body: JSON.stringify(registrationData)
-    });
+export function Register(this: LynxClient, registrationData: UserRegistration) {
+    return this.request<OKResponse>(
+        `${Endpoints.User}/register`, {
+            method: 'POST', body: JSON.stringify(registrationData)
+        });
+}

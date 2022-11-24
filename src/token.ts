@@ -1,5 +1,6 @@
-import {Endpoints, request} from './util';
+import {Endpoints} from './util';
 import {Identifier, OKResponse} from './types';
+import {LynxClient} from './client';
 
 export type TokenAccess = {
     ip: string
@@ -24,13 +25,19 @@ export type Token = EmptyToken & Identifier & {
     agent: string
 }
 
-export const GetTokens = () => request<Token[]>(Endpoints.Token, {});
+export function GetTokens(this: LynxClient) {
+    return this.request<Token[]>(Endpoints.Token, {});
+}
 
-export const DeleteToken = (token: Token) => request<OKResponse>(Endpoints.Token + '/' + token.id, {
-    method: 'DELETE',
-});
+export function DeleteToken(this: LynxClient, token: Token) {
+    return this.request<OKResponse>(`${Endpoints.Token}/${token.id}`, {
+        method: 'DELETE',
+    });
+}
 
-export const CreateToken = (token: EmptyToken) => request<Token>(Endpoints.Token, {
-    method: 'POST',
-    body: JSON.stringify(token),
-});
+export function CreateToken(this: LynxClient, token: EmptyToken) {
+    return this.request<Token>(Endpoints.Token, {
+        method: 'POST',
+        body: JSON.stringify(token),
+    });
+}
