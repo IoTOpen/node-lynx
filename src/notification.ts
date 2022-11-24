@@ -71,34 +71,50 @@ export type EmptyNotificationOutputExecutor = {
 
 type NotificationOutputExecutor = EmptyNotificationOutputExecutor & Identifier
 
-export const GetNotificationOutputExecutors = (installationId: number) => request<NotificationOutputExecutor[]>(
-    Endpoints.Notification + '/' + installationId + '/executor', {});
+export function GetNotificationOutputExecutors(installationId: number) {
+    return request<NotificationOutputExecutor[]>(
+        `${Endpoints.Notification}/${installationId}/executor`, {});
+}
 
-export const GetNotificationOutputExecutor = (installationId: number, id: number) => request<NotificationOutputExecutor>(
-    Endpoints.Notification + '/' + installationId + '/executor/' + id, {});
+export function GetNotificationOutputExecutor(installationId: number, id: number) {
+    return request<NotificationOutputExecutor>(
+        `${Endpoints.Notification}/${installationId}/executor/${id}`, {});
+}
 
-export const SendNotification = (installationId: number, outputId: number, data: any) => request<any>(
-    Endpoints.Notification + '/' + installationId + '/output/' + outputId + '/send', {
-        method: 'POST', body: JSON.stringify(data)
-    });
+export function SendNotification(installationId: number, outputId: number, data: any) {
+    return request<any>(
+        `${Endpoints.Notification}/${installationId}/output/${outputId}/send`, {
+            method: 'POST', body: JSON.stringify(data)
+        });
+}
 
-export const GetNotificationsExecutorsAdmin = () => request<NotificationOutputExecutor[]>(
-    Endpoints.NotificationExecutorAdmin, {});
+export function GetNotificationsExecutorsAdmin () {
+    return request<NotificationOutputExecutor[]>(
+        Endpoints.NotificationExecutorAdmin, {});
+}
 
-export const GetNotificationExecutorAdmin = (outputId: number) => request<NotificationOutputExecutor>(
-    Endpoints.NotificationExecutorAdmin + '/' + outputId, {});
+export function GetNotificationExecutorAdmin(outputId: number) {
+    return request<NotificationOutputExecutor>(
+        `${Endpoints.NotificationExecutorAdmin}/${outputId}`, {});
+}
 
-export const CreateNotificationExecutorAdmin = (notificationExecutor: EmptyNotificationOutputExecutor) => request<NotificationOutputExecutor>(
-    Endpoints.NotificationExecutorAdmin, {
-        method: 'POST', body: JSON.stringify(notificationExecutor)
-    });
+export function CreateNotificationExecutorAdmin(notificationExecutor: EmptyNotificationOutputExecutor) {
+    return request<NotificationOutputExecutor>(
+        Endpoints.NotificationExecutorAdmin, {
+            method: 'POST', body: JSON.stringify(notificationExecutor)
+        });
+}
 
-export const UpdateNotificationExecutorAdmin = (notificationExecutor: NotificationOutputExecutor) => request<NotificationOutputExecutor>(
-    Endpoints.NotificationExecutorAdmin + '/' + notificationExecutor.id, {
-        method: 'PUT', body: JSON.stringify(notificationExecutor)
-    });
+export function UpdateNotificationExecutorAdmin(notificationExecutor: NotificationOutputExecutor) {
+    return request<NotificationOutputExecutor>(
+        `${Endpoints.NotificationExecutorAdmin}/${notificationExecutor.id}`, {
+            method: 'PUT', body: JSON.stringify(notificationExecutor)
+        });
+}
 
-export const DeleteNotificationExecutorAdmin = (notificationExecutor: NotificationOutputExecutor) => request<OKResponse>(
-    Endpoints.NotificationExecutorAdmin + '/' + notificationExecutor.id, {
-        method: 'DELETE'
-    });
+export function DeleteNotificationExecutorAdmin(notificationExecutor: NotificationOutputExecutor) {
+    return request<OKResponse>(
+        `${Endpoints.NotificationExecutorAdmin}/${notificationExecutor.id}`, {
+            method: 'DELETE'
+        });
+}
