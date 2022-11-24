@@ -1,6 +1,7 @@
-import {Endpoints, request} from './util';
+import {Endpoints} from './util';
 import {LogOrder} from './log';
 import {PaginatedResponse} from './types';
+import {LynxClient} from './client';
 
 export enum TraceObjectType {
     Installation = 'installation',
@@ -45,7 +46,7 @@ export type Trace = {
     description: string
 }
 
-export function GetTrace(installationId: number, from?: number, to?: number, limit = 1000, offset = 0, order = LogOrder.Desc, objectType?: TraceObjectType, objectId?: number, id?: string, actions: TraceAction[] | TraceAction = []) {
+export function GetTrace(this: LynxClient, installationId: number, from?: number, to?: number, limit = 1000, offset = 0, order = LogOrder.Desc, objectType?: TraceObjectType, objectId?: number, id?: string, actions: TraceAction[] | TraceAction = []) {
     const now = new Date().getTime() / 1000;
     from = from ? from : now - (60 * 60 * 24);
     to = to ? to : now;
@@ -68,5 +69,5 @@ export function GetTrace(installationId: number, from?: number, to?: number, lim
     }
 
     const qs = `?${new URLSearchParams(params).toString()}`;
-    return request<PaginatedResponse<Trace>>(`${Endpoints.Trace}${qs}`, {});
+    return this.request<PaginatedResponse<Trace>>(`${Endpoints.Trace}${qs}`, {});
 }

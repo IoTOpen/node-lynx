@@ -1,5 +1,6 @@
-import {Endpoints, request} from './util';
+import {Endpoints} from './util';
 import {CreationDate, Identifier, Metadata, MetaObject, OKResponse} from './types';
+import {LynxClient} from './client';
 
 export type EmptyDevicex = {
     installation_id: number
@@ -10,61 +11,61 @@ export type EmptyDevicex = {
 
 export type Devicex = EmptyDevicex & Identifier & CreationDate
 
-export function GetDevices(installationId: number, filter?: Metadata) {
+export function GetDevices(this: LynxClient, installationId: number, filter?: Metadata) {
     const qs = filter ? '?' + new URLSearchParams(filter).toString() : '';
-    return request<Devicex[]>(`${Endpoints.DeviceX}/${installationId}${qs}`, {});
+    return this.request<Devicex[]>(`${Endpoints.DeviceX}/${installationId}${qs}`, {});
 }
 
-export function GetDevice(installationId: number, id: number) {
-    return request<Devicex>(`${Endpoints.DeviceX}/${installationId}/${id}`, {});
+export function GetDevice(this: LynxClient, installationId: number, id: number) {
+    return this.request<Devicex>(`${Endpoints.DeviceX}/${installationId}/${id}`, {});
 }
 
-export function CreateDevice(dev: EmptyDevicex) {
-    return request<Devicex>(
+export function CreateDevice(this: LynxClient, dev: EmptyDevicex) {
+    return this.request<Devicex>(
         `${Endpoints.DeviceX}/${dev.installation_id}`, {
             method: 'POST', body: JSON.stringify(dev)
         });
 }
 
-export function UpdateDevice(dev: Devicex) {
-    return request<Devicex>(
+export function UpdateDevice(this: LynxClient, dev: Devicex) {
+    return this.request<Devicex>(
         `${Endpoints.DeviceX}/${dev.installation_id}/${dev.id}`, {
             method: 'PUT', body: JSON.stringify(dev)
         });
 }
 
-export function DeleteDevice(dev: Devicex) {
-    return request<OKResponse>(
+export function DeleteDevice(this: LynxClient, dev: Devicex) {
+    return this.request<OKResponse>(
         `${Endpoints.DeviceX}/${dev.installation_id}/${dev.id}`, {
             method: 'DELETE'
         });
 }
 
-export function GetDeviceMeta(installationID: number, deviceID: number, key: string) {
-    return request<MetaObject>(
+export function GetDeviceMeta(this: LynxClient, installationID: number, deviceID: number, key: string) {
+    return this.request<MetaObject>(
         `${Endpoints.DeviceX}/${installationID}/${deviceID}/meta/${encodeURIComponent(key)}`, {});
 }
 
-export function CreateDeviceMeta(installationID: number, deviceID: number, key: string, data: MetaObject, silent = false) {
-    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}`: '';
+export function CreateDeviceMeta(this: LynxClient, installationID: number, deviceID: number, key: string, data: MetaObject, silent = false) {
+    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}` : '';
     const path = `${Endpoints.DeviceX}/${installationID}/${deviceID}/meta/${encodeURIComponent(key)}${qs}`;
-    return request<MetaObject>(path, {
+    return this.request<MetaObject>(path, {
         method: 'POST', body: JSON.stringify(data)
     });
 }
 
-export function UpdateDeviceMeta (installationID: number, deviceID: number, key: string, data: MetaObject, silent = false) {
-    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}`: '';
+export function UpdateDeviceMeta(this: LynxClient, installationID: number, deviceID: number, key: string, data: MetaObject, silent = false) {
+    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}` : '';
     const path = `${Endpoints.DeviceX}/${installationID}/${deviceID}/meta/${encodeURIComponent(key)}${qs}`;
-    return request<MetaObject>(path, {
+    return this.request<MetaObject>(path, {
         method: 'PUT', body: JSON.stringify(data)
     });
 }
 
-export function DeleteDeviceMeta(installationID: number, deviceID: number, key: string, silent = false) {
-    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}`: '';
+export function DeleteDeviceMeta(this: LynxClient, installationID: number, deviceID: number, key: string, silent = false) {
+    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}` : '';
     const path = `${Endpoints.DeviceX}/${installationID}/${deviceID}/meta/${encodeURIComponent(key)}${qs}`;
-    return request<MetaObject>(path, {
+    return this.request<MetaObject>(path, {
         method: 'DELETE'
     });
 }

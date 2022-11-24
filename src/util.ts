@@ -1,4 +1,5 @@
 import {ErrorResponse, RequestResponse} from './types';
+import {LynxClient} from './client';
 
 export enum Endpoints {
     Auth = '/api/v2/auth',
@@ -23,14 +24,10 @@ export enum Endpoints {
     Trace = '/api/v2/trace'
 }
 
-export const connectionOptions = {
-    apiKey: '', baseURL: ''
-};
-
-export function request<T>(endpoint: string, options: RequestInit): Promise<RequestResponse<T>> {
-    const url = connectionOptions.baseURL + endpoint;
+export function request<T>(this: LynxClient, endpoint: string, options: RequestInit): Promise<RequestResponse<T>> {
+    const url = `${this.baseURL}${endpoint}`;
     let headers = {
-        'X-API-Key': connectionOptions.apiKey
+        'X-API-Key': this.apiKey
     };
     if (options.headers) {
         headers = {...headers, ...options.headers};

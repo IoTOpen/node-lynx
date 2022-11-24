@@ -63,7 +63,7 @@ import {
 	RemoveEdgeAppInstance
 } from './edge_app';
 import {Login, Login2FA, Logout, ResetPassword, ResetPasswordUpdate} from './auth';
-import {connectionOptions} from './util';
+import {request} from './util';
 import {CreateRole, DeleteRole, GetRole, GetRoles, UpdateRole} from './role';
 import {GetPermissions} from './permission';
 import {CreateToken, DeleteToken, GetTokens} from './token';
@@ -102,9 +102,10 @@ export class LynxClient {
         this.baseURL = base.replace(/\/$/, '');
         this.apiKey = apiKey;
     }
+    request = request;
 
     getBaseURL = () => {
-        return connectionOptions.baseURL;
+        return this.baseURL;
     };
 
     login = Login;

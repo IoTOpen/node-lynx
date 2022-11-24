@@ -1,5 +1,6 @@
-import {Endpoints, request} from './util';
+import {Endpoints} from './util';
 import {Identifier, OKResponse} from './types';
+import {LynxClient} from './client';
 
 export type EmptySchedule = {
     installation_id: number
@@ -15,34 +16,33 @@ export type EmptySchedule = {
 
 export type Schedule = EmptySchedule & Identifier & { created_at: number, updated_at: number }
 
-export function GetSchedules(installationId: number, executor?: string) {
+export function GetSchedules(this: LynxClient, installationId: number, executor?: string) {
     const qs = executor ? `?executor=${executor}` : '';
-    return request<Schedule[]>(`${Endpoints.Schedule}/${installationId}${qs}`, {});
+    return this.request<Schedule[]>(`${Endpoints.Schedule}/${installationId}${qs}`, {});
 }
 
-export function GetSchedule(installationId: number, id: number) {
-    return request(
+export function GetSchedule(this: LynxClient, installationId: number, id: number) {
+    return this.request(
         `${Endpoints.Schedule}/${installationId}/${id}`, {});
 }
 
-export function CreateSchedule(schedule: EmptySchedule) {
-    return request<Schedule>(
+export function CreateSchedule(this: LynxClient, schedule: EmptySchedule) {
+    return this.request<Schedule>(
         `${Endpoints.Schedule}/${schedule.installation_id}`, {
             method: 'POST', body: JSON.stringify(schedule)
         });
 }
 
-export function UpdateSchedule(schedule: Schedule) {
-    return request<Schedule>(
+export function UpdateSchedule(this: LynxClient, schedule: Schedule) {
+    return this.request<Schedule>(
         `${Endpoints.Schedule}/${schedule.installation_id}/${schedule.id}`, {
             method: 'PUT', body: JSON.stringify(schedule)
         });
 }
 
-export function DeleteSchedule(schedule: Schedule) {
-    return request<OKResponse>(
+export function DeleteSchedule(this: LynxClient, schedule: Schedule) {
+    return this.request<OKResponse>(
         `${Endpoints.Schedule}/${schedule.installation_id}/${schedule.id}`, {
             method: 'DELETE'
         });
 }
-

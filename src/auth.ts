@@ -1,4 +1,4 @@
-import {connectionOptions, Endpoints, request} from './util';
+import {Endpoints} from './util';
 import {OKResponse, RequestResponse} from './types';
 import {LynxClient} from './client';
 
@@ -9,7 +9,7 @@ export type LoginResult = {
 
 export function Login (this: LynxClient, username: string, password: string): Promise<RequestResponse<LoginResult>> {
     const headers = {
-        'Authorization': `Basic ${btoa (username + ':' + password)}`
+        'Authorization': `Basic ${btoa (`${username}:${password}`)}`
     };
     const config = {
         method: 'POST', headers: headers
@@ -25,8 +25,8 @@ export function Login (this: LynxClient, username: string, password: string): Pr
         });
 }
 
-export function Logout () {
-    return request<RequestResponse<OKResponse>>(Endpoints.Auth, {method: 'DELETE'});
+export function Logout (this: LynxClient) {
+    return this.request<RequestResponse<OKResponse>>(Endpoints.Auth, {method: 'DELETE'});
 }
 
 export function Login2FA (this: LynxClient, token: string, challenge: string): Promise<RequestResponse<LoginResult>> {
@@ -39,7 +39,7 @@ export function Login2FA (this: LynxClient, token: string, challenge: string): P
         }
     };
 
-    return fetch(this.baseURL + Endpoints.Auth, config)
+    return fetch(`${this.baseURL}${Endpoints.Auth}`, config)
         .then(async res => {
             if (res.status !== 200) {
                 const error = await res.json();

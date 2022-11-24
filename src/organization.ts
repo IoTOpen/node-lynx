@@ -1,5 +1,6 @@
-import {Endpoints, request} from './util';
+import {Endpoints} from './util';
 import {Address, Identifier, Metadata, OKResponse} from './types';
+import {LynxClient} from './client';
 
 type OrganizationChild = {
     id: number
@@ -27,35 +28,35 @@ export type EmptyOrganization = {
 
 export type Organization = EmptyOrganization & Identifier
 
-export function GetOrganizations(minimal?: boolean) {
+export function GetOrganizations(this: LynxClient, minimal?: boolean) {
     if (minimal) {
         const qs = `?minimal=${minimal}`;
-        return request<OrganizationSimple[]>(`${Endpoints.Organization}${qs}`, {});
+        return this.request<OrganizationSimple[]>(`${Endpoints.Organization}${qs}`, {});
     }
-    return request<Organization[]>(Endpoints.Organization, {});
+    return this.request<Organization[]>(Endpoints.Organization, {});
 }
 
-export function GetOrganization(id: number) {
-    return request<Organization>(
+export function GetOrganization(this: LynxClient, id: number) {
+    return this.request<Organization>(
         `${Endpoints.Organization}/${id}`, {});
 }
 
-export function CreateOrganization(org: EmptyOrganization) {
-    return request<Organization>(
+export function CreateOrganization(this: LynxClient, org: EmptyOrganization) {
+    return this.request<Organization>(
         Endpoints.Organization, {
             method: 'POST', body: JSON.stringify(org)
         });
 }
 
-export function UpdateOrganization(org: Organization) {
-    return request<Organization>(
+export function UpdateOrganization(this: LynxClient, org: Organization) {
+    return this.request<Organization>(
         `${Endpoints.Organization}/${org.id}`, {
             method: 'PUT', body: JSON.stringify(org)
         });
 }
 
-export function DeleteOrganization(org: Organization) {
-    return request<OKResponse>(
+export function DeleteOrganization(this: LynxClient, org: Organization) {
+    return this.request<OKResponse>(
         `${Endpoints.Organization}/${org.id}`, {
             method: 'DELETE'
         });
