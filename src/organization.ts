@@ -1,7 +1,7 @@
 import {Endpoints, request} from './util';
 import {Address, Identifier, Metadata, OKResponse} from './types';
 
-type OrganizationChild = {
+export type OrganizationChild = {
     id: number
     name: string
 }
