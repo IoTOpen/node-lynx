@@ -8,7 +8,7 @@ export type EmptyFunctionx = {
     protected_meta: Metadata
 }
 
-type Functionx = EmptyFunctionx & Identifier & CreationDate
+export type Functionx = EmptyFunctionx & Identifier & CreationDate
 
 export const GetFunctions = (installationId: number, filter?: Metadata) => {
     const qs = filter ? '?' + new URLSearchParams(filter).toString() : '';

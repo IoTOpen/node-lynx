@@ -60,7 +60,7 @@ import {
     GetEdgeApps,
     GetEdgeAppVersions,
     UpdateEdgeAppInstance,
-	RemoveEdgeAppInstance
+    RemoveEdgeAppInstance
 } from './edge_app';
 import {Login, Login2FA, Logout, ResetPassword, ResetPasswordUpdate} from './auth';
 import {connectionOptions} from './util';

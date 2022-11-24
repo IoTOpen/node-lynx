@@ -69,7 +69,7 @@ export type EmptyNotificationOutputExecutor = {
     secret?: string
 }
 
-type NotificationOutputExecutor = EmptyNotificationOutputExecutor & Identifier
+export type NotificationOutputExecutor = EmptyNotificationOutputExecutor & Identifier
 
 export const GetNotificationOutputExecutors = (installationId: number) => request<NotificationOutputExecutor[]>(
     Endpoints.Notification + '/' + installationId + '/executor', {});
