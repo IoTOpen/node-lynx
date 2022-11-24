@@ -9,18 +9,28 @@ export type EmptyRole = {
 
 export type Role = EmptyRole & Identifier
 
-export const GetRoles = () => request<Role[]>(Endpoints.Role, {});
+export function GetRoles() {
+    return request<Role[]>(Endpoints.Role, {});
+}
 
-export const GetRole = (id: number) => request<Role>(Endpoints.Role + '/' + id, {});
+export function GetRole(id: number) {
+    return request<Role>(`${Endpoints.Role}/${id}`, {});
+}
 
-export const CreateRole = (role: EmptyRole) => request<Role>(Endpoints.Role, {
-    method: 'POST', body: JSON.stringify(role)
-});
+export function CreateRole(role: EmptyRole) {
+    return request<Role>(Endpoints.Role, {
+        method: 'POST', body: JSON.stringify(role)
+    });
+}
 
-export const UpdateRole = (role: Role) => request<Role>(Endpoints.Role + '/' + role.id, {
-    method: 'PUT', body: JSON.stringify(role)
-});
+export function UpdateRole(role: Role) {
+    return request<Role>(`${Endpoints.Role}/${role.id}`, {
+        method: 'PUT', body: JSON.stringify(role)
+    });
+}
 
-export const DeleteRole = (role: Role) => request<OKResponse>(Endpoints.Role + '/' + role.id, {
-    method: 'DELETE'
-});
+export function DeleteRole(role: Role) {
+    return request<OKResponse>(`${Endpoints.Role}/${role.id}`, {
+        method: 'DELETE'
+    });
+}
