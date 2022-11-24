@@ -27,28 +27,36 @@ export type EmptyOrganization = {
 
 export type Organization = EmptyOrganization & Identifier
 
-export const GetOrganizations = (minimal?: boolean) => {
+export function GetOrganizations(minimal?: boolean) {
     if (minimal) {
-        const qs = '?minimal=' + minimal;
-        return request<OrganizationSimple[]>(Endpoints.Organization + qs, {});
+        const qs = `?minimal=${minimal}`;
+        return request<OrganizationSimple[]>(`${Endpoints.Organization}${qs}`, {});
     }
-    return request<Organization[]>(Endpoints.Organization , {});
-};
+    return request<Organization[]>(Endpoints.Organization, {});
+}
 
-export const GetOrganization = (id: number) => request<Organization>(
-    Endpoints.Organization + '/' + id, {});
+export function GetOrganization(id: number) {
+    return request<Organization>(
+        `${Endpoints.Organization}/${id}`, {});
+}
 
-export const CreateOrganization = (org: EmptyOrganization) => request<Organization>(
-    Endpoints.Organization, {
-        method: 'POST', body: JSON.stringify(org)
-    });
+export function CreateOrganization(org: EmptyOrganization) {
+    return request<Organization>(
+        Endpoints.Organization, {
+            method: 'POST', body: JSON.stringify(org)
+        });
+}
 
-export const UpdateOrganization = (org: Organization) => request<Organization>(
-    Endpoints.Organization + '/' + org.id, {
-        method: 'PUT', body: JSON.stringify(org)
-    });
+export function UpdateOrganization(org: Organization) {
+    return request<Organization>(
+        `${Endpoints.Organization}/${org.id}`, {
+            method: 'PUT', body: JSON.stringify(org)
+        });
+}
 
-export const DeleteOrganization = (org: Organization) => request<OKResponse>(
-    Endpoints.Organization + '/' + org.id, {
-        method: 'DELETE'
-    });
+export function DeleteOrganization(org: Organization) {
+    return request<OKResponse>(
+        `${Endpoints.Organization}/${org.id}`, {
+            method: 'DELETE'
+        });
+}
