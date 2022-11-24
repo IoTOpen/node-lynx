@@ -10,24 +10,33 @@ export type EmptyUserRegistrationPolicy = {
 
 export type UserRegistrationPolicy = EmptyUserRegistrationPolicy & Identifier
 
-export const CreateUserRegistrationPolicy = (policy: UserRegistrationPolicy) => request<UserRegistrationPolicy>(
-    Endpoints.UserRegistrationPolicy, {
-        method: 'POST', body: JSON.stringify(policy),
-    });
+export function CreateUserRegistrationPolicy (policy: UserRegistrationPolicy) {
+    return request<UserRegistrationPolicy>(
+        Endpoints.UserRegistrationPolicy, {
+            method: 'POST', body: JSON.stringify(policy),
+        });
+}
 
-export const DeleteUserRegistrationPolicy = (policy: UserRegistrationPolicy) => request<OKResponse>(
-    Endpoints.UserRegistrationPolicy + '/' + policy.id, {
-        method: 'DELETE',
-    });
+export function DeleteUserRegistrationPolicy(policy: UserRegistrationPolicy) {
+    return request<OKResponse>(
+        `${Endpoints.UserRegistrationPolicy}/${policy.id}`, {
+            method: 'DELETE',
+        });
+}
 
-export const GetUserRegistrationPolicies = () => request<UserRegistrationPolicy[]>(
-    Endpoints.UserRegistrationPolicy, {});
+export function GetUserRegistrationPolicies() {
+    return request<UserRegistrationPolicy[]>(
+        Endpoints.UserRegistrationPolicy, {});
+}
 
-export const GetUserRegistrationPolicy = (id: number) => request<UserRegistrationPolicy>(
-    Endpoints.UserRegistrationPolicy + '/' + id, {});
+export function GetUserRegistrationPolicy(id: number) {
+    return request<UserRegistrationPolicy>(
+        `${Endpoints.UserRegistrationPolicy}/${id}`, {});
+}
 
-export const UpdateUserRegistrationPolicy = (policy: UserRegistrationPolicy) => request<UserRegistrationPolicy>(
-    Endpoints.UserRegistrationPolicy + '/' + policy.id, {
-        method: 'PUT', body: JSON.stringify(policy),
-    });
-
+export function UpdateUserRegistrationPolicy (policy: UserRegistrationPolicy) {
+    return request<UserRegistrationPolicy>(
+        `${Endpoints.UserRegistrationPolicy}/${policy.id}`, {
+            method: 'PUT', body: JSON.stringify(policy),
+        });
+}
