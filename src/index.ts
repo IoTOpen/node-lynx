@@ -10,7 +10,6 @@ export type {
     Metadata,
     MetaObject,
     OKResponse,
-    RequestResponse,
     ErrorResponse,
     PaginatedResponse,
     Address,
