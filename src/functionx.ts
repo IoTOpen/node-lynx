@@ -10,59 +10,63 @@ export type EmptyFunctionx = {
 
 type Functionx = EmptyFunctionx & Identifier & CreationDate
 
-export const GetFunctions = (installationId: number, filter?: Metadata) => {
-    const qs = filter ? '?' + new URLSearchParams(filter).toString() : '';
-    const url = Endpoints.FunctionX + '/' + installationId + qs;
+export function GetFunctions(installationId: number, filter?: Metadata) {
+    const qs = filter ? `?${new URLSearchParams(filter).toString()}` : '';
+    const url = `${Endpoints.FunctionX}/${installationId}${qs}`;
     return request<Functionx[]>(url, {});
-};
+}
 
-export const GetFunction = (installationId: number, id: number) => request<Functionx>(
-    Endpoints.FunctionX + '/' + installationId + '/' + id, {});
+export function GetFunction(installationId: number, id: number) {
+    return request<Functionx>(
+        `${Endpoints.FunctionX}/${installationId}/${id}`, {});
+}
 
-export const CreateFunction = (func: EmptyFunctionx) => request<Functionx>(
-    Endpoints.FunctionX + '/' + func.installation_id, {
-        method: 'POST', body: JSON.stringify(func)
-    });
+export function CreateFunction(func: EmptyFunctionx) {
+    return request<Functionx>(
+        `${Endpoints.FunctionX}/${func.installation_id}`, {
+            method: 'POST', body: JSON.stringify(func)
+        });
+}
 
-export const UpdateFunction = (func: Functionx) => request<Functionx>(
-    Endpoints.FunctionX + '/' + func.installation_id + '/' + func.id, {
-        method: 'PUT', body: JSON.stringify(func)
-    });
+export function UpdateFunction(func: Functionx) {
+    return request<Functionx>(
+        `${Endpoints.FunctionX}/${func.installation_id}/${func.id}`, {
+            method: 'PUT', body: JSON.stringify(func)
+        });
+}
 
-export const DeleteFunction = (func: Functionx) => request<OKResponse>(
-    Endpoints.FunctionX + '/' + func.installation_id + '/' + func.id, {
-        method: 'DELETE'
-    });
+export function DeleteFunction(func: Functionx) {
+    return request<OKResponse>(
+        `${Endpoints.FunctionX}/${func.installation_id}/${func.id}`, {
+            method: 'DELETE'
+        });
+}
 
-export const GetFunctionMeta = (installationID: number, functionID: number, key: string) => request<MetaObject>(
-    Endpoints.FunctionX + '/' + installationID + '/' + functionID + '/meta/' + encodeURIComponent(key), {});
+export function GetFunctionMeta(installationID: number, functionID: number, key: string) {
+    return request<MetaObject>(
+        `${Endpoints.FunctionX}/${installationID}/${functionID}/meta/${encodeURIComponent(key)}`, {});
+}
 
-export const CreateFunctionMeta = (installationID: number, functionID: number, key: string, data: MetaObject, silent = false) => {
-    const params: { [key: string]: string } = {silent: String(silent)};
-    const qs = '?' + new URLSearchParams(params).toString();
-    const path = Endpoints.FunctionX + '/' + installationID + '/' + functionID + '/meta/' + encodeURIComponent(key) + qs;
-
+export function CreateFunctionMeta(installationID: number, functionID: number, key: string, data: MetaObject, silent = false) {
+    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}` : '';
+    const path = `${Endpoints.FunctionX}/${installationID}/${functionID}/meta/${encodeURIComponent(key)}${qs}`;
     return request<MetaObject>(path, {
         method: 'POST', body: JSON.stringify(data)
     });
-};
+}
 
-export const UpdateFunctionMeta = (installationID: number, functionID: number, key: string, data: MetaObject, silent = false) => {
-    const params: { [key: string]: string } = {silent: String(silent)};
-    const qs = '?' + new URLSearchParams(params).toString();
-    const path = Endpoints.FunctionX + '/' + installationID + '/' + functionID + '/meta/' + encodeURIComponent(key) + qs;
-
+export function UpdateFunctionMeta(installationID: number, functionID: number, key: string, data: MetaObject, silent = false) {
+    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}` : '';
+    const path = `${Endpoints.FunctionX}/${installationID}/${functionID}/meta/${encodeURIComponent(key)}${qs}`;
     return request<MetaObject>(path, {
         method: 'PUT', body: JSON.stringify(data)
     });
-};
+}
 
-export const DeleteFunctionMeta = (installationID: number, functionID: number, key: string, silent = false) => {
-    const params: { [key: string]: string } = {silent: String(silent)};
-    const qs = '?' + new URLSearchParams(params).toString();
-    const path = Endpoints.FunctionX + '/' + installationID + '/' + functionID + '/meta/' + encodeURIComponent(key) + qs;
-
+export function DeleteFunctionMeta(installationID: number, functionID: number, key: string, silent = false) {
+    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}` : '';
+    const path = `${Endpoints.FunctionX}/${installationID}/${functionID}/meta/${encodeURIComponent(key)}${qs}`;
     return request<MetaObject>(path, {
         method: 'DELETE'
     });
-};
+}

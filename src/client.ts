@@ -96,9 +96,11 @@ import {GetTrace} from './trace';
 import {Register} from './register';
 
 export class LynxClient {
+    baseURL: string;
+    apiKey: string;
     constructor(base: string, apiKey: string) {
-        connectionOptions.baseURL = base.replace(/\/$/, '');
-        connectionOptions.apiKey = apiKey;
+        this.baseURL = base.replace(/\/$/, '');
+        this.apiKey = apiKey;
     }
 
     getBaseURL = () => {

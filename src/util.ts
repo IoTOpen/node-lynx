@@ -27,7 +27,7 @@ export const connectionOptions = {
     apiKey: '', baseURL: ''
 };
 
-export const request = <T>(endpoint: string, options: RequestInit): Promise<RequestResponse<T>> => {
+export function request<T>(endpoint: string, options: RequestInit): Promise<RequestResponse<T>> {
     const url = connectionOptions.baseURL + endpoint;
     let headers = {
         'X-API-Key': connectionOptions.apiKey
@@ -52,4 +52,4 @@ export const request = <T>(endpoint: string, options: RequestInit): Promise<Requ
             return res;
         }
     });
-};
+}

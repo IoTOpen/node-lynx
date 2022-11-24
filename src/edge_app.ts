@@ -21,23 +21,31 @@ export type EmptyEdgeApp = {
 
 export type EdgeApp = EmptyEdgeApp & Identifier & CreationDate
 
-export const GetEdgeApps = () => request<EdgeApp[]>(Endpoints.EdgeApp, {});
+export function GetEdgeApps() {
+    return request<EdgeApp[]>(Endpoints.EdgeApp, {});
+}
 
-export const GetEdgeApp = (id: number) => request<EdgeApp>(Endpoints.EdgeApp + '/' + id, {});
+export function GetEdgeApp(id: number) {
+    return request<EdgeApp>(`${Endpoints.EdgeApp}/${id}`, {});
+}
 
-export const GetEdgeAppVersions = (appId: number, untagged?: boolean) => {
-    const qs = untagged ? '?untagged=' + untagged : '';
-    return request(Endpoints.EdgeApp + '/' + appId + '/version' + qs, {});
-};
+export function GetEdgeAppVersions(appId: number, untagged?: boolean) {
+    const qs = untagged ? `?untagged=${untagged}` : '';
+    return request(`${Endpoints.EdgeApp}/${appId}/version${qs}`, {});
+}
 
-export const GetEdgeAppConfigOptions = (id: number, version: string) => {
-    const qs = '?version=' + version;
-    return request<any>(Endpoints.EdgeApp + '/' + id + '/configure' + qs, {});
-};
+export function GetEdgeAppConfigOptions(id: number, version: string) {
+    const qs = `?version=${version}`;
+    return request<any>(`${Endpoints.EdgeApp}/${id}/configure${qs}`, {});
+}
 
-export const GetConfiguredEdgeApps = (installationId: number) => request(Endpoints.EdgeApp + '/configured/' + installationId, {});
+export function GetConfiguredEdgeApps(installationId: number) {
+    return request(`${Endpoints.EdgeApp}/configured/${installationId}`, {});
+}
 
-export const GetEdgeAppInstance = (installationId: number, instanceId: number) => request(Endpoints.EdgeApp + '/configured/' + installationId + '/' + instanceId, {});
+export function GetEdgeAppInstance(installationId: number, instanceId: number) {
+    return request(`${Endpoints.EdgeApp}/configured/${installationId}/${instanceId}`, {});
+}
 
 export type EmptyEdgeAppInstance = {
     app_id: number
@@ -49,18 +57,24 @@ export type EmptyEdgeAppInstance = {
 
 export type EdgeAppInstance = EmptyEdgeAppInstance & Identifier & CreationDate
 
-export const CreateEdgeAppInstance = (instanceData: EmptyEdgeAppInstance) => request(
-    Endpoints.EdgeApp + '/configured/' + instanceData.installation_id, {
-        method: 'POST', body: JSON.stringify(instanceData)
-    });
+export function CreateEdgeAppInstance(instanceData: EmptyEdgeAppInstance) {
+    return request(
+        `${Endpoints.EdgeApp}/configured/${instanceData.installation_id}`, {
+            method: 'POST', body: JSON.stringify(instanceData)
+        });
+}
 
-export const UpdateEdgeAppInstance = (instanceData: EdgeAppInstance) => request(
-    Endpoints.EdgeApp + '/configured/' + instanceData.installation_id + '/' + instanceData.id, {
-        method: 'PUT', body: JSON.stringify(instanceData)
-    });
+export function UpdateEdgeAppInstance(instanceData: EdgeAppInstance) {
+    return request(
+        `${Endpoints.EdgeApp}/configured/${instanceData.installation_id}/${instanceData.id}`, {
+            method: 'PUT', body: JSON.stringify(instanceData)
+        });
+}
 
-export const RemoveEdgeAppInstance = (installationId: number, instanceId: number) => request<OKResponse>(
-    Endpoints.EdgeApp + '/configured/' + installationId + '/' + instanceId, {
-        method: 'DELETE'
-    }
-);
+export function RemoveEdgeAppInstance(installationId: number, instanceId: number) {
+    return request<OKResponse>(
+        `${Endpoints.EdgeApp}/configured/${installationId}/${instanceId}`, {
+            method: 'DELETE'
+        }
+    );
+}
