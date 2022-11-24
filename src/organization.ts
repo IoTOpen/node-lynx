@@ -31,32 +31,32 @@ export type Organization = EmptyOrganization & Identifier
 export function GetOrganizations(this: LynxClient, minimal?: boolean) {
     if (minimal) {
         const qs = `?minimal=${minimal}`;
-        return this.request<OrganizationSimple[]>(`${Endpoints.Organization}${qs}`, {});
+        return this.requestJson<OrganizationSimple[]>(`${Endpoints.Organization}${qs}`);
     }
-    return this.request<Organization[]>(Endpoints.Organization, {});
+    return this.requestJson<Organization[]>(Endpoints.Organization);
 }
 
 export function GetOrganization(this: LynxClient, id: number) {
-    return this.request<Organization>(
-        `${Endpoints.Organization}/${id}`, {});
+    return this.requestJson<Organization>(
+        `${Endpoints.Organization}/${id}`);
 }
 
 export function CreateOrganization(this: LynxClient, org: EmptyOrganization) {
-    return this.request<Organization>(
+    return this.requestJson<Organization>(
         Endpoints.Organization, {
             method: 'POST', body: JSON.stringify(org)
         });
 }
 
 export function UpdateOrganization(this: LynxClient, org: Organization) {
-    return this.request<Organization>(
+    return this.requestJson<Organization>(
         `${Endpoints.Organization}/${org.id}`, {
             method: 'PUT', body: JSON.stringify(org)
         });
 }
 
 export function DeleteOrganization(this: LynxClient, org: Organization) {
-    return this.request<OKResponse>(
+    return this.requestJson<OKResponse>(
         `${Endpoints.Organization}/${org.id}`, {
             method: 'DELETE'
         });

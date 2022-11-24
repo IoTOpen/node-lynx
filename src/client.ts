@@ -63,7 +63,6 @@ import {
     RemoveEdgeAppInstance
 } from './edge_app';
 import {Login, Login2FA, Logout, ResetPassword, ResetPasswordUpdate} from './auth';
-import {request} from './util';
 import {CreateRole, DeleteRole, GetRole, GetRoles, UpdateRole} from './role';
 import {GetPermissions} from './permission';
 import {CreateToken, DeleteToken, GetTokens} from './token';
@@ -94,15 +93,19 @@ import {
 } from './file';
 import {GetTrace} from './trace';
 import {Register} from './register';
+import {requestJson, request, requestNull, requestBlob} from './util';
 
 export class LynxClient {
     baseURL: string;
-    apiKey: string;
-    constructor(base: string, apiKey: string) {
+    apiKey?: string;
+    constructor(base: string, apiKey?: string) {
         this.baseURL = base.replace(/\/$/, '');
         this.apiKey = apiKey;
     }
     request = request;
+    requestJson = requestJson;
+    requestBlob = requestBlob;
+    requestNull = requestNull;
 
     getBaseURL = () => {
         return this.baseURL;

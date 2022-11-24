@@ -26,17 +26,17 @@ export type Token = EmptyToken & Identifier & {
 }
 
 export function GetTokens(this: LynxClient) {
-    return this.request<Token[]>(Endpoints.Token, {});
+    return this.requestJson<Token[]>(Endpoints.Token);
 }
 
 export function DeleteToken(this: LynxClient, token: Token) {
-    return this.request<OKResponse>(`${Endpoints.Token}/${token.id}`, {
+    return this.requestJson<OKResponse>(`${Endpoints.Token}/${token.id}`, {
         method: 'DELETE',
     });
 }
 
 export function CreateToken(this: LynxClient, token: EmptyToken) {
-    return this.request<Token>(Endpoints.Token, {
+    return this.requestJson<Token>(Endpoints.Token, {
         method: 'POST',
         body: JSON.stringify(token),
     });

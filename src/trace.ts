@@ -69,5 +69,5 @@ export function GetTrace(this: LynxClient, installationId: number, from?: number
     }
 
     const qs = `?${new URLSearchParams(params).toString()}`;
-    return this.request<PaginatedResponse<Trace>>(`${Endpoints.Trace}${qs}`, {});
+    return this.requestJson<PaginatedResponse<Trace>>(`${Endpoints.Trace}${qs}`);
 }

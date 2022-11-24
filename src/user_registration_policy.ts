@@ -12,31 +12,31 @@ export type EmptyUserRegistrationPolicy = {
 export type UserRegistrationPolicy = EmptyUserRegistrationPolicy & Identifier
 
 export function CreateUserRegistrationPolicy(this: LynxClient, policy: UserRegistrationPolicy) {
-    return this.request<UserRegistrationPolicy>(
+    return this.requestJson<UserRegistrationPolicy>(
         Endpoints.UserRegistrationPolicy, {
             method: 'POST', body: JSON.stringify(policy),
         });
 }
 
 export function DeleteUserRegistrationPolicy(this: LynxClient, policy: UserRegistrationPolicy) {
-    return this.request<OKResponse>(
+    return this.requestJson<OKResponse>(
         `${Endpoints.UserRegistrationPolicy}/${policy.id}`, {
             method: 'DELETE',
         });
 }
 
 export function GetUserRegistrationPolicies(this: LynxClient) {
-    return this.request<UserRegistrationPolicy[]>(
-        Endpoints.UserRegistrationPolicy, {});
+    return this.requestJson<UserRegistrationPolicy[]>(
+        Endpoints.UserRegistrationPolicy);
 }
 
 export function GetUserRegistrationPolicy(this: LynxClient, id: number) {
-    return this.request<UserRegistrationPolicy>(
-        `${Endpoints.UserRegistrationPolicy}/${id}`, {});
+    return this.requestJson<UserRegistrationPolicy>(
+        `${Endpoints.UserRegistrationPolicy}/${id}`);
 }
 
 export function UpdateUserRegistrationPolicy(this: LynxClient, policy: UserRegistrationPolicy) {
-    return this.request<UserRegistrationPolicy>(
+    return this.requestJson<UserRegistrationPolicy>(
         `${Endpoints.UserRegistrationPolicy}/${policy.id}`, {
             method: 'PUT', body: JSON.stringify(policy),
         });

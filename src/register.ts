@@ -10,7 +10,7 @@ export type UserRegistration = {
 }
 
 export function Register(this: LynxClient, registrationData: UserRegistration) {
-    return this.request<OKResponse>(
+    return this.requestJson<OKResponse>(
         `${Endpoints.User}/register`, {
             method: 'POST', body: JSON.stringify(registrationData)
         });

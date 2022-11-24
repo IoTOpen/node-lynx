@@ -23,7 +23,7 @@ export function GetStatus(this: LynxClient, installationId: number, topicFilter?
         }
         return `${prev}topics=${cur}`;
     }, '')}` : '';
-    return this.request<LogEntry[]>(`${Endpoints.Status}/${installationId}${qs}`, {});
+    return this.requestJson<LogEntry[]>(`${Endpoints.Status}/${installationId}${qs}`);
 }
 
 export function GetLog (this: LynxClient, installationId: number, from?: number, to?: number, limit = 500, offset = 0, order = LogOrder.Desc, topics?: string[]) {
@@ -39,5 +39,5 @@ export function GetLog (this: LynxClient, installationId: number, from?: number,
         params.topics = topics.join(',');
     }
     const qs = `?${new URLSearchParams(params).toString()}`;
-    return this.request<PaginatedResponse<LogEntry>>(`${Endpoints.LogV3}/${installationId}${qs}`, {});
+    return this.requestJson<PaginatedResponse<LogEntry>>(`${Endpoints.LogV3}/${installationId}${qs}`);
 }

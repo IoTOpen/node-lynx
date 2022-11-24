@@ -24,21 +24,21 @@ export type Installation = EmptyInstallation & Identifier & { client_id: number,
 
 export function GetInstallations(this: LynxClient, assignedOnly?: boolean) {
     const qs = assignedOnly ? `?assigned=${assignedOnly}` : '';
-    return this.request<InstallationInfo>(`${Endpoints.InstallationInfo}${qs}`, {});
+    return this.requestJson<InstallationInfo>(`${Endpoints.InstallationInfo}${qs}`);
 }
 
 export function GetInstallationRow(this: LynxClient, installationId: number) {
-    return this.request<Installation>(
-        `${Endpoints.Installation}/${installationId}`, {});
+    return this.requestJson<Installation>(
+        `${Endpoints.Installation}/${installationId}`);
 }
 
 export function ListInstallations(this: LynxClient, filter?: Metadata) {
     const qs = filter ? `?${new URLSearchParams(filter).toString()}` : '';
-    return this.request<Installation[]>(`${Endpoints.Installation}${qs}`, {});
+    return this.requestJson<Installation[]>(`${Endpoints.Installation}${qs}`);
 }
 
 export function GetInstallation(this: LynxClient, id: number) {
-    return this.request<InstallationInfo[]>(`${Endpoints.InstallationInfo}?assigned=false`, {})
+    return this.requestJson<InstallationInfo[]>(`${Endpoints.InstallationInfo}?assigned=false`)
         .then((res) => {
             const installations = res as InstallationInfo[];
             for (const installation of installations) {
@@ -52,25 +52,25 @@ export function GetInstallation(this: LynxClient, id: number) {
 
 export function GetInstallationByClientId(this: LynxClient, clientId: number, assignedOnly?: boolean) {
     const qs = assignedOnly ? `?assigned=${assignedOnly}` : '';
-    return this.request<InstallationInfo>(`${Endpoints.InstallationInfo}/${clientId}${qs}`, {});
+    return this.requestJson<InstallationInfo>(`${Endpoints.InstallationInfo}/${clientId}${qs}`);
 }
 
 export function CreateInstallation(this: LynxClient, installation: EmptyInstallation) {
-    return this.request<Installation>(
+    return this.requestJson<Installation>(
         Endpoints.Installation, {
             method: 'POST', body: JSON.stringify(installation)
         });
 }
 
 export function UpdateInstallation(this: LynxClient, installation: Installation) {
-    return this.request<Installation>(
+    return this.requestJson<Installation>(
         `${Endpoints.Installation}/${installation.id}`, {
             method: 'PUT', body: JSON.stringify(installation)
         });
 }
 
 export function DeleteInstallation(this: LynxClient, installation: Installation) {
-    return this.request<OKResponse>(
+    return this.requestJson<OKResponse>(
         `${Endpoints.Installation}/${installation.id}`, {
             method: 'DELETE'
         });

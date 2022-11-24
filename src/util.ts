@@ -1,4 +1,4 @@
-import {ErrorResponse, RequestResponse} from './types';
+import {ErrorResponse} from './types';
 import {LynxClient} from './client';
 
 export enum Endpoints {
@@ -24,29 +24,52 @@ export enum Endpoints {
     Trace = '/api/v2/trace'
 }
 
-export function request<T>(this: LynxClient, endpoint: string, options: RequestInit): Promise<RequestResponse<T>> {
-    const url = `${this.baseURL}${endpoint}`;
-    let headers = {
-        'X-API-Key': this.apiKey
-    };
-    if (options.headers) {
-        headers = {...headers, ...options.headers};
+export function request(this: LynxClient, info: RequestInfo | URL, init?: RequestInit) {
+    const conf = {
+        ...init,
+    } as RequestInit;
+    if (this.apiKey) {
+        if (!conf.headers) conf.headers = {};
+        (conf.headers as any)['X-API-Key'] = this.apiKey;
     }
+    return fetch(info, conf);
+}
 
-    const config = {
-        ...options, headers: headers
-    };
-
-    return fetch(url, config).then(async res => {
+export function requestJson<T>(this: LynxClient, endpoint: string, options?: RequestInit): Promise<T> {
+    const url = `${this.baseURL}${endpoint}`;
+    console.log(url, options?.method);
+    return this.request(url, options).then(async (res) => {
         if (res.status !== 200) {
-            const error: ErrorResponse = await res.json();
-            error.status = res.status;
-            return Promise.reject(error);
+            const err = await res.json() as ErrorResponse;
+            err.status = res.status;
+            throw err;
         }
-        try {
-            return await res.clone().json();
-        } catch (e) {
-            return res;
+        return await res.json() as T;
+    });
+}
+
+export function requestBlob<T>(this: LynxClient, endpoint: string, options?: RequestInit): Promise<T> {
+    const url = `${this.baseURL}${endpoint}`;
+    console.log(url, options?.method);
+    return this.request(url, options).then(async (res) => {
+        if (res.status !== 200) {
+            const err = await res.json() as ErrorResponse;
+            err.status = res.status;
+            throw err;
         }
+        return await res.blob() as T;
+    });
+}
+
+export function requestNull<T>(this: LynxClient, endpoint: string, options?: RequestInit): Promise<T | null> {
+    const url = `${this.baseURL}${endpoint}`;
+    return this.request(url, options).then(async (res) => {
+        if (res.status === 204) {
+            return null;
+        }
+        if (res.status !== 200) {
+            throw await res.json() as ErrorResponse;
+        }
+        return await res.json() as T;
     });
 }
