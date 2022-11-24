@@ -20,12 +20,12 @@ export type GatewayRegistrationPolicy = {
 }
 
 export function GetGatewayRegistrationPolicy(this: LynxClient) {
-    return this.request<GatewayRegistrationPolicy>(
-        `${Endpoints.Gateway}/registration/policy`, {});
+    return this.requestJson<GatewayRegistrationPolicy>(
+        `${Endpoints.Gateway}/registration/policy`);
 }
 
 export function SetGatewayRegistrationPolicy(this: LynxClient, policy: GatewayRegistrationPolicy) {
-    return this.request<GatewayRegistrationPolicy>(
+    return this.requestJson<GatewayRegistrationPolicy>(
         `${Endpoints.Gateway}/registration/policy`, {
             method: 'PUT',
             body: JSON.stringify(policy),
@@ -33,14 +33,14 @@ export function SetGatewayRegistrationPolicy(this: LynxClient, policy: GatewayRe
 }
 
 export function ResetGatewayPassword(this: LynxClient, installationId: number) {
-    return this.request<OKResponse>(
+    return this.requestJson<OKResponse>(
         `${Endpoints.Gateway}/reset/${installationId}`, {
             method: 'POST',
         });
 }
 
 export function CreateGatewayCredentials(this: LynxClient, installationId: number) {
-    return this.request<GatewayInformation>(
+    return this.requestJson<GatewayInformation>(
         `${Endpoints.Gateway}/credentials/${installationId}`, {
             method: 'POST'
         });

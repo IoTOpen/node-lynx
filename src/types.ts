@@ -32,8 +32,6 @@ export type OKResponse = {
     message: string
 }
 
-export type RequestResponse<T> = T | Response | ErrorResponse
-
 export type MetaObject = {
     value: string
     protected: boolean

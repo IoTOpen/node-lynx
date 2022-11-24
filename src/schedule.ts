@@ -18,30 +18,30 @@ export type Schedule = EmptySchedule & Identifier & { created_at: number, update
 
 export function GetSchedules(this: LynxClient, installationId: number, executor?: string) {
     const qs = executor ? `?executor=${executor}` : '';
-    return this.request<Schedule[]>(`${Endpoints.Schedule}/${installationId}${qs}`, {});
+    return this.requestJson<Schedule[]>(`${Endpoints.Schedule}/${installationId}${qs}`);
 }
 
 export function GetSchedule(this: LynxClient, installationId: number, id: number) {
-    return this.request(
-        `${Endpoints.Schedule}/${installationId}/${id}`, {});
+    return this.requestJson(
+        `${Endpoints.Schedule}/${installationId}/${id}`);
 }
 
 export function CreateSchedule(this: LynxClient, schedule: EmptySchedule) {
-    return this.request<Schedule>(
+    return this.requestJson<Schedule>(
         `${Endpoints.Schedule}/${schedule.installation_id}`, {
             method: 'POST', body: JSON.stringify(schedule)
         });
 }
 
 export function UpdateSchedule(this: LynxClient, schedule: Schedule) {
-    return this.request<Schedule>(
+    return this.requestJson<Schedule>(
         `${Endpoints.Schedule}/${schedule.installation_id}/${schedule.id}`, {
             method: 'PUT', body: JSON.stringify(schedule)
         });
 }
 
 export function DeleteSchedule(this: LynxClient, schedule: Schedule) {
-    return this.request<OKResponse>(
+    return this.requestJson<OKResponse>(
         `${Endpoints.Schedule}/${schedule.installation_id}/${schedule.id}`, {
             method: 'DELETE'
         });
