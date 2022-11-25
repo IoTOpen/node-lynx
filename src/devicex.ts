@@ -20,25 +20,28 @@ export function GetDevice(this: LynxClient, installationId: number, id: number) 
     return this.requestJson<Devicex>(`${Endpoints.DeviceX}/${installationId}/${id}`);
 }
 
-export function CreateDevice(this: LynxClient, dev: EmptyDevicex) {
+export function CreateDevice(this: LynxClient, dev: EmptyDevicex, silent = false) {
+    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}` : '';
     return this.requestJson<Devicex>(
-        `${Endpoints.DeviceX}/${dev.installation_id}`, {
+        `${Endpoints.DeviceX}/${dev.installation_id}${qs}`, {
             method: 'POST',
             body: JSON.stringify(dev)
         });
 }
 
-export function UpdateDevice(this: LynxClient, dev: Devicex) {
+export function UpdateDevice(this: LynxClient, dev: Devicex, silent = false) {
+    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}` : '';
     return this.requestJson<Devicex>(
-        `${Endpoints.DeviceX}/${dev.installation_id}/${dev.id}`, {
+        `${Endpoints.DeviceX}/${dev.installation_id}/${dev.id}${qs}`, {
             method: 'PUT',
             body: JSON.stringify(dev)
         });
 }
 
-export function DeleteDevice(this: LynxClient, dev: Devicex) {
+export function DeleteDevice(this: LynxClient, dev: Devicex, silent = false) {
+    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}` : '';
     return this.requestJson<OKResponse>(
-        `${Endpoints.DeviceX}/${dev.installation_id}/${dev.id}`, {
+        `${Endpoints.DeviceX}/${dev.installation_id}/${dev.id}${qs}`, {
             method: 'DELETE'
         });
 }
