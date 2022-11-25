@@ -1,20 +1,24 @@
 import {
     CreateFunction,
     CreateFunctionMeta,
-    DeleteFunction, DeleteFunctionMeta,
+    DeleteFunction,
+    DeleteFunctionMeta,
     GetFunction,
     GetFunctionMeta,
     GetFunctions,
-    UpdateFunction, UpdateFunctionMeta
+    UpdateFunction,
+    UpdateFunctionMeta
 } from './functionx';
 import {
     CreateDevice,
     CreateDeviceMeta,
-    DeleteDevice, DeleteDeviceMeta,
+    DeleteDevice,
+    DeleteDeviceMeta,
     GetDevice,
     GetDeviceMeta,
     GetDevices,
-    UpdateDevice, UpdateDeviceMeta
+    UpdateDevice,
+    UpdateDeviceMeta
 } from './devicex';
 import {
     CreateInstallation,
@@ -28,39 +32,44 @@ import {
 } from './installation';
 import {GetLog, GetStatus} from './log';
 import {
+    CreateNotificationExecutorAdmin,
+    CreateNotificationMessage,
     CreateNotificationOutput,
-    DeleteNotificationOutput,
-    GetNotificationMessages,
-    GetNotificationMessage,
+    DeleteNotificationExecutorAdmin,
     DeleteNotificationMessage,
-    GetNotificationOutputs,
+    DeleteNotificationOutput,
+    GetNotificationExecutorAdmin,
+    GetNotificationMessage,
+    GetNotificationMessages,
     GetNotificationOutput,
     GetNotificationOutputExecutor,
     GetNotificationOutputExecutors,
-    UpdateNotificationOutput,
-    SendNotification,
-    CreateNotificationMessage,
-    UpdateNotificationMessage,
+    GetNotificationOutputs,
     GetNotificationsExecutorsAdmin,
-    GetNotificationExecutorAdmin,
-    CreateNotificationExecutorAdmin,
+    SendNotification,
     UpdateNotificationExecutorAdmin,
-    DeleteNotificationExecutorAdmin
+    UpdateNotificationMessage,
+    UpdateNotificationOutput
 } from './notification';
 import {
-    CreateOrganization, DeleteOrganization, GetOrganization, GetOrganizations, UpdateOrganization
+    CreateOrganization,
+    DeleteOrganization,
+    GetOrganization,
+    GetOrganizations,
+    UpdateOrganization
 } from './organization';
 import {CreateSchedule, DeleteSchedule, GetSchedule, GetSchedules, UpdateSchedule} from './schedule';
 import {ChangePassword, CreateUser, DeleteUser, GetMe, GetUser, GetUsers, UpdateUser} from './user';
 import {
-    CreateEdgeAppInstance, GetConfiguredEdgeApps,
+    CreateEdgeAppInstance,
+    GetConfiguredEdgeApps,
     GetEdgeApp,
     GetEdgeAppConfigOptions,
     GetEdgeAppInstance,
     GetEdgeApps,
     GetEdgeAppVersions,
-    UpdateEdgeAppInstance,
-    RemoveEdgeAppInstance
+    RemoveEdgeAppInstance,
+    UpdateEdgeAppInstance
 } from './edge_app';
 import {Login, Login2FA, Logout, ResetPassword, ResetPasswordUpdate} from './auth';
 import {CreateRole, DeleteRole, GetRole, GetRoles, UpdateRole} from './role';
@@ -74,16 +83,17 @@ import {
 } from './gateway';
 import {
     CreateUserRegistrationPolicy,
+    DeleteUserRegistrationPolicy,
     GetUserRegistrationPolicies,
     GetUserRegistrationPolicy,
-    UpdateUserRegistrationPolicy,
-    DeleteUserRegistrationPolicy
+    UpdateUserRegistrationPolicy
 } from './user_registration_policy';
 import {
     CreateFileInstallation,
     CreateFileOrganization,
     DeleteFileInstallation,
-    DeleteFileOrganization, DownloadFile,
+    DeleteFileOrganization,
+    DownloadFile,
     GetFileInstallation,
     GetFileOrganization,
     GetFilesInstallation,
@@ -93,15 +103,17 @@ import {
 } from './file';
 import {GetTrace} from './trace';
 import {Register} from './register';
-import {requestJson, request, requestNull, requestBlob} from './util';
+import {request, requestBlob, requestJson, requestNull} from './util';
 
 export class LynxClient {
     baseURL: string;
     apiKey?: string;
-    constructor(base: string, apiKey?: string) {
-        this.baseURL = base.replace(/\/$/, '');
+
+    constructor(base?: string, apiKey?: string) {
+        this.baseURL = base ? base.replace(/\/$/, '') : '';
         this.apiKey = apiKey;
     }
+
     request = request;
     requestJson = requestJson;
     requestBlob = requestBlob;
@@ -196,7 +208,7 @@ export class LynxClient {
     getEdgeAppInstance = GetEdgeAppInstance;
     createEdgeAppInstance = CreateEdgeAppInstance;
     updateEdgeAppInstance = UpdateEdgeAppInstance;
-	removeEdgeAppInstance = RemoveEdgeAppInstance;
+    removeEdgeAppInstance = RemoveEdgeAppInstance;
 
     getRoles = GetRoles;
     getRole = GetRole;
