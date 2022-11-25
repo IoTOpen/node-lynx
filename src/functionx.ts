@@ -22,23 +22,26 @@ export function GetFunction(this: LynxClient, installationId: number, id: number
         `${Endpoints.FunctionX}/${installationId}/${id}`);
 }
 
-export function CreateFunction(this: LynxClient, func: EmptyFunctionx) {
+export function CreateFunction(this: LynxClient, func: EmptyFunctionx, silent = false) {
+    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}` : '';
     return this.requestJson<Functionx>(
-        `${Endpoints.FunctionX}/${func.installation_id}`, {
+        `${Endpoints.FunctionX}/${func.installation_id}${qs}`, {
             method: 'POST', body: JSON.stringify(func)
         });
 }
 
-export function UpdateFunction(this: LynxClient, func: Functionx) {
+export function UpdateFunction(this: LynxClient, func: Functionx, silent = false) {
+    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}` : '';
     return this.requestJson<Functionx>(
-        `${Endpoints.FunctionX}/${func.installation_id}/${func.id}`, {
+        `${Endpoints.FunctionX}/${func.installation_id}/${func.id}${qs}`, {
             method: 'PUT', body: JSON.stringify(func)
         });
 }
 
-export function DeleteFunction(this: LynxClient, func: Functionx) {
+export function DeleteFunction(this: LynxClient, func: Functionx, silent = false) {
+    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}` : '';
     return this.requestJson<OKResponse>(
-        `${Endpoints.FunctionX}/${func.installation_id}/${func.id}`, {
+        `${Endpoints.FunctionX}/${func.installation_id}/${func.id}${qs}`, {
             method: 'DELETE'
         });
 }
