@@ -37,7 +37,6 @@ export function request(this: LynxClient, info: RequestInfo | URL, init?: Reques
 
 export function requestJson<T>(this: LynxClient, endpoint: string, options?: RequestInit): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
-    console.log(url, options?.method);
     return this.request(url, options).then(async (res) => {
         if (res.status !== 200) {
             const err = await res.json() as ErrorResponse;
@@ -50,7 +49,6 @@ export function requestJson<T>(this: LynxClient, endpoint: string, options?: Req
 
 export function requestBlob<T>(this: LynxClient, endpoint: string, options?: RequestInit): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
-    console.log(url, options?.method);
     return this.request(url, options).then(async (res) => {
         if (res.status !== 200) {
             const err = await res.json() as ErrorResponse;
