@@ -22,7 +22,7 @@ export function GetSchedules(this: LynxClient, installationId: number, executor?
 }
 
 export function GetSchedule(this: LynxClient, installationId: number, id: number) {
-    return this.requestJson(
+    return this.requestJson<Schedule>(
         `${Endpoints.Schedule}/${installationId}/${id}`);
 }
 

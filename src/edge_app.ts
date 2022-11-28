@@ -22,6 +22,12 @@ export type EmptyEdgeApp = {
 
 export type EdgeApp = EmptyEdgeApp & Identifier & CreationDate
 
+export type EdgeAppVersion = {
+    name: string
+    hash: string
+    timestamp: number
+}
+
 export function GetEdgeApps(this: LynxClient) {
     return this.requestJson<EdgeApp[]>(Endpoints.EdgeApp);
 }
@@ -32,7 +38,7 @@ export function GetEdgeApp(this: LynxClient, id: number) {
 
 export function GetEdgeAppVersions(this: LynxClient, appId: number, untagged?: boolean) {
     const qs = untagged ? `?untagged=${untagged}` : '';
-    return this.requestJson(`${Endpoints.EdgeApp}/${appId}/version${qs}`);
+    return this.requestJson<EdgeAppVersion[]>(`${Endpoints.EdgeApp}/${appId}/version${qs}`);
 }
 
 export function GetEdgeAppConfigOptions(this: LynxClient, id: number, version: string) {
@@ -41,11 +47,11 @@ export function GetEdgeAppConfigOptions(this: LynxClient, id: number, version: s
 }
 
 export function GetConfiguredEdgeApps(this: LynxClient, installationId: number) {
-    return this.requestJson(`${Endpoints.EdgeApp}/configured/${installationId}`);
+    return this.requestJson<EdgeAppInstance[]>(`${Endpoints.EdgeApp}/configured/${installationId}`);
 }
 
 export function GetEdgeAppInstance(this: LynxClient, installationId: number, instanceId: number) {
-    return this.requestJson(`${Endpoints.EdgeApp}/configured/${installationId}/${instanceId}`);
+    return this.requestJson<EdgeAppInstance>(`${Endpoints.EdgeApp}/configured/${installationId}/${instanceId}`);
 }
 
 export type EmptyEdgeAppInstance = {
@@ -59,14 +65,14 @@ export type EmptyEdgeAppInstance = {
 export type EdgeAppInstance = EmptyEdgeAppInstance & Identifier & CreationDate
 
 export function CreateEdgeAppInstance(this: LynxClient, instanceData: EmptyEdgeAppInstance) {
-    return this.requestJson(
+    return this.requestJson<EdgeAppInstance>(
         `${Endpoints.EdgeApp}/configured/${instanceData.installation_id}`, {
             method: 'POST', body: JSON.stringify(instanceData)
         });
 }
 
 export function UpdateEdgeAppInstance(this: LynxClient, instanceData: EdgeAppInstance) {
-    return this.requestJson(
+    return this.requestJson<EdgeAppInstance>(
         `${Endpoints.EdgeApp}/configured/${instanceData.installation_id}/${instanceData.id}`, {
             method: 'PUT', body: JSON.stringify(instanceData)
         });

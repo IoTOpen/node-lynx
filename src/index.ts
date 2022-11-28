@@ -17,6 +17,7 @@ export type {
 export type {LoginResult} from './auth';
 export type {EmptyDevicex, Devicex} from './devicex';
 export type {
+    EdgeAppVersion,
     Publisher, EmptyEdgeApp, EdgeApp,
     EdgeAppInstance, EmptyEdgeAppInstance
 } from './edge_app';
