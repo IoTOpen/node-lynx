@@ -16,7 +16,10 @@ export type {
 } from './types';
 export type {LoginResult} from './auth';
 export type {EmptyDevicex, Devicex} from './devicex';
-export type {Publisher, EmptyEdgeApp, EdgeApp} from './edge_app';
+export type {
+    Publisher, EmptyEdgeApp, EdgeApp,
+    EdgeAppInstance, EmptyEdgeAppInstance
+} from './edge_app';
 export type {EmptyFile, File} from './file';
 export type {EmptyFunctionx, Functionx} from './functionx';
 export type {GatewayInformation, GatewayRegistrationPolicy} from './gateway';
@@ -34,7 +37,7 @@ export type {
 export type {UserRegistration} from './register';
 export type {EmptyRole, Role} from './role';
 export type {EmptySchedule, Schedule} from './schedule';
-export type {EmptyToken,Token,TokenAccess} from './token';
+export type {EmptyToken, Token, TokenAccess} from './token';
 export type {Trace} from './trace';
 export type {EmptyUser, User} from './user';
 export type {EmptyUserRegistrationPolicy, UserRegistrationPolicy} from './user_registration_policy';
