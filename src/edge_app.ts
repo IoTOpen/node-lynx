@@ -36,9 +36,63 @@ export function GetEdgeApp(this: LynxClient, id: number) {
     return this.requestJson<EdgeApp>(`${Endpoints.EdgeApp}/${id}`);
 }
 
-export function GetEdgeAppVersions(this: LynxClient, appId: number, untagged?: boolean) {
+
+export function CreateEdgeApp(this: LynxClient, app: EmptyEdgeApp) {
+    return this.requestJson<EdgeApp>(`${Endpoints.EdgeApp}`, {
+        method: 'POST',
+        body: JSON.stringify(app)
+    });
+}
+
+export function UpdateEdgeApp(this: LynxClient, app: EdgeApp) {
+    return this.requestJson<EdgeApp>(`${Endpoints.EdgeApp}/${app.id}`, {
+        method: 'PUT',
+        body: JSON.stringify(app)
+    });
+}
+
+export function GetEdgeAppVersions(this: LynxClient, id: number, untagged?: boolean) {
     const qs = untagged ? `?untagged=${untagged}` : '';
-    return this.requestJson<EdgeAppVersion[]>(`${Endpoints.EdgeApp}/${appId}/version${qs}`);
+    return this.requestJson<EdgeAppVersion[]>(`${Endpoints.EdgeApp}/${id}/version${qs}`);
+}
+
+export function NameEdgeAppVersion(this: LynxClient, id: number, name: string, hash: string) {
+    return this.requestJson<EdgeAppVersion>(`${Endpoints.EdgeApp}/${id}/publish`, {
+        method: 'POST',
+        body: JSON.stringify({
+            name,
+            hash,
+        })
+    });
+}
+
+export function CreateEdgeAppVersion(this: LynxClient, id: number, appJson?: object | string | Blob, appLua?: string | Blob) {
+    const data = new FormData();
+    let appData: Blob;
+    if (appJson !== undefined) {
+        if (appJson instanceof Blob) {
+            appData = appJson;
+        } else if (typeof appJson === 'string') {
+            appData = new Blob([appJson]);
+        } else {
+            appData = new Blob([JSON.stringify(appJson, null, 2)]);
+        }
+        data.append('app_json', appData, 'app.json');
+    }
+    if (appLua !== undefined) {
+        if (typeof appLua === 'string') {
+            appLua = new Blob([appLua]);
+        }
+        data.append('app_lua', appLua, 'app.lua');
+    }
+    return this.requestNull<EdgeAppVersion>(`${Endpoints.EdgeApp}/${id}/version`, {
+        method: 'POST',
+        body: data
+    });
+}
+
+export function DownloadEdgeApp(this: LynxClient, id: number, version: string) {
+    return this.requestBlob(`${Endpoints.EdgeApp}/${id}/download?version=${encodeURIComponent(version)}`);
 }
 
 export function GetEdgeAppConfigOptions(this: LynxClient, id: number, version: string) {
