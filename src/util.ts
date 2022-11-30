@@ -28,7 +28,7 @@ export function request(this: LynxClient, info: RequestInfo | URL, init?: Reques
     const conf = {
         ...init,
     } as RequestInit;
-    if (this.apiKey) {
+    if (this.apiKey && this.apiKey !== '') {
         if (!conf.headers) conf.headers = {};
         (conf.headers as any)['X-API-Key'] = this.apiKey;
     }
