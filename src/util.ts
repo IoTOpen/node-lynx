@@ -47,7 +47,7 @@ export function requestJson<T>(this: LynxClient, endpoint: string, options?: Req
     });
 }
 
-export function requestBlob<T>(this: LynxClient, endpoint: string, options?: RequestInit): Promise<T> {
+export function requestBlob(this: LynxClient, endpoint: string, options?: RequestInit) {
     const url = `${this.baseURL}${endpoint}`;
     return this.request(url, options).then(async (res) => {
         if (res.status !== 200) {
@@ -55,7 +55,7 @@ export function requestBlob<T>(this: LynxClient, endpoint: string, options?: Req
             err.status = res.status;
             throw err;
         }
-        return await res.blob() as T;
+        return await res.blob();
     });
 }
 
