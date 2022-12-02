@@ -1,5 +1,5 @@
 import {Endpoints} from './util';
-import {CreationDate, Identifier, OKResponse} from './types';
+import {CreationDate, Identifier, Metadata, OKResponse} from './types';
 import {LynxClient} from './client';
 
 export type Publisher = {
@@ -95,9 +95,49 @@ export function DownloadEdgeApp(this: LynxClient, id: number, version: string) {
     return this.requestBlob(`${Endpoints.EdgeApp}/${id}/download?version=${encodeURIComponent(version)}`);
 }
 
+type EdgeAppInput = {
+    type: string
+    name: string
+    description: string
+    required?: boolean
+    value?: boolean
+    values?: {
+        [key: string]: any
+    }
+    default?: any
+    filter?: Metadata
+    allow_add?: boolean
+    validator?: RegExp
+    on_error?: string
+    min?: number
+    max?: number
+    false_value?: any
+    true_value?: any
+    input_fields?: string[]
+    [key: string]: any
+}
+
+type Guide = {
+    id: string
+    title: string
+    description: string
+    input_fields: string[],
+    [key: string]: any
+};
+
+type EdgeAppOptions = {
+    author: string
+    license: string
+    input: {
+        [key: string]: EdgeAppInput
+    }
+    guide: Guide[]
+    [key: string]: any
+};
+
 export function GetEdgeAppConfigOptions(this: LynxClient, id: number, version: string) {
     const qs = `?version=${version}`;
-    return this.requestJson<any>(`${Endpoints.EdgeApp}/${id}/configure${qs}`);
+    return this.requestJson<EdgeAppOptions>(`${Endpoints.EdgeApp}/${id}/configure${qs}`);
 }
 
 export function GetConfiguredEdgeApps(this: LynxClient, installationId: number) {
