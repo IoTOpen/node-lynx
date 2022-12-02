@@ -1,12 +1,10 @@
 import {Endpoints} from './util';
-import {CreationDate, Identifier, Metadata, MetaObject, OKResponse} from './types';
+import {CreationDate, Identifier, Metadata, MetaLike, MetaObject, OKResponse} from './types';
 import {LynxClient} from './client';
 
-export type EmptyFunctionx = {
+export type EmptyFunctionx = MetaLike & {
     installation_id: number
     type: string
-    meta: Metadata
-    protected_meta: Metadata
 }
 
 export type Functionx = EmptyFunctionx & Identifier & CreationDate

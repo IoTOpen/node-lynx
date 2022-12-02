@@ -1,5 +1,5 @@
 import {Endpoints} from './util';
-import {Address, Identifier, Metadata, OKResponse} from './types';
+import {Address, Identifier, Metadata, MetaLike, OKResponse} from './types';
 import {LynxClient} from './client';
 
 export type OrganizationChild = {
@@ -13,7 +13,7 @@ export type OrganizationSimple = {
     parent: string
 }
 
-export type EmptyOrganization = {
+export type EmptyOrganization = MetaLike & {
     name: string
     address: Address
     email: string
@@ -22,8 +22,6 @@ export type EmptyOrganization = {
     parent: number
     children: OrganizationChild[]
     notes: string
-    meta: Metadata
-    protected_meta: Metadata
 }
 
 export type Organization = EmptyOrganization & Identifier

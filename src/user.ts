@@ -1,8 +1,8 @@
 import {Endpoints} from './util';
-import {Address, Identifier, Metadata, OKResponse} from './types';
+import {Address, Identifier, Metadata, MetaLike, OKResponse} from './types';
 import {LynxClient} from './client';
 
-export type EmptyUser = {
+export type EmptyUser = MetaLike & {
     email: number
     password?: string
     first_name: string
@@ -14,8 +14,6 @@ export type EmptyUser = {
     organisations: number[]
     assigned_installations?: number[]
     address: Address
-    meta: Metadata
-    protected_meta: Metadata
 }
 
 export type User = EmptyUser & Identifier
