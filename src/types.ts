@@ -1,5 +1,10 @@
 export type Metadata = { [key: string]: string }
 
+export type WithMeta = {
+    meta: Metadata
+    protected_meta: Metadata
+}
+
 export type Address = {
     address: string
     city: string

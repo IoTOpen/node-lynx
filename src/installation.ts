@@ -1,5 +1,5 @@
 import {Endpoints} from './util';
-import {Identifier, Metadata, OKResponse} from './types';
+import {Identifier, Metadata, WithMeta, OKResponse} from './types';
 import {LynxClient} from './client';
 
 export type InstallationInfo = {
@@ -11,13 +11,11 @@ export type InstallationInfo = {
     assigned: boolean
 };
 
-export type EmptyInstallation = {
+export type EmptyInstallation = WithMeta & {
     name: string
     organization_id: number
     notes: string
     users: number[]
-    meta: Metadata
-    protected_meta: Metadata
 }
 
 export type Installation = EmptyInstallation & Identifier & { client_id: number, created: number }
