@@ -1,6 +1,6 @@
 export type Metadata = { [key: string]: string }
 
-export type MetaLike = {
+export type WithMeta = {
     meta: Metadata
     protected_meta: Metadata
 }

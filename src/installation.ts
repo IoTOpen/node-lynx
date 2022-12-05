@@ -1,5 +1,5 @@
 import {Endpoints} from './util';
-import {Identifier, Metadata, MetaLike, OKResponse} from './types';
+import {Identifier, Metadata, WithMeta, OKResponse} from './types';
 import {LynxClient} from './client';
 
 export type InstallationInfo = {
@@ -11,7 +11,7 @@ export type InstallationInfo = {
     assigned: boolean
 };
 
-export type EmptyInstallation = MetaLike & {
+export type EmptyInstallation = WithMeta & {
     name: string
     organization_id: number
     notes: string
