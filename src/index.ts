@@ -5,6 +5,7 @@ import {TraceAction, TraceObjectType} from './trace';
 
 export {LynxClient, Permissions, LogOrder, TraceObjectType, TraceAction};
 export type {
+    WithMeta,
     CreationDate,
     Identifier,
     Metadata,
