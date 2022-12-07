@@ -32,5 +32,8 @@
     "rollup-plugin-dts": "^4.2.2",
     "rollup-plugin-terser": "^7.0.2",
     "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "js-base64": "^3.7.3"
   }
 }

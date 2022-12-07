@@ -1,6 +1,7 @@
 import {Endpoints} from './util';
 import {OKResponse} from './types';
 import {LynxClient} from './client';
+import {Base64} from 'js-base64';
 
 export type LoginResult = {
     token: string
@@ -11,7 +12,7 @@ export function Login(this: LynxClient, username: string, password: string): Pro
     return this.requestJson(Endpoints.Auth, {
         method: 'POST',
         headers: {
-            'Authorization': `Basic ${btoa(`${username}:${password}`)}`
+            'Authorization': `Basic ${Base64.encode(`${username}:${password}`)}`
         }
     });
 }
