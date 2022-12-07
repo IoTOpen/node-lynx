@@ -57,8 +57,8 @@ export function CreateFunctionMeta(this: LynxClient, installationID: number, fun
     });
 }
 
-export function UpdateFunctionMeta(this: LynxClient, installationID: number, functionID: number, key: string, data: MetaObject, silent = false) {
-    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}` : '';
+export function UpdateFunctionMeta(this: LynxClient, installationID: number, functionID: number, key: string, data: MetaObject, silent = false, createMissing = false) {
+    const qs = `?${new URLSearchParams({silent: String(silent), create_missing: String(createMissing)})}`;
     const path = `${Endpoints.FunctionX}/${installationID}/${functionID}/meta/${encodeURIComponent(key)}${qs}`;
     return this.requestJson<MetaObject>(path, {
         method: 'PUT', body: JSON.stringify(data)

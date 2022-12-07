@@ -56,8 +56,8 @@ export function CreateDeviceMeta(this: LynxClient, installationID: number, devic
     });
 }
 
-export function UpdateDeviceMeta(this: LynxClient, installationID: number, deviceID: number, key: string, data: MetaObject, silent = false) {
-    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}` : '';
+export function UpdateDeviceMeta(this: LynxClient, installationID: number, deviceID: number, key: string, data: MetaObject, silent = false, createMissing = false) {
+    const qs = `?${new URLSearchParams({silent: String(silent), create_missing: String(createMissing)})}`;
     const path = `${Endpoints.DeviceX}/${installationID}/${deviceID}/meta/${encodeURIComponent(key)}${qs}`;
     return this.requestJson<MetaObject>(path, {
         method: 'PUT', body: JSON.stringify(data)
