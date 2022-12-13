@@ -1,5 +1,5 @@
 import {Endpoints} from './util';
-import {Address, Identifier, Metadata, WithMeta, OKResponse} from './types';
+import {Address, Identifier, Metadata, WithMeta, OKResponse, MetaObject} from './types';
 import {LynxClient} from './client';
 
 export type EmptyUser = WithMeta & {
@@ -58,5 +58,33 @@ export function ChangePassword(this: LynxClient, passwordData: ChangePasswordDat
     return this.requestJson<OKResponse>(`${Endpoints.User}/password`, {
         method: 'PUT',
         body: JSON.stringify(passwordData),
+    });
+}
+
+export function GetUserMeta(this: LynxClient, userID: number, key: string) {
+    return this.requestJson<MetaObject>(`${Endpoints.User}/${userID}/meta/${encodeURIComponent(key)}`);
+}
+
+export function CreateUserMeta(this: LynxClient, userID: number, key: string, data: MetaObject, silent = false) {
+    const qs = `?${new URLSearchParams({silent: String(silent)})}`;
+    const path = `${Endpoints.User}/${userID}/meta/${encodeURIComponent(key)}${qs}`;
+    return this.requestJson<MetaObject>(path, {
+        method: 'POST', body: JSON.stringify(data)
+    });
+}
+
+export function UpdateUserMeta(this: LynxClient, userID: number, key: string, data: MetaObject, silent = false, createMissing = false) {
+    const qs = `?${new URLSearchParams({silent: String(silent), create_missing: String(createMissing)})}`;
+    const path = `${Endpoints.User}/${userID}/meta/${encodeURIComponent(key)}${qs}`;
+    return this.requestJson<MetaObject>(path, {
+        method: 'PUT', body: JSON.stringify(data)
+    });
+}
+
+export function DeleteUserMeta(this: LynxClient, userID: number, key: string, silent = false) {
+    const qs = `?${new URLSearchParams({silent: String(silent)})}`;
+    const path = `${Endpoints.User}/${userID}/meta/${encodeURIComponent(key)}${qs}`;
+    return this.requestJson<MetaObject>(path, {
+        method: 'DELETE'
     });
 }

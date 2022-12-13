@@ -52,14 +52,24 @@ import {
     UpdateNotificationOutput
 } from './notification';
 import {
-    CreateOrganization,
-    DeleteOrganization,
-    GetOrganization,
+    CreateOrganization, CreateOrganizationMeta,
+    DeleteOrganization, DeleteOrganizationMeta,
+    GetOrganization, GetOrganizationMeta,
     GetOrganizations,
-    UpdateOrganization
+    UpdateOrganization, UpdateOrganizationMeta
 } from './organization';
 import {CreateSchedule, DeleteSchedule, GetSchedule, GetSchedules, UpdateSchedule} from './schedule';
-import {ChangePassword, CreateUser, DeleteUser, GetMe, GetUser, GetUsers, UpdateUser} from './user';
+import {
+    ChangePassword,
+    CreateUser,
+    CreateUserMeta,
+    DeleteUser, DeleteUserMeta,
+    GetMe,
+    GetUser,
+    GetUserMeta,
+    GetUsers,
+    UpdateUser, UpdateUserMeta
+} from './user';
 import {
     CreateEdgeApp,
     CreateEdgeAppInstance,
@@ -187,6 +197,10 @@ export class LynxClient {
     createOrganization = CreateOrganization;
     updateOrganization = UpdateOrganization;
     deleteOrganization = DeleteOrganization;
+    getOrganizationMeta = GetOrganizationMeta;
+    createOrganizationMeta = CreateOrganizationMeta;
+    updateOrganizationMeta = UpdateOrganizationMeta;
+    deleteOrganizationMeta = DeleteOrganizationMeta;
 
     createNotificationMessage = CreateNotificationMessage;
     updateNotificationMessage = UpdateNotificationMessage;
@@ -204,6 +218,10 @@ export class LynxClient {
     updateUser = UpdateUser;
     deleteUser = DeleteUser;
     changePassword = ChangePassword;
+    getUserMeta = GetUserMeta;
+    createUserMeta = CreateUserMeta;
+    updateUserMeta = UpdateUserMeta;
+    deleteUserMeta = DeleteUserMeta;
 
     getEdgeApps = GetEdgeApps;
     getEdgeApp = GetEdgeApp;
