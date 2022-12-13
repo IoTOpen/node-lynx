@@ -49,7 +49,7 @@ export function GetDeviceMeta(this: LynxClient, installationID: number, deviceID
 }
 
 export function CreateDeviceMeta(this: LynxClient, installationID: number, deviceID: number, key: string, data: MetaObject, silent = false) {
-    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}` : '';
+    const qs = `?${new URLSearchParams({silent: String(silent)})}`;
     const path = `${Endpoints.DeviceX}/${installationID}/${deviceID}/meta/${encodeURIComponent(key)}${qs}`;
     return this.requestJson<MetaObject>(path, {
         method: 'POST', body: JSON.stringify(data)
@@ -65,7 +65,7 @@ export function UpdateDeviceMeta(this: LynxClient, installationID: number, devic
 }
 
 export function DeleteDeviceMeta(this: LynxClient, installationID: number, deviceID: number, key: string, silent = false) {
-    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}` : '';
+    const qs = `?${new URLSearchParams({silent: String(silent)})}`;
     const path = `${Endpoints.DeviceX}/${installationID}/${deviceID}/meta/${encodeURIComponent(key)}${qs}`;
     return this.requestJson<MetaObject>(path, {
         method: 'DELETE'

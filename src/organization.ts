@@ -1,5 +1,5 @@
 import {Endpoints} from './util';
-import {Address, Identifier, Metadata, WithMeta, OKResponse} from './types';
+import {Address, Identifier, Metadata, WithMeta, OKResponse, MetaObject} from './types';
 import {LynxClient} from './client';
 
 export type OrganizationChild = {
@@ -58,4 +58,32 @@ export function DeleteOrganization(this: LynxClient, org: Organization) {
         `${Endpoints.Organization}/${org.id}`, {
             method: 'DELETE'
         });
+}
+
+export function GetOrganizationMeta(this: LynxClient, userID: number, key: string) {
+    return this.requestJson<MetaObject>(`${Endpoints.Organization}/${userID}/meta/${encodeURIComponent(key)}`);
+}
+
+export function CreateOrganizationMeta(this: LynxClient, orgID: number, key: string, data: MetaObject, silent = false) {
+    const qs = `?${new URLSearchParams({silent: String(silent)})}`;
+    const path = `${Endpoints.Organization}/${orgID}/meta/${encodeURIComponent(key)}${qs}`;
+    return this.requestJson<MetaObject>(path, {
+        method: 'POST', body: JSON.stringify(data)
+    });
+}
+
+export function UpdateOrganizationMeta(this: LynxClient, orgID: number, key: string, data: MetaObject, silent = false, createMissing = false) {
+    const qs = `?${new URLSearchParams({silent: String(silent), create_missing: String(createMissing)})}`;
+    const path = `${Endpoints.Organization}/${orgID}/meta/${encodeURIComponent(key)}${qs}`;
+    return this.requestJson<MetaObject>(path, {
+        method: 'PUT', body: JSON.stringify(data)
+    });
+}
+
+export function DeleteOrganizationMeta(this: LynxClient, orgID: number, key: string, silent = false) {
+    const qs = `?${new URLSearchParams({silent: String(silent)})}`;
+    const path = `${Endpoints.Organization}/${orgID}/meta/${encodeURIComponent(key)}${qs}`;
+    return this.requestJson<MetaObject>(path, {
+        method: 'DELETE'
+    });
 }
