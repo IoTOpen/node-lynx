@@ -1,5 +1,5 @@
 import {Endpoints} from './util';
-import {Identifier, Metadata, WithMeta, OKResponse} from './types';
+import {Identifier, Metadata, WithMeta, OKResponse, MetaObject} from './types';
 import {LynxClient} from './client';
 
 export type InstallationInfo = {
@@ -72,4 +72,32 @@ export function DeleteInstallation(this: LynxClient, installation: Installation)
         `${Endpoints.Installation}/${installation.id}`, {
             method: 'DELETE'
         });
+}
+export function GetInstallationMeta(this: LynxClient, installationID: number, key: string) {
+    return this.requestJson<MetaObject>(
+        `${Endpoints.Installation}/${installationID}/meta/${encodeURIComponent(key)}`);
+}
+
+export function CreateInstallationMeta(this: LynxClient, installationID: number, key: string, data: MetaObject, silent = false) {
+    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}` : '';
+    const path = `${Endpoints.Installation}/${installationID}/meta/${encodeURIComponent(key)}${qs}`;
+    return this.requestJson<MetaObject>(path, {
+        method: 'POST', body: JSON.stringify(data)
+    });
+}
+
+export function UpdateInstallationMeta(this: LynxClient, installationID: number, key: string, data: MetaObject, silent = false, createMissing = false) {
+    const qs = `?${new URLSearchParams({silent: String(silent), create_missing: String(createMissing)})}`;
+    const path = `${Endpoints.Installation}/${installationID}/meta/${encodeURIComponent(key)}${qs}`;
+    return this.requestJson<MetaObject>(path, {
+        method: 'PUT', body: JSON.stringify(data)
+    });
+}
+
+export function DeleteInstallationMeta(this: LynxClient, installationID: number, functionID: number, key: string, silent = false) {
+    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}` : '';
+    const path = `${Endpoints.Installation}/${installationID}/meta/${encodeURIComponent(key)}${qs}`;
+    return this.requestJson<MetaObject>(path, {
+        method: 'DELETE'
+    });
 }

@@ -21,14 +21,14 @@ import {
     UpdateDeviceMeta
 } from './devicex';
 import {
-    CreateInstallation,
-    DeleteInstallation,
+    CreateInstallation, CreateInstallationMeta,
+    DeleteInstallation, DeleteInstallationMeta,
     GetInstallation,
-    GetInstallationByClientId,
+    GetInstallationByClientId, GetInstallationMeta,
     GetInstallationRow,
     GetInstallations,
     ListInstallations,
-    UpdateInstallation
+    UpdateInstallation, UpdateInstallationMeta
 } from './installation';
 import {GetLog, GetStatus} from './log';
 import {
@@ -172,6 +172,10 @@ export class LynxClient {
     createInstallation = CreateInstallation;
     updateInstallation = UpdateInstallation;
     deleteInstallation = DeleteInstallation;
+    getInstallationMeta = GetInstallationMeta;
+    createInstallationMeta = CreateInstallationMeta;
+    updateInstallationMeta = UpdateInstallationMeta;
+    deleteInstallationMeta = DeleteInstallationMeta;
 
     getStatus = GetStatus;
     getLog = GetLog;
