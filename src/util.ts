@@ -15,6 +15,7 @@ export enum Endpoints {
     Schedule = '/api/v2/schedule',
     User = '/api/v2/user',
     EdgeApp = '/api/v2/edge/app',
+    EdgePublisher = '/api/v2/edge/publisher',
     Role = '/api/v2/role',
     Permission = '/api/v2/permission',
     Token = '/api/v2/user/me/security/token',
