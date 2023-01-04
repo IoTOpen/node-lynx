@@ -28,6 +28,10 @@ export type EdgeAppVersion = {
     timestamp: number
 }
 
+export function GetEdgeAppPublisher(this: LynxClient, organizationId: number) {
+    return this.requestJson<Publisher>(`${Endpoints.EdgePublisher}/${organizationId}`);
+}
+
 export function GetEdgeApps(this: LynxClient) {
     return this.requestJson<EdgeApp[]>(Endpoints.EdgeApp);
 }

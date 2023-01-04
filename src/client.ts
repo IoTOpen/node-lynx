@@ -78,7 +78,7 @@ import {
     GetConfiguredEdgeApps,
     GetEdgeApp,
     GetEdgeAppConfigOptions,
-    GetEdgeAppInstance,
+    GetEdgeAppInstance, GetEdgeAppPublisher,
     GetEdgeApps,
     GetEdgeAppVersions,
     NameEdgeAppVersion,
@@ -229,6 +229,7 @@ export class LynxClient {
 
     getEdgeApps = GetEdgeApps;
     getEdgeApp = GetEdgeApp;
+    getEdgeAppPublisher = GetEdgeAppPublisher;
     createEdgeApp = CreateEdgeApp;
     updateEdgeApp = UpdateEdgeApp;
     getEdgeAppVersions = GetEdgeAppVersions;
