@@ -9,18 +9,17 @@ import * as packageJson from './package.json';
 export default [
     {
         input: 'src/index.ts',
+        external: ['cross-fetch', 'cross-fetch/polyfill'],
         output: [
             {
                 file: packageJson.main,
                 format: 'cjs',
                 sourcemap: true,
-                inlineDynamicImports: true
             },
             {
                 file: packageJson.module,
                 format: 'esm',
                 sourcemap: true,
-                inlineDynamicImports: true
             },
         ],
         plugins: [

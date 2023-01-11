@@ -1,6 +1,6 @@
 import {ErrorResponse} from './types';
 import {LynxClient} from './client';
-import fetch, {RequestInfo, RequestInit} from 'node-fetch';
+import 'cross-fetch/polyfill';
 
 export enum Endpoints {
     Auth = '/api/v2/auth',
