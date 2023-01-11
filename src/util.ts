@@ -1,5 +1,6 @@
 import {ErrorResponse} from './types';
 import {LynxClient} from './client';
+import fetch, {RequestInfo, RequestInit} from 'node-fetch';
 
 export enum Endpoints {
     Auth = '/api/v2/auth',
@@ -25,7 +26,7 @@ export enum Endpoints {
     Trace = '/api/v2/trace'
 }
 
-export function request(this: LynxClient, info: RequestInfo | URL, init?: RequestInit) {
+export function request(this: LynxClient, info: RequestInfo, init?: RequestInit) {
     const conf = {
         ...init,
     } as RequestInit;
