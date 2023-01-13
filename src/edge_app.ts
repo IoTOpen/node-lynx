@@ -32,6 +32,12 @@ export function GetEdgeAppPublisher(this: LynxClient, organizationId: number) {
     return this.requestJson<Publisher>(`${Endpoints.EdgePublisher}/${organizationId}`);
 }
 
+export function GetEdgeAppOrganization(this: LynxClient, organizationId: number, available?: boolean) {
+    const qs = available ? `?${new URLSearchParams({available: String(available)})}` : '';
+    const path = `${Endpoints.EdgeApp}/organization/${organizationId}${qs}`;
+    return this.requestJson<EdgeApp[]>(path);
+}
+
 export function GetEdgeApps(this: LynxClient) {
     return this.requestJson<EdgeApp[]>(Endpoints.EdgeApp);
 }
