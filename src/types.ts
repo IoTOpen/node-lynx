@@ -41,3 +41,5 @@ export type MetaObject = {
     value: string
     protected: boolean
 }
+
+export type PermissionMap = { [key: string]: boolean }
