@@ -14,6 +14,7 @@ export type {
     ErrorResponse,
     PaginatedResponse,
     Address,
+    PermissionMap
 } from './types';
 export type {LoginResult} from './auth';
 export type {EmptyDevicex, Devicex} from './devicex';
