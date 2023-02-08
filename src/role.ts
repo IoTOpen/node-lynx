@@ -1,11 +1,11 @@
 import {Endpoints} from './util';
-import {Identifier, OKResponse} from './types';
+import {Identifier, OKResponse, PermissionMap} from './types';
 import {LynxClient} from './client';
 
 export type EmptyRole = {
     name: string
     priority: number
-    permissions: { [key: string]: boolean }
+    permissions: PermissionMap
 }
 
 export type Role = EmptyRole & Identifier
