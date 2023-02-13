@@ -21,7 +21,8 @@ export type {EmptyDevicex, Devicex} from './devicex';
 export type {
     EdgeAppVersion,
     Publisher, EmptyEdgeApp, EdgeApp,
-    EdgeAppInstance, EmptyEdgeAppInstance
+    EdgeAppInstance, EmptyEdgeAppInstance,
+    EdgeAppOptions, EdgeAppInput, Guide
 } from './edge_app';
 export type {EmptyFile, File} from './file';
 export type {EmptyFunctionx, Functionx} from './functionx';

@@ -105,7 +105,7 @@ export function DownloadEdgeApp(this: LynxClient, id: number, version: string) {
     return this.requestBlob(`${Endpoints.EdgeApp}/${id}/download?version=${encodeURIComponent(version)}`);
 }
 
-type EdgeAppInput = {
+export type EdgeAppInput = {
     type: string
     name: string
     description: string
@@ -127,7 +127,7 @@ type EdgeAppInput = {
     [key: string]: any
 }
 
-type Guide = {
+export type Guide = {
     id: string
     title: string
     description: string
@@ -135,7 +135,7 @@ type Guide = {
     [key: string]: any
 };
 
-type EdgeAppOptions = {
+export type EdgeAppOptions = {
     author: string
     license: string
     input: {
