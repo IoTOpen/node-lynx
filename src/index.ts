@@ -45,3 +45,4 @@ export type {EmptyToken, Token, TokenAccess} from './token';
 export type {Trace} from './trace';
 export type {EmptyUser, User} from './user';
 export type {EmptyUserRegistrationPolicy, UserRegistrationPolicy} from './user_registration_policy';
+export type {EmptyTopicBlacklist, TopicBlacklist} from './topic_blacklist';
