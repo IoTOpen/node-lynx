@@ -125,5 +125,5 @@ export enum Permissions {
     userSecurityTokenCreateDelete = 'user/security/token/create_delete',
     userSecurityTokenListAll = 'user/security/token/list/all',
 
-    topicBlacklistManagement = 'topic/blacklist/manage'
+    topicBlacklistManagement = 'mqtt/blacklist/topic/manage'
 }
