@@ -4,7 +4,7 @@ import {LynxClient} from './client';
 
 export type EmptyTopicBlacklist = {
     topic: string
-    regex: boolean
+    mode: string
     enabled: boolean
     reason: string
     counter: number
