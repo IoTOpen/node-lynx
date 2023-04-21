@@ -24,7 +24,7 @@ export enum Endpoints {
     UserRegistrationPolicy = '/api/v2/user/registration/policy',
     File = '/api/v2/file',
     Trace = '/api/v2/trace',
-    TopicBlacklist = '/api/v2/topicblacklist',
+    TopicBlacklist = '/api/v2/blacklist/topic',
 }
 
 export function request(this: LynxClient, info: RequestInfo, init?: RequestInit) {
