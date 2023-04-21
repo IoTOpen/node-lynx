@@ -116,6 +116,15 @@ import {
     UpdateFileInstallation,
     UpdateFileOrganization
 } from './file';
+
+import {
+    GetTopicBlacklist,
+    GetTopicBlacklistEntry,
+    CreateTopicBlacklistEntry,
+    UpdateTopicBlacklistEntry,
+    DeleteTopicBlacklistEntry,
+} from './topic_blacklist';
+
 import {GetTrace} from './trace';
 import {Register} from './register';
 import {request, requestBlob, requestJson, requestNull} from './util';
@@ -282,4 +291,10 @@ export class LynxClient {
     getTrace = GetTrace;
 
     register = Register;
+
+    getTopicBlacklist = GetTopicBlacklist;
+    getTopicBlacklistEntry = GetTopicBlacklistEntry;
+    createTopicBlacklistEntry = CreateTopicBlacklistEntry;
+    updateTopicBlacklistEntry = UpdateTopicBlacklistEntry;
+    deleteTopicBlacklistEntry = DeleteTopicBlacklistEntry;
 }
