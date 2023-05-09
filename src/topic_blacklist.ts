@@ -7,7 +7,7 @@ export type EmptyTopicBlacklist = {
     mode: string
     enabled: boolean
     reason: string
-    counter: number
+    count: number
 }
 
 export type TopicBlacklist = EmptyTopicBlacklist & Identifier
