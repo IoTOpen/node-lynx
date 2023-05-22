@@ -46,3 +46,5 @@ export type {Trace} from './trace';
 export type {EmptyUser, User} from './user';
 export type {EmptyUserRegistrationPolicy, UserRegistrationPolicy} from './user_registration_policy';
 export type {EmptyTopicBlacklist, TopicBlacklist} from './topic_blacklist';
+
+export type {OAuth2Client, EmptyOAuth2Client, OAuth2Scope} from './oauth2';

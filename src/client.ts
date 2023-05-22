@@ -128,6 +128,14 @@ import {
 import {GetTrace} from './trace';
 import {Register} from './register';
 import {request, requestBlob, requestJson, requestNull} from './util';
+import {
+    ConsentOauth2Authorization,
+    CreateOAuth2Client,
+    DeleteOAuth2Client,
+    GetOAuth2Client,
+    GetOAuth2Clients,
+    UpdateOAuth2Client
+} from './oauth2';
 
 export class LynxClient {
     baseURL: string;
@@ -297,4 +305,14 @@ export class LynxClient {
     createTopicBlacklistEntry = CreateTopicBlacklistEntry;
     updateTopicBlacklistEntry = UpdateTopicBlacklistEntry;
     deleteTopicBlacklistEntry = DeleteTopicBlacklistEntry;
+
+    deleteOAuth2Client = DeleteOAuth2Client;
+    getOAuth2Clients = GetOAuth2Clients;
+    getOAuth2Client = GetOAuth2Client;
+    createOAuth2Client = CreateOAuth2Client;
+    updateOAuth2Client = UpdateOAuth2Client;
+
+    consentOAuth2Authorization = ConsentOauth2Authorization;
+
+
 }
