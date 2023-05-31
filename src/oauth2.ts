@@ -1,6 +1,7 @@
 import {Endpoints} from './util';
 import {LynxClient} from './client';
 import {OKResponse} from './types';
+import {User} from './user';
 
 export type EmptyOAuth2Client = {
     name: string
@@ -25,6 +26,11 @@ export type OAuth2Scope = {
     description: string
 }
 
+export type OAuth2Consent = {
+    id: string
+    oauth2_client_id: string
+    scopes: string[]
+}
 
 export type ConsentAcceptResponse =  {
     redirect_to: string
@@ -71,5 +77,16 @@ export function ConsentOauth2Authorization(this: LynxClient, request: {[p:string
         `${Endpoints.OAuth2}/consent`, {
             method: 'POST',
             body: JSON.stringify(request),
+        });
+}
+
+export function GetUserOAuth2Consents(this: LynxClient, user: User) {
+    return this.requestJson<OAuth2Consent[]>(`${Endpoints.User}/${user.id}/security/consent`);
+}
+
+export function DeleteUserOAuth2Consent(this: LynxClient, user: User, consent: OAuth2Consent) {
+    return this.requestJson<OKResponse>(
+        `${Endpoints.User}/${user.id}/security/consent/${consent.id}`, {
+            method: 'DELETE',
         });
 }

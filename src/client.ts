@@ -131,9 +131,9 @@ import {request, requestBlob, requestJson, requestNull} from './util';
 import {
     ConsentOauth2Authorization,
     CreateOAuth2Client,
-    DeleteOAuth2Client,
+    DeleteOAuth2Client, DeleteUserOAuth2Consent,
     GetOAuth2Client,
-    GetOAuth2Clients,
+    GetOAuth2Clients, GetUserOAuth2Consents,
     UpdateOAuth2Client
 } from './oauth2';
 
@@ -313,6 +313,6 @@ export class LynxClient {
     updateOAuth2Client = UpdateOAuth2Client;
 
     consentOAuth2Authorization = ConsentOauth2Authorization;
-
-
+    getUserOAuth2Consents = GetUserOAuth2Consents;
+    deleteUserOAuth2Consent = DeleteUserOAuth2Consent;
 }
