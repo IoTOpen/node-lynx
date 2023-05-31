@@ -133,7 +133,7 @@ import {
     CreateOAuth2Client,
     DeleteOAuth2Client, DeleteUserOAuth2Consent,
     GetOAuth2Client,
-    GetOAuth2Clients, GetUserOAuth2Consents,
+    GetOAuth2Clients, GetOAuth2Scopes, GetUserOAuth2Consents,
     UpdateOAuth2Client
 } from './oauth2';
 
@@ -311,6 +311,7 @@ export class LynxClient {
     getOAuth2Client = GetOAuth2Client;
     createOAuth2Client = CreateOAuth2Client;
     updateOAuth2Client = UpdateOAuth2Client;
+    getOAuth2Scopes = GetOAuth2Scopes;
 
     consentOAuth2Authorization = ConsentOauth2Authorization;
     getUserOAuth2Consents = GetUserOAuth2Consents;

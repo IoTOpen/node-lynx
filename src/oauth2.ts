@@ -90,3 +90,8 @@ export function DeleteUserOAuth2Consent(this: LynxClient, user: User, consent: O
             method: 'DELETE',
         });
 }
+
+
+export function GetOAuth2Scopes(this: LynxClient) {
+    return this.requestJson<OAuth2Scope[]>(`${Endpoints.OAuth2Admin}/scope`);
+}
