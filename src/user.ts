@@ -61,6 +61,13 @@ export function ChangePassword(this: LynxClient, passwordData: ChangePasswordDat
     });
 }
 
+export function ChangePasswordOther(this: LynxClient, newPassword: string) {
+    return this.requestJson<OKResponse>(`${Endpoints.User}/password`, {
+        method: 'PUT',
+        body: JSON.stringify(newPassword),
+    });
+}
+
 export function GetUserMeta(this: LynxClient, userID: number, key: string) {
     return this.requestJson<MetaObject>(`${Endpoints.User}/${userID}/meta/${encodeURIComponent(key)}`);
 }
