@@ -3,7 +3,7 @@ import {Address, Identifier, Metadata, WithMeta, OKResponse, MetaObject} from '.
 import {LynxClient} from './client';
 
 export type EmptyUser = WithMeta & {
-    email: number
+    email: string
     password?: string
     first_name: string
     last_name: string
