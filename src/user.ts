@@ -64,7 +64,7 @@ export function ChangePassword(this: LynxClient, passwordData: ChangePasswordDat
 export function ChangePasswordOther(this: LynxClient, newPassword: string) {
     return this.requestJson<OKResponse>(`${Endpoints.User}/password`, {
         method: 'PUT',
-        body: JSON.stringify(newPassword),
+        body: JSON.stringify({password: newPassword}),
     });
 }
 
