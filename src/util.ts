@@ -25,6 +25,8 @@ export enum Endpoints {
     File = '/api/v2/file',
     Trace = '/api/v2/trace',
     TopicBlacklist = '/api/v2/blacklist/topic',
+    OAuth2 = '/api/v2/oauth2',
+    OAuth2Admin = '/api/v2/admin/oauth2',
 }
 
 export function request(this: LynxClient, info: RequestInfo, init?: RequestInit) {
