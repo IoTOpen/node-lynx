@@ -20,7 +20,6 @@ export type OAuth2Client = EmptyOAuth2Client & {
     updated: number
 }
 
-
 export type OAuth2Scope = {
     scope: string
     description: string
@@ -32,14 +31,13 @@ export type OAuth2Consent = {
     scopes: string[]
 }
 
-export type ConsentAcceptResponse =  {
+export type ConsentAcceptResponse = {
     redirect_to: string
 }
 
 export function GetOAuth2Clients(this: LynxClient) {
     return this.requestJson<OAuth2Client[]>(`${Endpoints.OAuth2Admin}/client`);
 }
-
 
 export function DeleteOAuth2Client(this: LynxClient, client: OAuth2Client) {
     return this.requestJson<OKResponse>(
@@ -70,9 +68,7 @@ export function UpdateOAuth2Client(this: LynxClient, client: OAuth2Client) {
         });
 }
 
-
-
-export function ConsentOauth2Authorization(this: LynxClient, request: {[p:string]: string}) {
+export function ConsentOauth2Authorization(this: LynxClient, request: { [p: string]: string }) {
     return this.requestJson<ConsentAcceptResponse>(
         `${Endpoints.OAuth2}/consent`, {
             method: 'POST',
@@ -90,7 +86,6 @@ export function DeleteUserOAuth2Consent(this: LynxClient, user: User, consent: O
             method: 'DELETE',
         });
 }
-
 
 export function GetOAuth2Scopes(this: LynxClient) {
     return this.requestJson<OAuth2Scope[]>(`${Endpoints.OAuth2Admin}/scope`);
