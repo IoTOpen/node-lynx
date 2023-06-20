@@ -125,5 +125,8 @@ export enum Permissions {
     userSecurityTokenCreateDelete = 'user/security/token/create_delete',
     userSecurityTokenListAll = 'user/security/token/list/all',
 
-    topicBlacklistManagement = 'mqtt/blacklist/topic/manage'
+    topicBlacklistManagement = 'mqtt/blacklist/topic/manage',
+
+    OAuth2ClientAdminCreateDelete = 'oauth2_client/admin/create_delete',
+    OAuth2ClientAdminUpdate = 'oauth2_client/admin/update'
 }
