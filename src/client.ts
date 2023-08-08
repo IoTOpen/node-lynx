@@ -61,6 +61,7 @@ import {
 import {CreateSchedule, DeleteSchedule, GetSchedule, GetSchedules, UpdateSchedule} from './schedule';
 import {
     ChangePassword,
+    ChangePasswordOther,
     CreateUser,
     CreateUserMeta,
     DeleteUser, DeleteUserMeta,
@@ -231,6 +232,7 @@ export class LynxClient {
     updateUser = UpdateUser;
     deleteUser = DeleteUser;
     changePassword = ChangePassword;
+    changePasswordOther = ChangePasswordOther;
     getUserMeta = GetUserMeta;
     createUserMeta = CreateUserMeta;
     updateUserMeta = UpdateUserMeta;
