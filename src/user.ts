@@ -31,6 +31,10 @@ export function GetUsers(this: LynxClient, filter?: Metadata) {
     return this.requestJson<User[]>(`${Endpoints.User}${qs}`);
 }
 
+export function GetUserTokens(this: LynxClient, id: number | 'me') {
+    return this.requestJson<OKResponse>(`${Endpoints.User}/${id}/security/token`);
+}
+
 export function CreateUser(this: LynxClient, user: EmptyUser) {
     return this.requestJson<User>(Endpoints.User, {
         method: 'POST', body: JSON.stringify(user)

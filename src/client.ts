@@ -69,6 +69,7 @@ import {
     GetUser,
     GetUserMeta,
     GetUsers,
+    GetUserTokens,
     UpdateUser, UpdateUserMeta
 } from './user';
 import {
@@ -236,6 +237,7 @@ export class LynxClient {
     getMe = GetMe;
     getUser = GetUser;
     getUsers = GetUsers;
+    getUserTokens = GetUserTokens;
     createUser = CreateUser;
     updateUser = UpdateUser;
     deleteUser = DeleteUser;
