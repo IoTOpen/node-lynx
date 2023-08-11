@@ -82,6 +82,7 @@ import {
     GetEdgeAppConfigOptions,
     GetEdgeAppInstance, GetEdgeAppPublisher,
     GetEdgeApps,
+    GetEdgeAppOrganization,
     GetEdgeAppVersions,
     NameEdgeAppVersion,
     RemoveEdgeAppInstance,
@@ -263,6 +264,7 @@ export class LynxClient {
     updateEdgeAppInstance = UpdateEdgeAppInstance;
     removeEdgeAppInstance = RemoveEdgeAppInstance;
     downloadEdgeApp = DownloadEdgeApp;
+    getEdgeAppOrganization = GetEdgeAppOrganization;
 
 
     getRoles = GetRoles;
