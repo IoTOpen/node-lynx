@@ -48,3 +48,9 @@ export function CreateTokenOther(this: LynxClient, userid: number | 'me', token:
         body: JSON.stringify(token)
     });
 }
+
+export function DeleteTokenOther(this: LynxClient, userid: number | 'me', token: Token) {
+    return this.requestJson<OKResponse>(`${Endpoints.User}/${userid}/security/token/${token.id}`, {
+        method: 'DELETE',
+    });
+}
