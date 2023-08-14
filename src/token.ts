@@ -41,3 +41,10 @@ export function CreateToken(this: LynxClient, token: EmptyToken) {
         body: JSON.stringify(token),
     });
 }
+
+export function CreateTokenOther(this: LynxClient, id: number | 'me', token: EmptyToken) {
+    return this.requestJson<Token>(`${Endpoints.User}/${id}/security/token`, {
+        method: 'POST',
+        body: JSON.stringify(token),
+    });
+}
