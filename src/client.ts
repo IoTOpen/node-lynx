@@ -92,7 +92,7 @@ import {
 import {Login, Login2FA, Logout, ResetPassword, ResetPasswordUpdate} from './auth';
 import {CreateRole, DeleteRole, GetRole, GetRoles, UpdateRole} from './role';
 import {GetPermissions} from './permission';
-import {CreateToken, DeleteToken, GetTokens} from './token';
+import {CreateToken, CreateTokenOther, DeleteToken, GetTokens} from './token';
 import {
     CreateGatewayCredentials,
     GetGatewayRegistrationPolicy,
@@ -276,6 +276,7 @@ export class LynxClient {
     getPermissions = GetPermissions;
 
     createToken = CreateToken;
+    createTokenOther = CreateTokenOther;
     deleteToken = DeleteToken;
     getTokens = GetTokens;
 
