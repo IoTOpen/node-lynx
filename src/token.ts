@@ -29,28 +29,15 @@ export function GetTokens(this: LynxClient) {
     return this.requestJson<Token[]>(Endpoints.Token);
 }
 
-export function DeleteToken(this: LynxClient, token: Token) {
-    return this.requestJson<OKResponse>(`${Endpoints.Token}/${token.id}`, {
+export function DeleteToken(this: LynxClient, token: Token, userid: number | 'me' = 'me') {
+    return this.requestJson<OKResponse>(`${Endpoints.User}/${userid}/security/token/${token.id}`, {
         method: 'DELETE',
     });
 }
 
-export function CreateToken(this: LynxClient, token: EmptyToken) {
-    return this.requestJson<Token>(Endpoints.Token, {
-        method: 'POST',
-        body: JSON.stringify(token),
-    });
-}
-
-export function CreateTokenOther(this: LynxClient, userid: number | 'me', token: EmptyToken) {
+export function CreateToken(this: LynxClient, token: EmptyToken, userid: number | 'me' = 'me') {
     return this.requestJson<Token>(`${Endpoints.User}/${userid}/security/token`, {
         method: 'POST',
         body: JSON.stringify(token)
-    });
-}
-
-export function DeleteTokenOther(this: LynxClient, userid: number | 'me', token: Token) {
-    return this.requestJson<OKResponse>(`${Endpoints.User}/${userid}/security/token/${token.id}`, {
-        method: 'DELETE',
     });
 }
