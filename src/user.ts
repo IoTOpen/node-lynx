@@ -14,6 +14,7 @@ export type EmptyUser = WithMeta & {
     organisations: number[]
     assigned_installations?: number[]
     address: Address
+    expire_at: number
 }
 
 export type User = EmptyUser & Identifier
