@@ -1,5 +1,5 @@
 import {Endpoints} from './util';
-import {Address, Identifier, Metadata, WithMeta, OKResponse, MetaObject} from './types';
+import {Address, Identifier, WithMeta, OKResponse, MetaObject} from './types';
 import {LynxClient} from './client';
 
 export type OrganizationChild = {
@@ -22,6 +22,7 @@ export type EmptyOrganization = WithMeta & {
     parent: number
     children: OrganizationChild[]
     notes: string
+    password_valid_days: number
 }
 
 export type Organization = EmptyOrganization & Identifier
