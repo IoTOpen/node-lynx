@@ -36,7 +36,7 @@ export type {
 } from './notification';
 export type {
     OrganizationChild, OrganizationSimple,
-    EmptyOrganization, Organization
+    EmptyOrganization, Organization, MinimalOrg
 } from './organization';
 export type {UserRegistration} from './register';
 export type {EmptyRole, Role} from './role';
