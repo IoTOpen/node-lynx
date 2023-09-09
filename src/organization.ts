@@ -28,7 +28,7 @@ export type EmptyOrganization = WithMeta & {
 export type Organization = EmptyOrganization & Identifier
 
 export type MinimalOrg<T extends boolean> = T extends true ? OrganizationSimple : Organization;
-export function GetOrganizations<T extends boolean = false>(this: LynxClient, minimal: T) {
+export function GetOrganizations<T extends boolean = false>(this: LynxClient, minimal?: T) {
     if (minimal) {
         const qs = `?minimal=${minimal}`;
         return <Promise<MinimalOrg<T>[]>>this.requestJson<OrganizationSimple[]>(`${Endpoints.Organization}${qs}`);
