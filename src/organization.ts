@@ -1,5 +1,5 @@
 import {Endpoints} from './util';
-import {Address, Identifier, Metadata, WithMeta, OKResponse, MetaObject} from './types';
+import {Address, Identifier, WithMeta, OKResponse, MetaObject} from './types';
 import {LynxClient} from './client';
 
 export type OrganizationChild = {
@@ -22,16 +22,18 @@ export type EmptyOrganization = WithMeta & {
     parent: number
     children: OrganizationChild[]
     notes: string
+    password_valid_days: number
 }
 
 export type Organization = EmptyOrganization & Identifier
 
-export function GetOrganizations(this: LynxClient, minimal?: boolean) {
+export type MinimalOrg<T extends boolean> = T extends true ? OrganizationSimple : Organization;
+export function GetOrganizations<T extends boolean = false>(this: LynxClient, minimal?: T) {
     if (minimal) {
         const qs = `?minimal=${minimal}`;
-        return this.requestJson<OrganizationSimple[]>(`${Endpoints.Organization}${qs}`);
+        return <Promise<MinimalOrg<T>[]>>this.requestJson<OrganizationSimple[]>(`${Endpoints.Organization}${qs}`);
     }
-    return this.requestJson<Organization[]>(Endpoints.Organization);
+    return <Promise<MinimalOrg<T>[]>>this.requestJson<Organization[]>(Endpoints.Organization);
 }
 
 export function GetOrganization(this: LynxClient, id: number) {
