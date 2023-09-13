@@ -46,7 +46,7 @@ export type EmptyNotificationOutput = {
     name: string
     notification_message_id: number
     notification_output_executor_id: number
-    config: Map<string, string>
+    config: { [key: string]: string }
 }
 
 export type NotificationOutput = EmptyNotificationOutput & Identifier
@@ -86,7 +86,7 @@ export type EmptyNotificationOutputExecutor = {
     type: string
     name: string
     organization_id: number
-    config: Map<string, string>
+    config: { [key: string]: string }
     secret?: string
 }
 
