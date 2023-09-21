@@ -1,5 +1,5 @@
 import { Devicex, EmptyDevicex } from './devicex';
-import { EdgeApp, EmptyEdgeApp, EmptyEdgeAppInstance } from './edge_app';
+import { EdgeApp, EdgeAppInstance, EmptyEdgeApp, EmptyEdgeAppInstance } from './edge_app';
 import { EmptyFile } from './file';
 import { EmptyFunctionx, Functionx } from './functionx';
 import { GatewayInformation } from './gateway';
@@ -248,7 +248,7 @@ export const zero = {
     getEmptyEdgeApp: (): EmptyEdgeApp => clone({...edgeApp}),
     getEdgeApp: (): EdgeApp => clone({...edgeApp, ...emptyIdentifier, ...emptyCreationDate}),
     getEmptyEdgeAppInstance: (): EmptyEdgeAppInstance => clone({...edgeAppInstance}),
-    getEdgeAppInstance: (): EmptyEdgeAppInstance => clone({...edgeAppInstance, ...emptyIdentifier, ...emptyCreationDate}),
+    getEdgeAppInstance: (): EdgeAppInstance => clone({...edgeAppInstance, ...emptyIdentifier, ...emptyCreationDate}),
     getEmptyFile: (): EmptyFile => clone({...emptyFile}),
     getFile: (): (EmptyFile & Identifier & CreationDate)  => clone({...emptyFile, ...emptyIdentifier, ...emptyCreationDate}),
     getEmptyFunctionx: (): EmptyFunctionx => clone({...functionx, ...emptyWithMeta}),
