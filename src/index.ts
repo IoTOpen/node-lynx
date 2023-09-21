@@ -2,8 +2,9 @@ import {LynxClient} from './client';
 import {Permissions} from './permissions';
 import {LogOrder} from './log';
 import {TraceAction, TraceObjectType} from './trace';
+import {clone, zero} from './zero';
 
-export {LynxClient, Permissions, LogOrder, TraceObjectType, TraceAction};
+export {LynxClient, Permissions, LogOrder, TraceObjectType, TraceAction, clone, zero};
 export type {
     WithMeta,
     CreationDate,
