@@ -11,7 +11,7 @@ import {
 } from './notification';
 import { EmptyOrganization, Organization, OrganizationSimple } from './organization';
 import { EmptyRole, Role } from './role';
-import { EmptySchedule } from './schedule';
+import { EmptySchedule, Schedule } from './schedule';
 import { EmptyToken, Token } from './token';
 import { EmptyTopicBlacklist, TopicBlacklist } from './topic_blacklist';
 import { Trace, TraceAction, TraceObjectType } from './trace';
@@ -270,6 +270,7 @@ export const zero = {
     getEmptyRole: (): EmptyRole => clone({...role}),
     getRole: (): Role => clone({...role, ...emptyIdentifier}),
     getEmptySchedule: (): EmptySchedule => clone({...schedule}),
+    getSchedule: (): Schedule => clone({...schedule, ...emptyIdentifier, ...{ created_at: 0, updated_at: 0 }}),
     getEmptyToken: (): EmptyToken => clone({...token}),
     getToken: (): Token => clone({...token, ...zeroToken, ...emptyIdentifier}),
     getEmptyTopicBlacklist: (): EmptyTopicBlacklist => clone({...topicBlacklist}),
