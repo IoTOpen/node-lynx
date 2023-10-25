@@ -11,6 +11,7 @@ export type EmptyOAuth2Client = {
     tos_uri: string
     policy_uri: string
     redirect_uris: string[]
+    id_token_alg: string
 }
 
 export type OAuth2Client = EmptyOAuth2Client & {
@@ -46,6 +47,9 @@ export function DeleteOAuth2Client(this: LynxClient, client: OAuth2Client) {
         });
 }
 
+export function GetIDTokenAlgorithms(this: LynxClient) {
+    return this.requestJson<string[]>(`${Endpoints.OAuth2}/algs`);
+}
 
 export function GetOAuth2Client(this: LynxClient, id: string) {
     return this.requestJson<OAuth2Client>(
