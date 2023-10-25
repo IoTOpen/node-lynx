@@ -17,6 +17,7 @@ import { EmptyTopicBlacklist, TopicBlacklist } from './topic_blacklist';
 import { Trace, TraceAction, TraceObjectType } from './trace';
 import { CreationDate, Identifier, WithMeta } from './types';
 import { EmptyUser, User } from './user';
+import {EmptyOAuth2Client, OAuth2Client} from './oauth2';
 
 export const clone = <T,>(model: T): T => {
     if (typeof model === 'object' && model !== null) {
@@ -242,6 +243,34 @@ const organizationSimple = {
     parent: ''
 };
 
+
+const oauth2Client = {
+    id: '',
+    client_secret: '',
+    name: '',
+    trusted: false,
+    allowed_scopes: [],
+    icon_uri: '',
+    tos_uri: '',
+    policy_uri: '',
+    redirect_uris: [],
+    id_token_alg: '',
+    created: 0,
+    updated: 0
+};
+
+const emptyOAuth2Client = {
+    name: '',
+    trusted: false,
+    allowed_scopes: [],
+    icon_uri: '',
+    tos_uri: '',
+    policy_uri: '',
+    redirect_uris: [],
+    id_token_alg: ''
+};
+
+
 export const zero = {
     getEmptyDevicex: (): EmptyDevicex => clone({...devicex, ...emptyWithMeta}),
     getDevicex: (): Devicex => clone({...devicex, ...emptyWithMeta, ...emptyIdentifier, ...emptyCreationDate}),
@@ -277,5 +306,7 @@ export const zero = {
     getBlacklist: (): TopicBlacklist => clone({...topicBlacklist, ...emptyIdentifier}),
     getTrace: (): Trace => clone({...trace}),
     getEmptyUser: (): EmptyUser => clone({...user, ...emptyWithMeta}),
-    getUser: (): User => clone({...user, ...emptyWithMeta, ...emptyIdentifier})
+    getUser: (): User => clone({...user, ...emptyWithMeta, ...emptyIdentifier}),
+    getOAuth2Client: (): OAuth2Client => clone({...oauth2Client}),
+    getEmptyOAuth2Client: (): EmptyOAuth2Client => clone({...emptyOAuth2Client}),
 };
