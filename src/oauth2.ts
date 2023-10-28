@@ -12,6 +12,7 @@ export type EmptyOAuth2Client = {
     policy_uri: string
     redirect_uris: string[]
     id_token_alg: string
+    kid: string
 }
 
 export type OAuth2Client = EmptyOAuth2Client & {

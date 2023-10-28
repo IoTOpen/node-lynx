@@ -255,6 +255,7 @@ const oauth2Client = {
     policy_uri: '',
     redirect_uris: [],
     id_token_alg: '',
+    kid: '',
     created: 0,
     updated: 0
 };
@@ -267,7 +268,8 @@ const emptyOAuth2Client = {
     tos_uri: '',
     policy_uri: '',
     redirect_uris: [],
-    id_token_alg: ''
+    id_token_alg: '',
+    kid: ''
 };
 
 
