@@ -1,6 +1,7 @@
 import {Endpoints} from './util';
 import {Address, Identifier, Metadata, WithMeta, OKResponse, MetaObject} from './types';
 import {LynxClient} from './client';
+import { Token } from './token';
 
 export type EmptyUser = WithMeta & {
     email: string
@@ -33,7 +34,7 @@ export function GetUsers(this: LynxClient, filter?: Metadata) {
 }
 
 export function GetUserTokens(this: LynxClient, id: number | 'me') {
-    return this.requestJson<OKResponse>(`${Endpoints.User}/${id}/security/token`);
+    return this.requestJson<Token[]>(`${Endpoints.User}/${id}/security/token`);
 }
 
 export function CreateUser(this: LynxClient, user: EmptyUser) {
