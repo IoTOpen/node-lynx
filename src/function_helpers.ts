@@ -49,9 +49,9 @@ export const formatFunctionValue = (value: number, functionx: Functionx, topicKe
     }
 
     if(labels && labels[`function_value__${stateKey}`]){
-        return labels[`function_value__${stateKey}`];
+        return labels[stateKey];
     }
-    return `function_value__${stateKey}`;
+    return stateKey;
 };
 
 export const formatFunctionMessageStatus = (status: {[key: string]: LogEntry & {msg?: string}}, functionx: Functionx, topicKey = 'topic_read') => {
