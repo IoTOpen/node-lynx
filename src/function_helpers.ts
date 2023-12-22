@@ -24,7 +24,7 @@ export const getFunctionStates = (functionx: Functionx) =>
         return res;
     }, {});
 
-export const formatFunctionValue = (value: number, functionx: Functionx, topicKey: string) =>{
+export const formatFunctionValue = (value: number, functionx: Functionx, topicKey: string, labels?: {[key: string]: string}) =>{
     const topicFormat = functionx.meta?.[`format_${(topicKey ?? '')?.slice('topic_'.length)}`] ?? functionx.meta?.['format'];
 
     if (topicFormat) {
@@ -40,11 +40,18 @@ export const formatFunctionValue = (value: number, functionx: Functionx, topicKe
     const states = getFunctionStates(functionx);
     const stateKey = states[value];
 
-    //handle translation key for `function_value__${stateKey}`?
-    return (stateKey) ?
-        //functionx.meta[`text_${stateKey}`] ?? <Translation>{(t) => <span>{t(`function_value__${stateKey}`)}</span>}</Translation> :
-        functionx.meta[`text_${stateKey}`] ?? `function_value__${stateKey}` :
-        value;
+    if(!stateKey) {
+        return value;
+    }
+
+    if(functionx.meta[`text_${stateKey}`]){
+        return functionx.meta[`text_${stateKey}`];
+    }
+
+    if(labels && labels[`function_value__${stateKey}`]){
+        return labels[`function_value__${stateKey}`];
+    }
+    return `function_value__${stateKey}`;
 };
 
 export const formatFunctionMessageStatus = (status: {[key: string]: LogEntry & {msg?: string}}, functionx: Functionx, topicKey = 'topic_read') => {
@@ -58,10 +65,8 @@ export const formatFunctionMessageStatus = (status: {[key: string]: LogEntry & {
     return '---';
 };
 
-//deal with formatting in front-end?
 export const getFunctionTimestampStatus = (status: {[key: string]: LogEntry}, functionx: Functionx, topicKey = 'topic_read') => {
     if (functionx.meta.topic_read && status[functionx.meta[topicKey]]) {
-        //return Utils.ParseDate(status[functionx.meta[topicKey]].timestamp);
         return status[functionx.meta[topicKey]].timestamp;
     }
     return '---';
