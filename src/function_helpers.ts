@@ -48,7 +48,7 @@ export const formatFunctionValue = (value: number, functionx: Functionx, topicKe
         return functionx.meta[`text_${stateKey}`];
     }
 
-    if(labels && labels[`function_value__${stateKey}`]){
+    if(labels && labels[stateKey]){
         return labels[stateKey];
     }
     return stateKey;
