@@ -49,3 +49,11 @@ export type {EmptyUserRegistrationPolicy, UserRegistrationPolicy} from './user_r
 export type {EmptyTopicBlacklist, TopicBlacklist} from './topic_blacklist';
 
 export type {OAuth2Client, EmptyOAuth2Client, OAuth2Scope, OAuth2Consent, ConsentAcceptResponse} from './oauth2';
+
+export {
+    formatFunctionValueStatus,
+    formatFunctionMessageStatus,
+    getFunctionStates,
+    getFunctionTimestampStatus,
+    formatFunctionValue
+} from './function_helpers';
