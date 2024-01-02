@@ -54,7 +54,7 @@ export const formatFunctionValue = (value: number, functionx: Functionx, topicKe
     return stateKey;
 };
 
-export const formatFunctionMessageStatus = (status: {[key: string]: LogEntry & {msg?: string}}, functionx: Functionx, topicKey = 'topic_read') => {
+export const formatFunctionMessageStatus = (status: {[key: string]: LogEntry}, functionx: Functionx, topicKey = 'topic_read') => {
     if (
         functionx.meta[topicKey] &&
         status[functionx.meta[topicKey]] &&

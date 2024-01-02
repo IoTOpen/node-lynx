@@ -8,7 +8,7 @@ export type LogEntry = {
     timestamp: number
     topic: string
     value: number
-    message: string
+    msg: string
 }
 
 export enum LogOrder {
