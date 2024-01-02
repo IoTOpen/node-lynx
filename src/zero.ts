@@ -126,7 +126,7 @@ const logEntry = {
     timestamp: 0,
     topic: '',
     value: 0,
-    message: '',
+    msg: '',
 };
 
 const notificationMessage = {
