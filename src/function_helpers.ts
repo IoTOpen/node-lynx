@@ -24,7 +24,7 @@ export const getFunctionStates = (functionx: Functionx) =>
         return res;
     }, {});
 
-export const formatFunctionValue = (value: number, functionx: Functionx, topicKey: string, labels?: {[key: string]: string}) =>{
+export const formatFunctionValue = (value: number, functionx: Functionx, topicKey?: string, labels?: {[key: string]: string}) =>{
     const topicFormat = functionx.meta?.[`format_${(topicKey ?? '')?.slice('topic_'.length)}`] ?? functionx.meta?.['format'];
 
     if (topicFormat) {
