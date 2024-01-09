@@ -2,9 +2,7 @@ import {sprintf} from 'sprintf-js';
 import { Functionx } from './functionx';
 import { LogEntry } from './log';
 
-export const formatFunctionValueStatus = (status: {[key: string]: LogEntry}, functionx: Functionx, topicKey?: string) => {
-    topicKey = topicKey ?? 'topic_read';
-
+export const formatFunctionValueStatus = (status: {[key: string]: LogEntry}, functionx: Functionx, topicKey = 'topic_read') => {
     if (functionx.meta[topicKey] && status[functionx.meta[topicKey]]) {
         const currentStatus = status[functionx.meta[topicKey]];
         return formatFunctionValue(currentStatus.value, functionx, topicKey);
@@ -24,7 +22,7 @@ export const getFunctionStates = (functionx: Functionx) =>
         return res;
     }, {});
 
-export const formatFunctionValue = (value: number, functionx: Functionx, topicKey?: string, labels?: {[key: string]: string}) =>{
+export const formatFunctionValue = (value: number, functionx: Functionx, topicKey = 'topic_read', labels?: {[key: string]: string}) =>{
     const topicFormat = functionx.meta?.[`format_${(topicKey ?? '')?.slice('topic_'.length)}`] ?? functionx.meta?.['format'];
 
     if (topicFormat) {
