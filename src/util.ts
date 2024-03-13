@@ -35,7 +35,6 @@ export function request(this: LynxClient, info: RequestInfo, init?: RequestInit)
     } as RequestInit;
     if (this.apiKey && this.apiKey !== '') {
         if (!conf.headers) conf.headers = {};
-        if (!conf.credentials) conf.credentials = 'include';
         if(this.bearer) {
             (conf.headers as any)['Authorization'] = `Bearer ${this.apiKey}`;
         } else {
