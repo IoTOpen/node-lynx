@@ -143,10 +143,12 @@ import {
 export class LynxClient {
     baseURL: string;
     apiKey?: string;
+    bearer: boolean;
 
-    constructor(base?: string, apiKey?: string) {
+    constructor(base?: string, token?: string, bearer = false) {
         this.baseURL = base ? base.replace(/\/$/, '') : '';
-        this.apiKey = apiKey;
+        this.apiKey = token;
+        this.bearer = bearer;
     }
 
     request = request;

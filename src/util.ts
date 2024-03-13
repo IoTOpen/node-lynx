@@ -35,7 +35,11 @@ export function request(this: LynxClient, info: RequestInfo, init?: RequestInit)
     } as RequestInit;
     if (this.apiKey && this.apiKey !== '') {
         if (!conf.headers) conf.headers = {};
-        (conf.headers as any)['X-API-Key'] = this.apiKey;
+        if(this.bearer) {
+            (conf.headers as any)['Authorization'] = `Bearer ${this.apiKey}`;
+        } else {
+            (conf.headers as any)['X-API-Key'] = this.apiKey;
+        }
     }
     return fetch(info, conf);
 }
