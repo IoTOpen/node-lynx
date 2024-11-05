@@ -64,7 +64,7 @@ export const formatFunctionMessageStatus = (status: {[key: string]: LogEntry}, f
 };
 
 export const getFunctionTimestampStatus = (status: {[key: string]: LogEntry}, functionx: Functionx, topicKey = 'topic_read') => {
-    if (topicKey.startsWith('topic_') && functionx.meta[topicKey] && status[functionx.meta[topicKey]]) {
+    if (topicKey.startsWith('topic_read') && functionx.meta[topicKey] && status[functionx.meta[topicKey]]) {
         return status[functionx.meta[topicKey]].timestamp;
     }
     return '---';
