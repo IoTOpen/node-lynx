@@ -26,17 +26,17 @@
     "@rollup/plugin-node-resolve": "^14.1.0",
     "@rollup/plugin-typescript": "^8.5.0",
     "@types/sprintf-js": "^1.1.4",
-    "@typescript-eslint/eslint-plugin": "^5.39.0",
-    "@typescript-eslint/parser": "^5.39.0",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
     "eslint": "^7.32.0",
-    "rollup": "^2.79.1",
-    "rollup-plugin-dts": "^4.2.2",
+    "rollup": "^2.79.2",
+    "rollup-plugin-dts": "^4.2.3",
     "rollup-plugin-terser": "^7.0.2",
-    "typescript": "^4.8.4"
+    "typescript": "^4.9.5"
   },
   "dependencies": {
-    "cross-fetch": "^3.1.5",
-    "js-base64": "^3.7.3",
+    "cross-fetch": "^3.2.0",
+    "js-base64": "^3.7.7",
     "sprintf-js": "^1.1.3"
   }
 }
