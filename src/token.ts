@@ -13,6 +13,7 @@ export type EmptyToken = {
     session_timeout: number
     name: string
     permissions?: string[]
+    length?: number
 }
 
 export type Token = EmptyToken & Identifier & {
