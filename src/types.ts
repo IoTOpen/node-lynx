@@ -42,4 +42,34 @@ export type MetaObject = {
     protected: boolean
 }
 
+// Options for the search endpoint
+export interface SearchOptions {
+    q: string; // The search query term
+    types?: string[]; // Optional array of types to filter by (e.g., ['installation', 'device'])
+    metadata?: Record<string, string>; // Optional key-value pairs for metadata filtering
+    limit?: number; // Optional limit for results
+    offset?: number; // Optional offset for pagination
+    signal?: AbortSignal; // Add this line
+}
+
+// Structure of a single search result item
+export interface SearchResultItem {
+    id: string;
+    type: string;
+    name?: string;
+    [key: string]: any; // Allow for other properties
+}
+
+// Structure of the overall search response
+export interface SearchResultsData {
+    total: number;
+    results: SearchResultItem[];
+    limit: number;
+    offset: number;
+    q: string;
+    types?: string[];
+    metadata?: Record<string, string>;
+    // ... any other top-level properties from the API response
+}
+
 export type PermissionMap = { [key: string]: boolean }
