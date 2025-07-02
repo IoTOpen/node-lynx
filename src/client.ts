@@ -139,6 +139,8 @@ import {
     GetOAuth2Clients, GetOAuth2Scopes, GetUserOAuth2Consents,
     UpdateOAuth2Client
 } from './oauth2';
+import { Search } from './search';
+import { SearchOptions, SearchResultsData } from './types';
 
 export class LynxClient {
     baseURL: string;
@@ -325,4 +327,11 @@ export class LynxClient {
     consentOAuth2Authorization = ConsentOauth2Authorization;
     getUserOAuth2Consents = GetUserOAuth2Consents;
     deleteUserOAuth2Consent = DeleteUserOAuth2Consent;
+
+    /**
+     * Performs a search across various resource types based on query, types, and metadata.
+     * @param options - Search parameters including query term, types, metadata filters, limit, and offset.
+     * @returns A promise that resolves with the search results.
+     */
+    search: (options: SearchOptions) => Promise<SearchResultsData> = Search;
 }

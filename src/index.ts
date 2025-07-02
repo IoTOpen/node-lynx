@@ -1,22 +1,13 @@
-import {LynxClient} from './client';
+export * from './client';
+export * from './types'; // Make sure all types including the new search ones are exported
+// Export other necessary modules/functions if not covered by './types'
+
 import {Permissions} from './permissions';
 import {LogOrder} from './log';
 import {TraceAction, TraceObjectType} from './trace';
 import {clone, zero} from './zero';
 
-export {LynxClient, Permissions, LogOrder, TraceObjectType, TraceAction, clone, zero};
-export type {
-    WithMeta,
-    CreationDate,
-    Identifier,
-    Metadata,
-    MetaObject,
-    OKResponse,
-    ErrorResponse,
-    PaginatedResponse,
-    Address,
-    PermissionMap
-} from './types';
+export {Permissions, LogOrder, TraceObjectType, TraceAction, clone, zero};
 export type {LoginResult} from './auth';
 export type {EmptyDevicex, Devicex} from './devicex';
 export type {

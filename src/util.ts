@@ -48,7 +48,7 @@ export function requestJson<T>(this: LynxClient, endpoint: string, options?: Req
     const url = `${this.baseURL}${endpoint}`;
     return this.request(url, options).then(async (res) => {
         if (res.status >= 200 && res.status < 300) {
-            return await res.json() as T;    
+            return await res.json() as T;
         }
 
         const err = await res.json() as ErrorResponse;
