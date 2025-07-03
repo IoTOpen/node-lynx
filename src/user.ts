@@ -1,7 +1,7 @@
+import type {LynxClient} from './client';
+import type { Token } from './token';
+import type {Address, Identifier, Metadata, MetaObject,OKResponse, WithMeta} from './types';
 import {Endpoints} from './util';
-import {Address, Identifier, Metadata, WithMeta, OKResponse, MetaObject} from './types';
-import {LynxClient} from './client';
-import { Token } from './token';
 
 export type EmptyUser = WithMeta & {
     email: string
@@ -55,7 +55,7 @@ export function DeleteUser(this: LynxClient, user: User) {
     });
 }
 
-export type ChangePasswordData = {
+export interface ChangePasswordData {
     current_password: string
     new_password: string
 }

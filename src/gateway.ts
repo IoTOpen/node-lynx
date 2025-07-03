@@ -1,8 +1,8 @@
+import type {LynxClient} from './client';
+import type {OKResponse} from './types';
 import {Endpoints} from './util';
-import {OKResponse} from './types';
-import {LynxClient} from './client';
 
-export type GatewayInformation = {
+export interface GatewayInformation {
     client_id: number
     installation_id: number
     api: string
@@ -14,7 +14,7 @@ export type GatewayInformation = {
     timezone: string
 }
 
-export type GatewayRegistrationPolicy = {
+export interface GatewayRegistrationPolicy {
     allow_unregistered: boolean
     default_organization_id: 10
 }

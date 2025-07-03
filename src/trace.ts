@@ -1,7 +1,7 @@
-import {Endpoints} from './util';
+import type {LynxClient} from './client';
 import {LogOrder} from './log';
-import {PaginatedResponse} from './types';
-import {LynxClient} from './client';
+import type {PaginatedResponse} from './types';
+import {Endpoints} from './util';
 
 export enum TraceObjectType {
     Installation = 'installation',
@@ -34,7 +34,7 @@ export enum TraceAction {
     Auth = 'auth'
 }
 
-export type Trace = {
+export interface Trace {
     id: number
     path: string
     method: string
@@ -51,7 +51,7 @@ export function GetTrace(this: LynxClient, from?: number, to?: number, limit = 1
     from = from ? from : now - (60 * 60 * 24);
     to = to ? to : now;
 
-    const params: { [key: string]: string } = {
+    const params: Record<string, string> = {
         from: from.toString(), to: to.toString(), limit: limit.toString(), offset: offset.toString(), order: order
     };
 

@@ -1,8 +1,8 @@
-import {Identifier, OKResponse} from './types';
+import type {LynxClient} from './client';
+import type {Identifier, OKResponse} from './types';
 import {Endpoints} from './util';
-import {LynxClient} from './client';
 
-export type EmptyTopicBlacklist = {
+export interface EmptyTopicBlacklist {
     topic: string
     mode: string
     enabled: boolean

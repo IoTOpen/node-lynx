@@ -1,6 +1,6 @@
+import type {LynxClient} from './client';
+import type {CreationDate, Identifier, Metadata, MetaObject, OKResponse,WithMeta} from './types';
 import {Endpoints} from './util';
-import {CreationDate, Identifier, Metadata, WithMeta, MetaObject, OKResponse} from './types';
-import {LynxClient} from './client';
 
 export type EmptyFunctionx = WithMeta & {
     installation_id: number

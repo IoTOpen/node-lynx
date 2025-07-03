@@ -1,23 +1,24 @@
-import { Devicex, EmptyDevicex } from './devicex';
-import { EdgeApp, EdgeAppInstance, EmptyEdgeApp, EmptyEdgeAppInstance } from './edge_app';
-import { EmptyFile } from './file';
-import { EmptyFunctionx, Functionx } from './functionx';
-import { GatewayInformation } from './gateway';
-import { EmptyInstallation, Installation, InstallationInfo } from './installation';
-import { LogEntry } from './log';
-import {
+import type { Devicex, EmptyDevicex } from './devicex';
+import type { EdgeApp, EdgeAppInstance, EmptyEdgeApp, EmptyEdgeAppInstance } from './edge_app';
+import type { EmptyFile } from './file';
+import type { EmptyFunctionx, Functionx } from './functionx';
+import type { GatewayInformation } from './gateway';
+import type { EmptyInstallation, Installation, InstallationInfo } from './installation';
+import type { LogEntry } from './log';
+import type {
     EmptyNotificationMessage, EmptyNotificationOutput, EmptyNotificationOutputExecutor,
     NotificationMessage, NotificationOutput, NotificationOutputExecutor
 } from './notification';
-import { EmptyOrganization, Organization, OrganizationSimple } from './organization';
-import { EmptyRole, Role } from './role';
-import { EmptySchedule, Schedule } from './schedule';
-import { EmptyToken, Token } from './token';
-import { EmptyTopicBlacklist, TopicBlacklist } from './topic_blacklist';
-import { Trace, TraceAction, TraceObjectType } from './trace';
-import { CreationDate, Identifier, WithMeta } from './types';
-import { EmptyUser, User } from './user';
-import {EmptyOAuth2Client, OAuth2Client} from './oauth2';
+import type {EmptyOAuth2Client, OAuth2Client} from './oauth2';
+import type { EmptyOrganization, Organization, OrganizationSimple } from './organization';
+import type { EmptyRole, Role } from './role';
+import type { EmptySchedule, Schedule } from './schedule';
+import type { EmptyToken, Token } from './token';
+import type { EmptyTopicBlacklist, TopicBlacklist } from './topic_blacklist';
+import type { Trace} from './trace';
+import { TraceAction, TraceObjectType } from './trace';
+import type { CreationDate, Identifier, WithMeta } from './types';
+import type { EmptyUser, User } from './user';
 
 export const clone = <T,>(model: T): T => {
     if (typeof model === 'object' && model !== null) {

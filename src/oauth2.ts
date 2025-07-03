@@ -1,9 +1,9 @@
+import type {LynxClient} from './client';
+import type {OKResponse} from './types';
+import type {User} from './user';
 import {Endpoints} from './util';
-import {LynxClient} from './client';
-import {OKResponse} from './types';
-import {User} from './user';
 
-export type EmptyOAuth2Client = {
+export interface EmptyOAuth2Client {
     name: string
     trusted: boolean
     allowed_scopes: string[]
@@ -22,18 +22,18 @@ export type OAuth2Client = EmptyOAuth2Client & {
     updated: number
 }
 
-export type OAuth2Scope = {
+export interface OAuth2Scope {
     scope: string
     description: string
 }
 
-export type OAuth2Consent = {
+export interface OAuth2Consent {
     id: string
     oauth2_client_id: string
     scopes: string[]
 }
 
-export type ConsentAcceptResponse = {
+export interface ConsentAcceptResponse {
     redirect_to: string
 }
 
@@ -73,7 +73,7 @@ export function UpdateOAuth2Client(this: LynxClient, client: OAuth2Client) {
         });
 }
 
-export function ConsentOauth2Authorization(this: LynxClient, request: { [p: string]: string }) {
+export function ConsentOauth2Authorization(this: LynxClient, request: Record<string, string>) {
     return this.requestJson<ConsentAcceptResponse>(
         `${Endpoints.OAuth2}/consent`, {
             method: 'POST',

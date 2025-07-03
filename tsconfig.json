@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "ESNext",
     "declaration": true,
     "module": "esnext",
     "esModuleInterop": true,

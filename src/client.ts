@@ -1,3 +1,45 @@
+import {Login, Login2FA, Logout, ResetPassword, ResetPasswordUpdate} from './auth';
+import {
+    CreateDevice,
+    CreateDeviceMeta,
+    DeleteDevice,
+    DeleteDeviceMeta,
+    GetDevice,
+    GetDeviceMeta,
+    GetDevices,
+    UpdateDevice,
+    UpdateDeviceMeta
+} from './devicex';
+import {
+    CreateEdgeApp,
+    CreateEdgeAppInstance,
+    CreateEdgeAppVersion,
+    DownloadEdgeApp,
+    GetConfiguredEdgeApps,
+    GetEdgeApp,
+    GetEdgeAppConfigOptions,
+    GetEdgeAppInstance,     GetEdgeAppOrganization,
+    GetEdgeAppPublisher,
+    GetEdgeApps,
+    GetEdgeAppVersions,
+    NameEdgeAppVersion,
+    RemoveEdgeAppInstance,
+    UpdateEdgeApp,
+    UpdateEdgeAppInstance
+} from './edge_app';
+import {
+    CreateFileInstallation,
+    CreateFileOrganization,
+    DeleteFileInstallation,
+    DeleteFileOrganization,
+    DownloadFile,
+    GetFileInstallation,
+    GetFileOrganization,
+    GetFilesInstallation,
+    GetFilesOrganization,
+    UpdateFileInstallation,
+    UpdateFileOrganization
+} from './file';
 import {
     CreateFunction,
     CreateFunctionMeta,
@@ -10,16 +52,11 @@ import {
     UpdateFunctionMeta
 } from './functionx';
 import {
-    CreateDevice,
-    CreateDeviceMeta,
-    DeleteDevice,
-    DeleteDeviceMeta,
-    GetDevice,
-    GetDeviceMeta,
-    GetDevices,
-    UpdateDevice,
-    UpdateDeviceMeta
-} from './devicex';
+    CreateGatewayCredentials,
+    GetGatewayRegistrationPolicy,
+    ResetGatewayPassword,
+    SetGatewayRegistrationPolicy
+} from './gateway';
 import {
     CreateInstallation, CreateInstallationMeta,
     DeleteInstallation, DeleteInstallationMeta,
@@ -52,13 +89,33 @@ import {
     UpdateNotificationOutput
 } from './notification';
 import {
+    ConsentOauth2Authorization,
+    CreateOAuth2Client,
+    DeleteOAuth2Client, DeleteUserOAuth2Consent, GetIDTokenAlgorithms,
+    GetOAuth2Client,
+    GetOAuth2Clients, GetOAuth2Scopes, GetUserOAuth2Consents,
+    UpdateOAuth2Client
+} from './oauth2';
+import {
     CreateOrganization, CreateOrganizationMeta,
     DeleteOrganization, DeleteOrganizationMeta,
     GetOrganization, GetOrganizationMeta,
     GetOrganizations,
     UpdateOrganization, UpdateOrganizationMeta
 } from './organization';
+import {GetPermissions} from './permission';
+import {Register} from './register';
+import {CreateRole, DeleteRole, GetRole, GetRoles, UpdateRole} from './role';
 import {CreateSchedule, DeleteSchedule, GetSchedule, GetSchedules, UpdateSchedule} from './schedule';
+import {CreateToken, DeleteToken, GetTokens} from './token';
+import {
+    CreateTopicBlacklistEntry,
+    DeleteTopicBlacklistEntry,
+    GetTopicBlacklist,
+    GetTopicBlacklistEntry,
+    UpdateTopicBlacklistEntry,
+} from './topic_blacklist';
+import {GetTrace} from './trace';
 import {
     ChangePassword,
     ChangePasswordOther,
@@ -73,72 +130,13 @@ import {
     UpdateUser, UpdateUserMeta
 } from './user';
 import {
-    CreateEdgeApp,
-    CreateEdgeAppInstance,
-    CreateEdgeAppVersion,
-    DownloadEdgeApp,
-    GetConfiguredEdgeApps,
-    GetEdgeApp,
-    GetEdgeAppConfigOptions,
-    GetEdgeAppInstance, GetEdgeAppPublisher,
-    GetEdgeApps,
-    GetEdgeAppOrganization,
-    GetEdgeAppVersions,
-    NameEdgeAppVersion,
-    RemoveEdgeAppInstance,
-    UpdateEdgeApp,
-    UpdateEdgeAppInstance
-} from './edge_app';
-import {Login, Login2FA, Logout, ResetPassword, ResetPasswordUpdate} from './auth';
-import {CreateRole, DeleteRole, GetRole, GetRoles, UpdateRole} from './role';
-import {GetPermissions} from './permission';
-import {CreateToken, DeleteToken, GetTokens} from './token';
-import {
-    CreateGatewayCredentials,
-    GetGatewayRegistrationPolicy,
-    ResetGatewayPassword,
-    SetGatewayRegistrationPolicy
-} from './gateway';
-import {
     CreateUserRegistrationPolicy,
     DeleteUserRegistrationPolicy,
     GetUserRegistrationPolicies,
     GetUserRegistrationPolicy,
     UpdateUserRegistrationPolicy
 } from './user_registration_policy';
-import {
-    CreateFileInstallation,
-    CreateFileOrganization,
-    DeleteFileInstallation,
-    DeleteFileOrganization,
-    DownloadFile,
-    GetFileInstallation,
-    GetFileOrganization,
-    GetFilesInstallation,
-    GetFilesOrganization,
-    UpdateFileInstallation,
-    UpdateFileOrganization
-} from './file';
-
-import {
-    GetTopicBlacklist,
-    GetTopicBlacklistEntry,
-    CreateTopicBlacklistEntry,
-    UpdateTopicBlacklistEntry,
-    DeleteTopicBlacklistEntry,
-} from './topic_blacklist';
-
-import {GetTrace} from './trace';
-import {Register} from './register';
 import {request, requestBlob, requestJson, requestNull} from './util';
-import {
-    ConsentOauth2Authorization,
-    CreateOAuth2Client,
-    DeleteOAuth2Client, DeleteUserOAuth2Consent, GetIDTokenAlgorithms,
-    GetOAuth2Client,
-    GetOAuth2Clients, GetOAuth2Scopes, GetUserOAuth2Consents,
-    UpdateOAuth2Client
-} from './oauth2';
 
 export class LynxClient {
     baseURL: string;

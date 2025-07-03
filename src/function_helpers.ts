@@ -1,8 +1,9 @@
 import {sprintf} from 'sprintf-js';
-import { Functionx } from './functionx';
-import { LogEntry } from './log';
 
-export const formatFunctionValueStatus = (status: {[key: string]: LogEntry}, functionx: Functionx, topicKey = 'topic_read', labels?: {[key: string]: string}) => {
+import type { Functionx } from './functionx';
+import type { LogEntry } from './log';
+
+export const formatFunctionValueStatus = (status: Record<string, LogEntry>, functionx: Functionx, topicKey = 'topic_read', labels?: Record<string, string>) => {
     if (functionx.meta[topicKey] && status[functionx.meta[topicKey]]) {
         const currentStatus = status[functionx.meta[topicKey]];
         return formatFunctionValue(currentStatus.value, functionx, topicKey, labels);
@@ -12,7 +13,7 @@ export const formatFunctionValueStatus = (status: {[key: string]: LogEntry}, fun
 };
 
 export const getFunctionStates = (functionx: Functionx) =>
-    Object.keys(functionx.meta).reduce((res: {[key: string]: string}, k) => {
+    Object.keys(functionx.meta).reduce((res: Record<string, string>, k) => {
         if (k.startsWith('state_')) {
             const stateName = k.slice('state_'.length);
             const stateValue = functionx.meta[k];
@@ -22,8 +23,8 @@ export const getFunctionStates = (functionx: Functionx) =>
         return res;
     }, {});
 
-export const formatFunctionValue = (value: number, functionx: Functionx, topicKey = 'topic_read', labels?: {[key: string]: string}) =>{
-    const topicFormat = functionx.meta?.[`format_${(topicKey ?? '')?.slice('topic_'.length)}`] ?? functionx.meta?.['format'];
+export const formatFunctionValue = (value: number, functionx: Functionx, topicKey = 'topic_read', labels?: Record<string, string>) =>{
+    const topicFormat = functionx.meta?.[`format_${(topicKey ?? '')?.slice('topic_'.length)}`] ?? functionx.meta?.format;
 
     if (topicFormat) {
         try {
@@ -46,13 +47,13 @@ export const formatFunctionValue = (value: number, functionx: Functionx, topicKe
         return functionx.meta[`text_${stateKey}`];
     }
 
-    if(labels && labels[stateKey]){
+    if(labels?.[stateKey]){
         return labels[stateKey];
     }
     return stateKey;
 };
 
-export const formatFunctionMessageStatus = (status: {[key: string]: LogEntry}, functionx: Functionx, topicKey = 'topic_read') => {
+export const formatFunctionMessageStatus = (status: Record<string, LogEntry>, functionx: Functionx, topicKey = 'topic_read') => {
     if (
         functionx.meta[topicKey] &&
         status[functionx.meta[topicKey]] &&
@@ -63,7 +64,7 @@ export const formatFunctionMessageStatus = (status: {[key: string]: LogEntry}, f
     return '---';
 };
 
-export const getFunctionTimestampStatus = (status: {[key: string]: LogEntry}, functionx: Functionx, topicKey = 'topic_read') => {
+export const getFunctionTimestampStatus = (status: Record<string, LogEntry>, functionx: Functionx, topicKey = 'topic_read') => {
     if (topicKey.startsWith('topic_read') && functionx.meta[topicKey] && status[functionx.meta[topicKey]]) {
         return status[functionx.meta[topicKey]].timestamp;
     }

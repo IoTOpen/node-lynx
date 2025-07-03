@@ -1,59 +1,54 @@
 import {LynxClient} from './client';
-import {Permissions} from './permissions';
 import {LogOrder} from './log';
+import {Permissions} from './permissions';
 import {TraceAction, TraceObjectType} from './trace';
 import {clone, zero} from './zero';
 
-export {LynxClient, Permissions, LogOrder, TraceObjectType, TraceAction, clone, zero};
-export type {
-    WithMeta,
-    CreationDate,
-    Identifier,
-    Metadata,
-    MetaObject,
-    OKResponse,
-    ErrorResponse,
-    PaginatedResponse,
-    Address,
-    PermissionMap
-} from './types';
+export {clone, LogOrder, LynxClient, Permissions, TraceAction, TraceObjectType, zero};
 export type {LoginResult} from './auth';
-export type {EmptyDevicex, Devicex} from './devicex';
+export type {Devicex,EmptyDevicex} from './devicex';
 export type {
-    EdgeAppVersion,
-    Publisher, EmptyEdgeApp, EdgeApp,
-    EdgeAppInstance, EmptyEdgeAppInstance,
-    EdgeAppOptions, EdgeAppInput, Guide
-} from './edge_app';
+    EdgeApp,
+    EdgeAppInput,     EdgeAppInstance,     EdgeAppOptions,     EdgeAppVersion,
+    EmptyEdgeApp, EmptyEdgeAppInstance,
+    Guide,
+    Publisher} from './edge_app';
 export type {EmptyFile, File} from './file';
+export {
+    formatFunctionMessageStatus,
+    formatFunctionValue,
+    formatFunctionValueStatus,
+    getFunctionStates,
+    getFunctionTimestampStatus} from './function_helpers';
 export type {EmptyFunctionx, Functionx} from './functionx';
 export type {GatewayInformation, GatewayRegistrationPolicy} from './gateway';
-export type {Installation, InstallationInfo, EmptyInstallation} from './installation';
+export type {EmptyInstallation,Installation, InstallationInfo} from './installation';
 export type {LogEntry} from './log';
 export type {
-    EmptyNotificationMessage, NotificationMessage,
-    EmptyNotificationOutput, NotificationOutput,
-    EmptyNotificationOutputExecutor, NotificationOutputExecutor
+    EmptyNotificationMessage,     EmptyNotificationOutput,     EmptyNotificationOutputExecutor, NotificationMessage,
+    NotificationOutput,
+    NotificationOutputExecutor
 } from './notification';
+export type {ConsentAcceptResponse,EmptyOAuth2Client, OAuth2Client, OAuth2Consent, OAuth2Scope} from './oauth2';
 export type {
-    OrganizationChild, OrganizationSimple,
-    EmptyOrganization, Organization, MinimalOrg
-} from './organization';
+    EmptyOrganization, MinimalOrg,
+    Organization,     OrganizationChild, OrganizationSimple} from './organization';
 export type {UserRegistration} from './register';
 export type {EmptyRole, Role} from './role';
 export type {EmptySchedule, Schedule} from './schedule';
 export type {EmptyToken, Token, TokenAccess} from './token';
+export type {EmptyTopicBlacklist, TopicBlacklist} from './topic_blacklist';
 export type {Trace} from './trace';
+export type {
+    Address,
+    CreationDate,
+    ErrorResponse,
+    Identifier,
+    Metadata,
+    MetaObject,
+    OKResponse,
+    PaginatedResponse,
+    PermissionMap,
+    WithMeta} from './types';
 export type {EmptyUser, User} from './user';
 export type {EmptyUserRegistrationPolicy, UserRegistrationPolicy} from './user_registration_policy';
-export type {EmptyTopicBlacklist, TopicBlacklist} from './topic_blacklist';
-
-export type {OAuth2Client, EmptyOAuth2Client, OAuth2Scope, OAuth2Consent, ConsentAcceptResponse} from './oauth2';
-
-export {
-    formatFunctionValueStatus,
-    formatFunctionMessageStatus,
-    getFunctionStates,
-    getFunctionTimestampStatus,
-    formatFunctionValue
-} from './function_helpers';

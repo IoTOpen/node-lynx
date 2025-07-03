@@ -1,14 +1,14 @@
-import {Endpoints} from './util';
-import {CreationDate, Identifier, Metadata, OKResponse} from './types';
-import {LynxClient} from './client';
+import type { LynxClient } from './client';
+import type { CreationDate, Identifier, Metadata, OKResponse } from './types';
+import { Endpoints } from './util';
 
-export type Publisher = {
+export interface Publisher {
     id: number
     name?: string
     apps?: EdgeApp[]
 }
 
-export type EmptyEdgeApp = {
+export interface EmptyEdgeApp {
     name: string
     category: string
     tags: string[]
@@ -22,51 +22,51 @@ export type EmptyEdgeApp = {
 
 export type EdgeApp = EmptyEdgeApp & Identifier & CreationDate
 
-export type EdgeAppVersion = {
+export interface EdgeAppVersion {
     name: string
     hash: string
     timestamp: number
 }
 
-export function GetEdgeAppPublisher(this: LynxClient, organizationId: number) {
+export function GetEdgeAppPublisher (this: LynxClient, organizationId: number) {
     return this.requestJson<Publisher>(`${Endpoints.EdgePublisher}/${organizationId}`);
 }
 
-export function GetEdgeAppOrganization(this: LynxClient, organizationId: number, available?: boolean) {
-    const qs = available ? `?${new URLSearchParams({available: String(available)})}` : '';
+export function GetEdgeAppOrganization (this: LynxClient, organizationId: number, available?: boolean) {
+    const qs = available ? `?${new URLSearchParams({ available: String(available) })}` : '';
     const path = `${Endpoints.EdgeApp}/organization/${organizationId}${qs}`;
     return this.requestJson<EdgeApp[]>(path);
 }
 
-export function GetEdgeApps(this: LynxClient) {
+export function GetEdgeApps (this: LynxClient) {
     return this.requestJson<EdgeApp[]>(Endpoints.EdgeApp);
 }
 
-export function GetEdgeApp(this: LynxClient, id: number) {
+export function GetEdgeApp (this: LynxClient, id: number) {
     return this.requestJson<EdgeApp>(`${Endpoints.EdgeApp}/${id}`);
 }
 
 
-export function CreateEdgeApp(this: LynxClient, app: EmptyEdgeApp) {
-    return this.requestJson<EdgeApp>(`${Endpoints.EdgeApp}`, {
+export function CreateEdgeApp (this: LynxClient, app: EmptyEdgeApp) {
+    return this.requestJson<EdgeApp>(Endpoints.EdgeApp, {
         method: 'POST',
         body: JSON.stringify(app)
     });
 }
 
-export function UpdateEdgeApp(this: LynxClient, app: EdgeApp) {
+export function UpdateEdgeApp (this: LynxClient, app: EdgeApp) {
     return this.requestJson<EdgeApp>(`${Endpoints.EdgeApp}/${app.id}`, {
         method: 'PUT',
         body: JSON.stringify(app)
     });
 }
 
-export function GetEdgeAppVersions(this: LynxClient, id: number, untagged?: boolean) {
+export function GetEdgeAppVersions (this: LynxClient, id: number, untagged?: boolean) {
     const qs = untagged ? `?untagged=${untagged}` : '';
     return this.requestJson<EdgeAppVersion[]>(`${Endpoints.EdgeApp}/${id}/version${qs}`);
 }
 
-export function NameEdgeAppVersion(this: LynxClient, id: number, name: string, hash: string) {
+export function NameEdgeAppVersion (this: LynxClient, id: number, name: string, hash: string) {
     return this.requestJson<EdgeAppVersion>(`${Endpoints.EdgeApp}/${id}/publish`, {
         method: 'POST',
         body: JSON.stringify({
@@ -76,7 +76,7 @@ export function NameEdgeAppVersion(this: LynxClient, id: number, name: string, h
     });
 }
 
-export function CreateEdgeAppVersion(this: LynxClient, id: number, appJson?: object | string | Blob, appLua?: string | Blob) {
+export function CreateEdgeAppVersion (this: LynxClient, id: number, appJson?: object | string | Blob, appLua?: string | Blob) {
     const data = new FormData();
     let appData: Blob;
     if (appJson !== undefined) {
@@ -101,19 +101,17 @@ export function CreateEdgeAppVersion(this: LynxClient, id: number, appJson?: obj
     });
 }
 
-export function DownloadEdgeApp(this: LynxClient, id: number, version: string) {
+export function DownloadEdgeApp (this: LynxClient, id: number, version: string) {
     return this.requestBlob(`${Endpoints.EdgeApp}/${id}/download?version=${encodeURIComponent(version)}`);
 }
 
-export type EdgeAppInput = {
+export interface EdgeAppInput {
     type: string
     name: string
     description: string
     required?: boolean
     value?: boolean
-    values?: {
-        [key: string]: any
-    }
+    values?: Record<string, any>
     default?: any
     filter?: Metadata
     allow_add?: boolean
@@ -127,62 +125,60 @@ export type EdgeAppInput = {
     [key: string]: any
 }
 
-export type Guide = {
+export interface Guide {
     id: string
     title: string
     description: string
     input_fields: string[],
     [key: string]: any
-};
+}
 
-export type EdgeAppOptions = {
+export interface EdgeAppOptions {
     author: string
     license: string
-    input: {
-        [key: string]: EdgeAppInput
-    }
+    input: Record<string, EdgeAppInput>
     guide: Guide[]
     [key: string]: any
-};
+}
 
-export function GetEdgeAppConfigOptions(this: LynxClient, id: number, version: string) {
+export function GetEdgeAppConfigOptions (this: LynxClient, id: number, version: string) {
     const qs = `?version=${version}`;
     return this.requestJson<EdgeAppOptions>(`${Endpoints.EdgeApp}/${id}/configure${qs}`);
 }
 
-export function GetConfiguredEdgeApps(this: LynxClient, installationId: number) {
+export function GetConfiguredEdgeApps (this: LynxClient, installationId: number) {
     return this.requestJson<EdgeAppInstance[]>(`${Endpoints.EdgeApp}/configured/${installationId}`);
 }
 
-export function GetEdgeAppInstance(this: LynxClient, installationId: number, instanceId: number) {
+export function GetEdgeAppInstance (this: LynxClient, installationId: number, instanceId: number) {
     return this.requestJson<EdgeAppInstance>(`${Endpoints.EdgeApp}/configured/${installationId}/${instanceId}`);
 }
 
-export type EmptyEdgeAppInstance = {
+export interface EmptyEdgeAppInstance {
     app_id: number
     installation_id: number
     version: string
-    config: { [key: string]: any }
+    config: Record<string, any>
     name: string
 }
 
 export type EdgeAppInstance = EmptyEdgeAppInstance & Identifier & CreationDate
 
-export function CreateEdgeAppInstance(this: LynxClient, instanceData: EmptyEdgeAppInstance) {
+export function CreateEdgeAppInstance (this: LynxClient, instanceData: EmptyEdgeAppInstance) {
     return this.requestJson<EdgeAppInstance>(
         `${Endpoints.EdgeApp}/configured/${instanceData.installation_id}`, {
             method: 'POST', body: JSON.stringify(instanceData)
         });
 }
 
-export function UpdateEdgeAppInstance(this: LynxClient, instanceData: EdgeAppInstance) {
+export function UpdateEdgeAppInstance (this: LynxClient, instanceData: EdgeAppInstance) {
     return this.requestJson<EdgeAppInstance>(
         `${Endpoints.EdgeApp}/configured/${instanceData.installation_id}/${instanceData.id}`, {
             method: 'PUT', body: JSON.stringify(instanceData)
         });
 }
 
-export function RemoveEdgeAppInstance(this: LynxClient, installationId: number, instanceId: number) {
+export function RemoveEdgeAppInstance (this: LynxClient, installationId: number, instanceId: number) {
     return this.requestJson<OKResponse>(
         `${Endpoints.EdgeApp}/configured/${installationId}/${instanceId}`, {
             method: 'DELETE'

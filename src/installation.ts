@@ -1,15 +1,15 @@
+import type {LynxClient} from './client';
+import type {Identifier, Metadata, MetaObject,OKResponse, WithMeta} from './types';
 import {Endpoints} from './util';
-import {Identifier, Metadata, WithMeta, OKResponse, MetaObject} from './types';
-import {LynxClient} from './client';
 
-export type InstallationInfo = {
+export interface InstallationInfo {
     id: number
     name: string
     client_id: number
     organization_id: number
     capabilities: string[]
     assigned: boolean
-};
+}
 
 export type EmptyInstallation = WithMeta & {
     name: string
@@ -38,7 +38,7 @@ export function ListInstallations(this: LynxClient, filter?: Metadata) {
 export function GetInstallation(this: LynxClient, id: number) {
     return this.requestJson<InstallationInfo[]>(`${Endpoints.InstallationInfo}?assigned=false`)
         .then((res) => {
-            const installations = res as InstallationInfo[];
+            const installations = res;
             for (const installation of installations) {
                 if (installation.id === id) {
                     return installation;

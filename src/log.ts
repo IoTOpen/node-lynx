@@ -1,8 +1,8 @@
+import type { LynxClient } from './client';
+import type { PaginatedResponse } from './types';
 import { Endpoints } from './util';
-import { PaginatedResponse } from './types';
-import { LynxClient } from './client';
 
-export type LogEntry = {
+export interface LogEntry {
     client_id: number
     installation_id: number
     timestamp: number
@@ -42,7 +42,7 @@ export function GetLog (
     from = from ? from : now - (60 * 60 * 24);
     to = to ? to : now;
 
-    const params: { [key: string]: string } = {
+    const params: Record<string, string> = {
         from: from.toString(),
         to: to.toString(),
         limit: limit.toString(),

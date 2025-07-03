@@ -1,5 +1,6 @@
-import {ErrorResponse} from './types';
-import {LynxClient} from './client';
+import type { LynxClient } from './client';
+import type { ErrorResponse } from './types';
+
 import 'cross-fetch/polyfill';
 
 export enum Endpoints {
@@ -29,14 +30,14 @@ export enum Endpoints {
     OAuth2Admin = '/api/v2/admin/oauth2',
 }
 
-export function request(this: LynxClient, info: RequestInfo, init?: RequestInit) {
+export function request (this: LynxClient, info: RequestInfo, init?: RequestInit) {
     const conf = {
         ...init,
     } as RequestInit;
     if (this.apiKey && this.apiKey !== '') {
         if (!conf.headers) conf.headers = {};
-        if(this.bearer) {
-            (conf.headers as any)['Authorization'] = `Bearer ${this.apiKey}`;
+        if (this.bearer) {
+            (conf.headers as any).Authorization = `Bearer ${this.apiKey}`;
         } else {
             (conf.headers as any)['X-API-Key'] = this.apiKey;
         }
@@ -44,11 +45,11 @@ export function request(this: LynxClient, info: RequestInfo, init?: RequestInit)
     return fetch(info, conf);
 }
 
-export function requestJson<T>(this: LynxClient, endpoint: string, options?: RequestInit): Promise<T> {
+export function requestJson<T> (this: LynxClient, endpoint: string, options?: RequestInit): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
     return this.request(url, options).then(async (res) => {
         if (res.status >= 200 && res.status < 300) {
-            return await res.json() as T;    
+            return await res.json() as T;
         }
 
         const err = await res.json() as ErrorResponse;
@@ -57,7 +58,7 @@ export function requestJson<T>(this: LynxClient, endpoint: string, options?: Req
     });
 }
 
-export function requestBlob(this: LynxClient, endpoint: string, options?: RequestInit) {
+export function requestBlob (this: LynxClient, endpoint: string, options?: RequestInit) {
     const url = `${this.baseURL}${endpoint}`;
     return this.request(url, options).then(async (res) => {
         if (res.status >= 200 && res.status < 300) {
@@ -70,7 +71,7 @@ export function requestBlob(this: LynxClient, endpoint: string, options?: Reques
     });
 }
 
-export function requestNull<T>(this: LynxClient, endpoint: string, options?: RequestInit): Promise<T | null> {
+export function requestNull<T> (this: LynxClient, endpoint: string, options?: RequestInit): Promise<T | null> {
     const url = `${this.baseURL}${endpoint}`;
     return this.request(url, options).then(async (res) => {
         if (res.status === 204) {

@@ -1,9 +1,10 @@
-import {Endpoints} from './util';
-import {OKResponse} from './types';
-import {LynxClient} from './client';
 import {Base64} from 'js-base64';
 
-export type LoginResult = {
+import type {LynxClient} from './client';
+import type {OKResponse} from './types';
+import {Endpoints} from './util';
+
+export interface LoginResult {
     token: string
     next_step?: string
 }

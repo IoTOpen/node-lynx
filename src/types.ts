@@ -1,45 +1,45 @@
-export type Metadata = { [key: string]: string }
+export type Metadata = Record<string, string>;
 
-export type WithMeta = {
+export interface WithMeta {
     meta: Metadata
     protected_meta: Metadata
 }
 
-export type Address = {
+export interface Address {
     address: string
     city: string
     country: string
     zip: string
 }
 
-export type Identifier = {
+export interface Identifier {
     id: number
 }
 
-export type CreationDate = {
+export interface CreationDate {
     created: number
     updated: number
 }
 
-export type PaginatedResponse<T> = {
+export interface PaginatedResponse<T> {
     total: number
     last_time: number
     count: number
     data: T[]
 }
 
-export type ErrorResponse = {
+export interface ErrorResponse {
     message: string
     status: number
 }
 
-export type OKResponse = {
+export interface OKResponse {
     message: string
 }
 
-export type MetaObject = {
+export interface MetaObject {
     value: string
     protected: boolean
 }
 
-export type PermissionMap = { [key: string]: boolean }
+export type PermissionMap = Record<string, boolean>;
