@@ -102,8 +102,12 @@ export function GetNotificationOutputExecutor(this: LynxClient, installationId: 
         `${Endpoints.Notification}/${installationId}/executor/${id}`);
 }
 
-export function SendNotification(this: LynxClient, installationId: number, outputId: number, data: any) {
-    return this.requestJson<any>(
+/**
+ * Sends a notification with arbitrary data. The data argument is unknown and should be validated by the caller.
+ * @param data - Payload to send. Must match the expected API contract.
+ */
+export function SendNotification(this: LynxClient, installationId: number, outputId: number, data: unknown): Promise<unknown> {
+    return this.requestJson<unknown>(
         `${Endpoints.Notification}/${installationId}/output/${outputId}/send`, {
             method: 'POST', body: JSON.stringify(data)
         });

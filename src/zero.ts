@@ -20,15 +20,28 @@ import { TraceAction, TraceObjectType } from './trace';
 import type { CreationDate, Identifier, WithMeta } from './types';
 import type { EmptyUser, User } from './user';
 
+/**
+ * Deep clone utility for objects and arrays.
+ * TypeScript cannot fully verify the recursive type safety here, but the logic is sound for the intended use.
+ * The type assertion is required to satisfy the type checker and avoid unsafe any returns.
+ */
 export const clone = <T,>(model: T): T => {
-    if (typeof model === 'object' && model !== null) {
-        return Object.assign({}, ...Object.keys(model).map(
-            (key) => ({[key]: clone(model[key as keyof T])})
-        ));
+    if (Array.isArray(model)) {
+        // Use helper to ensure type safety for arrays
+        return cloneArray(model as unknown as unknown[] as T[] ) as unknown as T;
     }
-
-    return (Array.isArray(model)) ? (model.map((v) => clone(v)) as T) : model;
+    if (typeof model === 'object' && model !== null) {
+        // Recursively clone each property, then assert as T (object of T)
+        return (Object.assign({}, ...Object.keys(model).map(
+            (key) => ({ [key]: clone(model[key as keyof T]) })
+        )) as unknown) as T;
+    }
+    return model;
 };
+
+function cloneArray<T>(arr: T[]): T[] {
+    return arr.map((v) => clone(v));
+}
 
 const emptyIdentifier: Identifier = {
     id: 0

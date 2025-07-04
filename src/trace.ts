@@ -48,8 +48,8 @@ export interface Trace {
 
 export function GetTrace(this: LynxClient, from?: number, to?: number, limit = 1000, offset = 0, order = LogOrder.Desc, objectType?: TraceObjectType, objectId?: number, id?: string, actions: TraceAction[] | TraceAction = []) {
     const now = new Date().getTime() / 1000;
-    from = from ? from : now - (60 * 60 * 24);
-    to = to ? to : now;
+    from ??= now - (60 * 60 * 24);
+    to ??= now;
 
     const params: Record<string, string> = {
         from: from.toString(), to: to.toString(), limit: limit.toString(), offset: offset.toString(), order: order

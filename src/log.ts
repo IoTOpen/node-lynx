@@ -39,8 +39,8 @@ export function GetLog (
     aggr_interval?: string
 ) {
     const now = new Date().getTime() / 1000;
-    from = from ? from : now - (60 * 60 * 24);
-    to = to ? to : now;
+    from ??= now - (60 * 60 * 24);
+    to ??= now;
 
     const params: Record<string, string> = {
         from: from.toString(),

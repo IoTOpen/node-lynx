@@ -35,11 +35,11 @@ export function request (this: LynxClient, info: RequestInfo, init?: RequestInit
         ...init,
     } as RequestInit;
     if (this.apiKey && this.apiKey !== '') {
-        if (!conf.headers) conf.headers = {};
+        conf.headers ??= {};
         if (this.bearer) {
-            (conf.headers as any).Authorization = `Bearer ${this.apiKey}`;
+            (conf.headers as Record<string, string>).Authorization = `Bearer ${this.apiKey}`;
         } else {
-            (conf.headers as any)['X-API-Key'] = this.apiKey;
+            (conf.headers as Record<string, string>)['X-API-Key'] = this.apiKey;
         }
     }
     return fetch(info, conf);
@@ -54,7 +54,7 @@ export function requestJson<T> (this: LynxClient, endpoint: string, options?: Re
 
         const err = await res.json() as ErrorResponse;
         err.status = res.status;
-        throw err;
+        throw new Error('API error: ' + err.status + ' - ' + (err.message || 'Unknown error'));
     });
 }
 
@@ -67,7 +67,7 @@ export function requestBlob (this: LynxClient, endpoint: string, options?: Reque
 
         const err = await res.json() as ErrorResponse;
         err.status = res.status;
-        throw err;
+        throw new Error('API error: ' + err.status + ' - ' + (err.message || 'Unknown error'));
     });
 }
 
@@ -78,7 +78,9 @@ export function requestNull<T> (this: LynxClient, endpoint: string, options?: Re
             return null;
         }
         if (res.status !== 200) {
-            throw await res.json() as ErrorResponse;
+            const err = await res.json() as ErrorResponse;
+            err.status = res.status;
+            throw new Error('API error: ' + err.status + ' - ' + (err.message || 'Unknown error'));
         }
         return await res.json() as T;
     });
