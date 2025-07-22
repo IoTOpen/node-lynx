@@ -107,6 +107,7 @@ import {GetPermissions} from './permission';
 import {Register} from './register';
 import {CreateRole, DeleteRole, GetRole, GetRoles, UpdateRole} from './role';
 import {CreateSchedule, DeleteSchedule, GetSchedule, GetSchedules, UpdateSchedule} from './schedule';
+import { Search } from './search';
 import {CreateToken, DeleteToken, GetTokens} from './token';
 import {
     CreateTopicBlacklistEntry,
@@ -116,6 +117,7 @@ import {
     UpdateTopicBlacklistEntry,
 } from './topic_blacklist';
 import {GetTrace} from './trace';
+import type { SearchOptions, SearchResultsData } from './types';
 import {
     ChangePassword,
     ChangePasswordOther,
@@ -323,4 +325,11 @@ export class LynxClient {
     consentOAuth2Authorization = ConsentOauth2Authorization;
     getUserOAuth2Consents = GetUserOAuth2Consents;
     deleteUserOAuth2Consent = DeleteUserOAuth2Consent;
+
+    /**
+     * Performs a search across various resource types based on query, types, and metadata.
+     * @param options - Search parameters including query term, types, metadata filters, limit, and offset.
+     * @returns A promise that resolves with the search results.
+     */
+    search: (options: SearchOptions) => Promise<SearchResultsData> = Search;
 }
