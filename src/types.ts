@@ -57,7 +57,7 @@ export interface SearchResultItem {
     id: string;
     type: string;
     name?: string;
-    [key: string]: any; // Allow for other properties
+    [key: string]: unknown; // Allow for other properties
 }
 
 // Structure of the overall search response

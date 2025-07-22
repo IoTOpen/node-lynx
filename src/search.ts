@@ -1,5 +1,5 @@
-import { LynxClient } from './client';
-import { SearchOptions, SearchResultsData } from './types';
+import type { LynxClient } from './client';
+import type { SearchOptions, SearchResultsData } from './types';
 
 /**
  * Performs a search across various resource types based on query, types, and metadata.
@@ -40,7 +40,7 @@ export async function Search(this: LynxClient, options: SearchOptions): Promise<
     const responseData = await this.requestJson<SearchResultsData>(path, { signal: options.signal });
 
     // Basic validation of the response structure
-    if (!responseData || typeof responseData.total !== 'number' || !Array.isArray(responseData.results)) {
+    if (typeof responseData.total !== 'number' || !Array.isArray(responseData.results)) {
         // Consider using a more specific error type if you have one defined
         throw new Error('Invalid search response format received from API');
     }
