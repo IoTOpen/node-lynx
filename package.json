@@ -5,7 +5,6 @@
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "scripts": {
-    "prepare": "npm run build:ts",
     "lint": "eslint --ext js,ts,tsx --max-warnings 0 src",
     "lint:fix": "eslint --ext js,ts,tsx --max-warnings 0 --fix src",
     "build:ts": "rollup -c",
