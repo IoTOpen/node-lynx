@@ -49,7 +49,7 @@ export interface SearchOptions {
     metadata?: Record<string, string>; // Optional key-value pairs for metadata filtering
     limit?: number; // Optional limit for results
     offset?: number; // Optional offset for pagination
-    signal?: AbortSignal; // Add this line
+    signal?: AbortSignal;
 }
 
 // Structure of a single search result item

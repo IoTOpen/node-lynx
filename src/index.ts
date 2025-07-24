@@ -49,6 +49,10 @@ export type {
     OKResponse,
     PaginatedResponse,
     PermissionMap,
-    WithMeta} from './types';
+    SearchOptions,
+    SearchResultItem,
+    SearchResultsData,
+    WithMeta
+} from './types';
 export type {EmptyUser, User} from './user';
 export type {EmptyUserRegistrationPolicy, UserRegistrationPolicy} from './user_registration_policy';
