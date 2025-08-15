@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "eslint --ext js,ts,tsx --max-warnings 0 src",
     "lint:fix": "eslint --ext js,ts,tsx --max-warnings 0 --fix src",
-    "build:ts": "rollup -c",
+    "build": "rollup -c",
     "dev:ts": "rollup -c -w",
     "clean": "rm -rf dist",
     "prepare": "rm -rf dist/ && rollup -c"
@@ -25,19 +25,19 @@
   "author": "IoT Open",
   "license": "Apache 2.0",
   "devDependencies": {
-    "@eslint/js": "^9.31.0",
+    "@eslint/js": "^9.32.0",
     "@rollup/plugin-commonjs": "^28.0.6",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.1.4",
-    "@types/node": "^22.16.5",
+    "@types/node": "^22.17.0",
     "@types/sprintf-js": "^1.1.4",
     "@typescript-eslint/eslint-plugin": "^8.38.0",
     "@typescript-eslint/parser": "^8.38.0",
-    "eslint": "^9.31.0",
+    "eslint": "^9.32.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "globals": "^16.3.0",
-    "rollup": "^4.45.1",
+    "rollup": "^4.46.2",
     "rollup-plugin-dts": "^6.2.1",
     "rollup-plugin-visualizer": "^6.0.3",
     "typescript": "^5.8.3",
@@ -51,6 +51,6 @@
   },
   "type": "module",
   "engines": {
-    "node": ">=24.0.0 <25.0.0"
+    "node": "22.x"
   }
 }
