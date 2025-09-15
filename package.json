@@ -6,8 +6,9 @@
   "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "lint": "eslint --ext js,ts,tsx --max-warnings 0 src",
-    "lint:fix": "eslint --ext js,ts,tsx --max-warnings 0 --fix src",
+    "lint": "eslint --ext js,ts,tsx src --max-warnings 0 && pnpm type-check",
+    "lint:fix": "eslint --ext js,ts,tsx --max-warnings 0 --fix src && pnpm type-check",
+    "type-check": "tsc --noEmit",
     "build": "rollup -c",
     "dev:ts": "rollup -c -w",
     "clean": "rm -rf dist",
