@@ -156,9 +156,7 @@ export class LynxClient {
     requestBlob = requestBlob;
     requestNull = requestNull;
 
-    getBaseURL = () => {
-        return this.baseURL;
-    };
+    getBaseURL = () => this.baseURL;
 
     login = Login;
     login2fa = Login2FA;

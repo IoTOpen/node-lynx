@@ -41,7 +41,8 @@ export type { EmptyRole, Role } from './role';
 export type { EmptySchedule, Schedule } from './schedule';
 export type { EmptyToken, Token, TokenAccess } from './token';
 export type { EmptyTopicBlacklist, TopicBlacklist } from './topic_blacklist';
-export type { Trace } from './trace';
+// Removed explicit type export for Trace to avoid type/value ambiguity
+export * from './trace';
 export type {
     Address,
     CreationDate,

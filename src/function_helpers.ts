@@ -3,9 +3,23 @@ import {sprintf} from 'sprintf-js';
 import type { Functionx } from './functionx';
 import type { LogEntry } from './log';
 
-export const formatFunctionValueStatus = (status: Record<string, LogEntry>, functionx: Functionx, topicKey = 'topic_read', labels?: Record<string, string>) => {
-    const currentStatus = status[functionx.meta[topicKey]];
-    return formatFunctionValue(currentStatus.value, functionx, topicKey, labels);
+export const formatFunctionValueStatus = (
+    status: Record<string, LogEntry>,
+    functionx: Functionx,
+    topicKey = 'topic_read',
+    labels?: Record<string, string>
+) => {
+    const topic = functionx.meta[topicKey];
+    console.log('# 📊 Formatting function value status for topic:', topic);
+
+    if (!(topic in status) || typeof status[topic].value === 'undefined') {
+        console.log('## ⚠️ Value is undefined, returning "-"');
+        return '-';
+    }
+
+    const value = status[topic].value;
+    console.log('## ✅ Value found:', value);
+    return formatFunctionValue(value, functionx, topicKey, labels);
 };
 
 export const getFunctionStates = (functionx: Functionx) =>
@@ -13,7 +27,7 @@ export const getFunctionStates = (functionx: Functionx) =>
         if (k.startsWith('state_')) {
             const stateName = k.slice('state_'.length);
             const stateValue = functionx.meta[k];
-            if (!res[stateValue]) res[stateValue] = stateName;
+            if (!res[stateValue]) {res[stateValue] = stateName;}
         }
         return res;
     }, {});
@@ -44,10 +58,26 @@ export const formatFunctionValue = (value: number, functionx: Functionx, topicKe
     return stateKey;
 };
 
-export const formatFunctionMessageStatus = (status: Record<string, LogEntry>, functionx: Functionx, topicKey = 'topic_read') => {
-    return status[functionx.meta[topicKey]].msg;
+export const formatFunctionMessageStatus = (
+    status: Record<string, LogEntry>,
+    functionx: Functionx,
+    topicKey = 'topic_read'
+) => {
+    const topic = functionx.meta[topicKey];
+    if (!(topic in status) || typeof status[topic].msg === 'undefined') {
+        return '-';
+    }
+    return status[topic].msg;
 };
 
-export const getFunctionTimestampStatus = (status: Record<string, LogEntry>, functionx: Functionx, topicKey = 'topic_read') => {
-    return status[functionx.meta[topicKey]].timestamp;
+export const getFunctionTimestampStatus = (
+    status: Record<string, LogEntry>,
+    functionx: Functionx,
+    topicKey = 'topic_read'
+) => {
+    const topic = functionx.meta[topicKey];
+    if (!(topic in status) || typeof status[topic].timestamp === 'undefined') {
+        return '-';
+    }
+    return status[topic].timestamp;
 };

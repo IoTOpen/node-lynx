@@ -52,7 +52,7 @@ export function GetTrace(this: LynxClient, from?: number, to?: number, limit = 1
     to ??= now;
 
     const params: Record<string, string> = {
-        from: from.toString(), to: to.toString(), limit: limit.toString(), offset: offset.toString(), order: order
+        from: from.toString(), to: to.toString(), limit: limit.toString(), offset: offset.toString(), order
     };
 
     if (typeof actions === 'string') {

@@ -47,7 +47,7 @@ export function GetLog (
         to: to.toString(),
         limit: limit.toString(),
         offset: offset.toString(),
-        order: order,
+        order,
     };
 
     if (topics) {
