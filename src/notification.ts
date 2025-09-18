@@ -1,8 +1,8 @@
+import type {LynxClient} from './client';
+import type {Identifier, OKResponse} from './types';
 import {Endpoints} from './util';
-import {Identifier, OKResponse} from './types';
-import {LynxClient} from './client';
 
-export type EmptyNotificationMessage = {
+export interface EmptyNotificationMessage {
     installation_id: number
     name: string
     text: string
@@ -41,12 +41,12 @@ export function UpdateNotificationMessage(this: LynxClient, notificationMessage:
         });
 }
 
-export type EmptyNotificationOutput = {
+export interface EmptyNotificationOutput {
     installation_id: number
     name: string
     notification_message_id: number
     notification_output_executor_id: number
-    config: { [key: string]: string }
+    config: Record<string, string>
 }
 
 export type NotificationOutput = EmptyNotificationOutput & Identifier
@@ -82,11 +82,11 @@ export function UpdateNotificationOutput(this: LynxClient, notificationOutput: N
         });
 }
 
-export type EmptyNotificationOutputExecutor = {
+export interface EmptyNotificationOutputExecutor {
     type: string
     name: string
     organization_id: number
-    config: { [key: string]: string }
+    config: Record<string, string>
     secret?: string
 }
 

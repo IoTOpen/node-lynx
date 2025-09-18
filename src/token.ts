@@ -1,14 +1,14 @@
+import type {LynxClient} from './client';
+import type {Identifier, OKResponse} from './types';
 import {Endpoints} from './util';
-import {Identifier, OKResponse} from './types';
-import {LynxClient} from './client';
 
-export type TokenAccess = {
+export interface TokenAccess {
     ip: string
     agent: string
     last_accessed: number
 }
 
-export type EmptyToken = {
+export interface EmptyToken {
     expire: number
     session_timeout: number
     name: string

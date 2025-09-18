@@ -1,8 +1,8 @@
+import type {LynxClient} from './client';
+import type {CreationDate, Identifier, OKResponse} from './types';
 import {Endpoints} from './util';
-import {CreationDate, Identifier, OKResponse} from './types';
-import {LynxClient} from './client';
 
-export type EmptyFile = {
+export interface EmptyFile {
     hash: string
     name: string
     mime: string

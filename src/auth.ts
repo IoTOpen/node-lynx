@@ -1,9 +1,10 @@
-import {Endpoints} from './util';
-import {OKResponse} from './types';
-import {LynxClient} from './client';
 import {Base64} from 'js-base64';
 
-export type LoginResult = {
+import type {LynxClient} from './client';
+import type {OKResponse} from './types';
+import {Endpoints} from './util';
+
+export interface LoginResult {
     token: string
     next_step?: string
 }
@@ -24,7 +25,7 @@ export function Logout(this: LynxClient) {
 export function Login2FA(this: LynxClient, token: string, challenge: string): Promise<LoginResult> {
     return this.requestJson(Endpoints.Auth, {
         method: 'PUT',
-        body: JSON.stringify({challenge: challenge}),
+        body: JSON.stringify({challenge}),
         headers: {
             'X-API-Key': token
         }
@@ -34,14 +35,14 @@ export function Login2FA(this: LynxClient, token: string, challenge: string): Pr
 export function ResetPassword(this: LynxClient, email: string): Promise<OKResponse> {
     return this.requestJson(`${Endpoints.Auth}/reset_password`, {
         method: 'POST',
-        body: JSON.stringify({email: email}),
+        body: JSON.stringify({email}),
     });
 }
 
 export function ResetPasswordUpdate(this: LynxClient, token: string, password: string): Promise<OKResponse> {
     return this.requestJson(`${Endpoints.Auth}/reset_password`, {
         method: 'PUT',
-        body: JSON.stringify({password: password}),
+        body: JSON.stringify({password}),
         headers: {
             'X-API-Key': token
         }

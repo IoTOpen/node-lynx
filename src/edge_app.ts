@@ -1,14 +1,14 @@
+import type {LynxClient} from './client';
+import type {CreationDate, Identifier, Metadata, OKResponse} from './types';
 import {Endpoints} from './util';
-import {CreationDate, Identifier, Metadata, OKResponse} from './types';
-import {LynxClient} from './client';
 
-export type Publisher = {
+export interface Publisher {
     id: number
     name?: string
     apps?: EdgeApp[]
 }
 
-export type EmptyEdgeApp = {
+export interface EmptyEdgeApp {
     name: string
     category: string
     tags: string[]
@@ -22,7 +22,7 @@ export type EmptyEdgeApp = {
 
 export type EdgeApp = EmptyEdgeApp & Identifier & CreationDate
 
-export type EdgeAppVersion = {
+export interface EdgeAppVersion {
     name: string
     hash: string
     timestamp: number
@@ -48,7 +48,7 @@ export function GetEdgeApp(this: LynxClient, id: number) {
 
 
 export function CreateEdgeApp(this: LynxClient, app: EmptyEdgeApp) {
-    return this.requestJson<EdgeApp>(`${Endpoints.EdgeApp}`, {
+    return this.requestJson<EdgeApp>(Endpoints.EdgeApp, {
         method: 'POST',
         body: JSON.stringify(app)
     });
@@ -105,15 +105,13 @@ export function DownloadEdgeApp(this: LynxClient, id: number, version: string) {
     return this.requestBlob(`${Endpoints.EdgeApp}/${id}/download?version=${encodeURIComponent(version)}`);
 }
 
-export type EdgeAppInput = {
+export interface EdgeAppInput {
     type: string
     name: string
     description: string
     required?: boolean
     value?: boolean
-    values?: {
-        [key: string]: any
-    }
+    values?: Record<string, any>
     default?: any
     filter?: Metadata
     allow_add?: boolean
@@ -127,23 +125,21 @@ export type EdgeAppInput = {
     [key: string]: any
 }
 
-export type Guide = {
+export interface Guide {
     id: string
     title: string
     description: string
     input_fields: string[],
     [key: string]: any
-};
+}
 
-export type EdgeAppOptions = {
+export interface EdgeAppOptions {
     author: string
     license: string
-    input: {
-        [key: string]: EdgeAppInput
-    }
+    input: Record<string, EdgeAppInput>
     guide: Guide[]
     [key: string]: any
-};
+}
 
 export function GetEdgeAppConfigOptions(this: LynxClient, id: number, version: string) {
     const qs = `?version=${version}`;
@@ -158,11 +154,11 @@ export function GetEdgeAppInstance(this: LynxClient, installationId: number, ins
     return this.requestJson<EdgeAppInstance>(`${Endpoints.EdgeApp}/configured/${installationId}/${instanceId}`);
 }
 
-export type EmptyEdgeAppInstance = {
+export interface EmptyEdgeAppInstance {
     app_id: number
     installation_id: number
     version: string
-    config: { [key: string]: any }
+    config: Record<string, any>
     name: string
 }
 

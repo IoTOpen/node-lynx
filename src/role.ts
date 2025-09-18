@@ -1,8 +1,8 @@
+import type {LynxClient} from './client';
+import type {Identifier, OKResponse, PermissionMap} from './types';
 import {Endpoints} from './util';
-import {Identifier, OKResponse, PermissionMap} from './types';
-import {LynxClient} from './client';
 
-export type EmptyRole = {
+export interface EmptyRole {
     name: string
     priority: number
     permissions: PermissionMap

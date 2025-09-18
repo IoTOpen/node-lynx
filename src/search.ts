@@ -1,5 +1,5 @@
-import { LynxClient } from './client';
-import { SearchOptions, SearchResultsData } from './types';
+import type { LynxClient } from './client';
+import type { SearchOptions, SearchResultsData } from './types';
 
 /**
  * Performs a search across various resource types based on query, types, and metadata.
