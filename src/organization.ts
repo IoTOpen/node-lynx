@@ -67,7 +67,7 @@ export function GetOrganizationMeta(this: LynxClient, userID: number, key: strin
 }
 
 export function CreateOrganizationMeta(this: LynxClient, orgID: number, key: string, data: MetaObject, silent = false) {
-    const qs = `?${new URLSearchParams({silent: String(silent)})}`;
+    const qs = `?${new URLSearchParams({silent: String(silent)}).toString()}`;
     const path = `${Endpoints.Organization}/${orgID}/meta/${encodeURIComponent(key)}${qs}`;
     return this.requestJson<MetaObject>(path, {
         method: 'POST', body: JSON.stringify(data)
@@ -75,7 +75,7 @@ export function CreateOrganizationMeta(this: LynxClient, orgID: number, key: str
 }
 
 export function UpdateOrganizationMeta(this: LynxClient, orgID: number, key: string, data: MetaObject, silent = false, createMissing = false) {
-    const qs = `?${new URLSearchParams({silent: String(silent), create_missing: String(createMissing)})}`;
+    const qs = `?${new URLSearchParams({silent: String(silent), create_missing: String(createMissing)}).toString()}`;
     const path = `${Endpoints.Organization}/${orgID}/meta/${encodeURIComponent(key)}${qs}`;
     return this.requestJson<MetaObject>(path, {
         method: 'PUT', body: JSON.stringify(data)
@@ -83,7 +83,7 @@ export function UpdateOrganizationMeta(this: LynxClient, orgID: number, key: str
 }
 
 export function DeleteOrganizationMeta(this: LynxClient, orgID: number, key: string, silent = false) {
-    const qs = `?${new URLSearchParams({silent: String(silent)})}`;
+    const qs = `?${new URLSearchParams({silent: String(silent)}).toString()}`;
     const path = `${Endpoints.Organization}/${orgID}/meta/${encodeURIComponent(key)}${qs}`;
     return this.requestJson<MetaObject>(path, {
         method: 'DELETE'

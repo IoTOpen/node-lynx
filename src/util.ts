@@ -30,16 +30,17 @@ export enum Endpoints {
     OAuth2Admin = '/api/v2/admin/oauth2',
 }
 
-export function request(this: LynxClient, info: RequestInfo, init?: RequestInit) {
-    const conf = {
+export function request(this: LynxClient, info: string, init?: RequestInit) {
+    const conf: RequestInit = {
         ...init,
-    } as RequestInit;
+    };
+    (conf.headers ??= {});
+    const headers = conf.headers as Record<string, string>;
     if (this.apiKey && this.apiKey !== '') {
-        if (!conf.headers) {conf.headers = {};}
-        if(this.bearer) {
-            (conf.headers as any).Authorization = `Bearer ${this.apiKey}`;
+        if (this.bearer) {
+            headers['Authorization'] = `Bearer ${this.apiKey}`;
         } else {
-            (conf.headers as any)['X-API-Key'] = this.apiKey;
+            headers['X-API-Key'] = this.apiKey;
         }
     }
     return fetch(info, conf);
@@ -54,7 +55,7 @@ export function requestJson<T>(this: LynxClient, endpoint: string, options?: Req
 
         const err = await res.json() as ErrorResponse;
         err.status = res.status;
-        throw err;
+    throw new Error(err.message);
     });
 }
 
@@ -67,7 +68,7 @@ export function requestBlob(this: LynxClient, endpoint: string, options?: Reques
 
         const err = await res.json() as ErrorResponse;
         err.status = res.status;
-        throw err;
+    throw new Error(err.message);
     });
 }
 
@@ -78,7 +79,8 @@ export function requestNull<T>(this: LynxClient, endpoint: string, options?: Req
             return null;
         }
         if (res.status !== 200) {
-            throw await res.json() as ErrorResponse;
+            const err = await res.json() as ErrorResponse;
+            throw new Error(err.message);
         }
         return await res.json() as T;
     });

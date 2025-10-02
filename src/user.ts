@@ -79,7 +79,7 @@ export function GetUserMeta(this: LynxClient, userID: number, key: string) {
 }
 
 export function CreateUserMeta(this: LynxClient, userID: number, key: string, data: MetaObject, silent = false) {
-    const qs = `?${new URLSearchParams({silent: String(silent)})}`;
+    const qs = `?${new URLSearchParams({silent: String(silent)}).toString()}`;
     const path = `${Endpoints.User}/${userID}/meta/${encodeURIComponent(key)}${qs}`;
     return this.requestJson<MetaObject>(path, {
         method: 'POST', body: JSON.stringify(data)
@@ -87,7 +87,7 @@ export function CreateUserMeta(this: LynxClient, userID: number, key: string, da
 }
 
 export function UpdateUserMeta(this: LynxClient, userID: number, key: string, data: MetaObject, silent = false, createMissing = false) {
-    const qs = `?${new URLSearchParams({silent: String(silent), create_missing: String(createMissing)})}`;
+    const qs = `?${new URLSearchParams({silent: String(silent), create_missing: String(createMissing)}).toString()}`;
     const path = `${Endpoints.User}/${userID}/meta/${encodeURIComponent(key)}${qs}`;
     return this.requestJson<MetaObject>(path, {
         method: 'PUT', body: JSON.stringify(data)
@@ -95,7 +95,7 @@ export function UpdateUserMeta(this: LynxClient, userID: number, key: string, da
 }
 
 export function DeleteUserMeta(this: LynxClient, userID: number, key: string, silent = false) {
-    const qs = `?${new URLSearchParams({silent: String(silent)})}`;
+    const qs = `?${new URLSearchParams({silent: String(silent)}).toString()}`;
     const path = `${Endpoints.User}/${userID}/meta/${encodeURIComponent(key)}${qs}`;
     return this.requestJson<MetaObject>(path, {
         method: 'DELETE'

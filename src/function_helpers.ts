@@ -6,9 +6,10 @@ import type { LogEntry } from './log';
 export const formatFunctionValueStatus = (status: Record<string, LogEntry>, functionx: Functionx, topicKey = 'topic_read', labels?: Record<string, string>) => {
     if (functionx.meta[topicKey] && status[functionx.meta[topicKey]]) {
         const currentStatus = status[functionx.meta[topicKey]];
-        return formatFunctionValue(currentStatus.value, functionx, topicKey, labels);
+        if (currentStatus !== undefined) {
+            return formatFunctionValue(currentStatus.value, functionx, topicKey, labels);
+        }
     }
-
     return '---';
 };
 
@@ -17,56 +18,59 @@ export const getFunctionStates = (functionx: Functionx) =>
         if (k.startsWith('state_')) {
             const stateName = k.slice('state_'.length);
             const stateValue = functionx.meta[k];
-
-            if (!res[stateValue]) {res[stateValue] = stateName;}
+            if (stateValue !== undefined && !res[stateValue]) {
+                res[stateValue] = stateName;
+            }
         }
         return res;
     }, {});
 
 export const formatFunctionValue = (value: number, functionx: Functionx, topicKey = 'topic_read', labels?: Record<string, string>) =>{
-    const topicFormat = functionx.meta?.[`format_${(topicKey ?? '')?.slice('topic_'.length)}`] ?? functionx.meta?.['format'];
+    let format = functionx.meta[`format_${topicKey.slice('topic_'.length)}`];
+    format ??= functionx.meta['format'];
 
-    if (topicFormat) {
+    if (format) {
         try {
-            return sprintf(topicFormat, value);
-        } catch (error) {
-            return (functionx.meta.unit) ?  value + functionx.meta.unit : sprintf('%.2f', value);
+            return sprintf(format, value);
+        } catch (_error) {
+            if (functionx.meta['unit']) {
+                return String(value) + functionx.meta['unit'];
+            }
+            return sprintf('%.2f', value);
         }
-    } else if (functionx.meta.unit) {
-        return value + functionx.meta.unit;
+    } else if (functionx.meta['unit']) {
+        return String(value) + functionx.meta['unit'];
     }
 
     const states = getFunctionStates(functionx);
-    const stateKey = states[value];
+    const stateKey = states[String(value)];
 
-    if(!stateKey) {
+    if (!stateKey) {
         return value;
     }
 
-    if(functionx.meta[`text_${stateKey}`]){
+    if (functionx.meta[`text_${stateKey}`]) {
         return functionx.meta[`text_${stateKey}`];
     }
 
-    if(labels?.[stateKey]){
+    if (labels?.[stateKey]) {
         return labels[stateKey];
     }
     return stateKey;
 };
 
 export const formatFunctionMessageStatus = (status: Record<string, LogEntry>, functionx: Functionx, topicKey = 'topic_read') => {
-    if (
-        functionx.meta[topicKey] &&
-        status[functionx.meta[topicKey]] &&
-        status[functionx.meta[topicKey]].msg !== ''
-    ) {
-        return status[functionx.meta[topicKey]].msg;
+    const key = functionx.meta[topicKey];
+    if (key && status[key] && status[key].msg !== '') {
+        return status[key].msg;
     }
     return '---';
 };
 
 export const getFunctionTimestampStatus = (status: Record<string, LogEntry>, functionx: Functionx, topicKey = 'topic_read') => {
-    if (functionx.meta[topicKey] && status[functionx.meta[topicKey]]) {
-        return status[functionx.meta[topicKey]].timestamp;
+    const key = functionx.meta[topicKey];
+    if (key && status[key]) {
+        return status[key].timestamp;
     }
     return '---';
 };

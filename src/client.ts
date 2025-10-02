@@ -142,7 +142,7 @@ import {request, requestBlob, requestJson, requestNull} from './util';
 
 export class LynxClient {
     baseURL: string;
-    apiKey?: string;
+    apiKey: string | undefined;
     bearer: boolean;
 
     constructor(base?: string, token?: string, bearer = false) {

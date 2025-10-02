@@ -94,7 +94,7 @@ export function UpdateInstallationMeta(this: LynxClient, installationID: number,
     });
 }
 
-export function DeleteInstallationMeta(this: LynxClient, installationID: number, functionID: number, key: string, silent = false) {
+export function DeleteInstallationMeta(this: LynxClient, installationID: number, _functionID: number, key: string, silent = false) {
     const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}` : '';
     const path = `${Endpoints.Installation}/${installationID}/meta/${encodeURIComponent(key)}${qs}`;
     return this.requestJson<MetaObject>(path, {

@@ -22,7 +22,10 @@ export async function Search(this: LynxClient, options: SearchOptions): Promise<
             // Automatically prefix metadata keys if they don't already start with 'metadata.'
             // Adjust this logic if your API expects keys differently.
             const fullKey = key.startsWith('metadata.') ? key : `metadata.${key}`;
-            params.append(fullKey, options.metadata[key]);
+            const value = options.metadata[key];
+            if (typeof value === 'string') {
+                params.append(fullKey, value);
+            }
         }
     }
 
@@ -37,10 +40,10 @@ export async function Search(this: LynxClient, options: SearchOptions): Promise<
 
     // Pass the signal to requestJson.
     // requestJson in util.ts already accepts RequestInit, which includes 'signal'.
-    const responseData = await this.requestJson<SearchResultsData>(path, { signal: options.signal });
+    const responseData = await this.requestJson<SearchResultsData>(path, { signal: options.signal ?? null });
 
     // Basic validation of the response structure
-    if (!responseData || typeof responseData.total !== 'number' || !Array.isArray(responseData.results)) {
+    if (typeof responseData.total !== 'number' || !Array.isArray(responseData.results)) {
         // Consider using a more specific error type if you have one defined
         throw new Error('Invalid search response format received from API');
     }

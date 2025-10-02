@@ -111,18 +111,18 @@ export interface EdgeAppInput {
     description: string
     required?: boolean
     value?: boolean
-    values?: Record<string, any>
-    default?: any
+    values?: Record<string, unknown>
+    default?: unknown
     filter?: Metadata
     allow_add?: boolean
     validator?: RegExp
     on_error?: string
     min?: number
     max?: number
-    false_value?: any
-    true_value?: any
+    false_value?: unknown
+    true_value?: unknown
     input_fields?: string[]
-    [key: string]: any
+    [key: string]: unknown
 }
 
 export interface Guide {
@@ -130,7 +130,7 @@ export interface Guide {
     title: string
     description: string
     input_fields: string[],
-    [key: string]: any
+    [key: string]: unknown
 }
 
 export interface EdgeAppOptions {
@@ -138,7 +138,7 @@ export interface EdgeAppOptions {
     license: string
     input: Record<string, EdgeAppInput>
     guide: Guide[]
-    [key: string]: any
+    [key: string]: unknown
 }
 
 export function GetEdgeAppConfigOptions(this: LynxClient, id: number, version: string) {
@@ -158,7 +158,7 @@ export interface EmptyEdgeAppInstance {
     app_id: number
     installation_id: number
     version: string
-    config: Record<string, any>
+    config: Record<string, unknown>
     name: string
 }
 

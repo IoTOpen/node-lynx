@@ -23,7 +23,7 @@ export default defineConfig([
   {
     ...js.configs.recommended,
     languageOptions: {
-      ecmaVersion: 'latest',
+      ecmaVersion: '2022',
       sourceType: 'module',
       globals: { ...globals.node },
     },
@@ -50,6 +50,13 @@ export default defineConfig([
       globals: { ...globals.node },
     },
     rules: {
+      // Allow numbers and booleans in template literals (relax restrict-template-expressions)
+      '@typescript-eslint/restrict-template-expressions': ['error', {
+        allowNumber: true,
+        allowBoolean: true,
+        allowAny: false,
+        allowNullish: false,
+      }],
       // Import hygiene
       'import/first': 'error',
       'import/no-duplicates': 'error',

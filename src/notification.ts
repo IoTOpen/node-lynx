@@ -87,7 +87,7 @@ export interface EmptyNotificationOutputExecutor {
     name: string
     organization_id: number
     config: Record<string, string>
-    secret?: string
+    secret?: string | undefined
 }
 
 export type NotificationOutputExecutor = EmptyNotificationOutputExecutor & Identifier
@@ -102,8 +102,19 @@ export function GetNotificationOutputExecutor(this: LynxClient, installationId: 
         `${Endpoints.Notification}/${installationId}/executor/${id}`);
 }
 
-export function SendNotification(this: LynxClient, installationId: number, outputId: number, data: any) {
-    return this.requestJson<any>(
+/**
+ * Represents the payload for sending a notification.
+ * The structure is executor-dependent; use key-value pairs as needed.
+ */
+export type NotificationSendPayload = Record<string, unknown>;
+
+export function SendNotification(
+    this: LynxClient,
+    installationId: number,
+    outputId: number,
+    data: NotificationSendPayload
+): Promise<OKResponse> {
+    return this.requestJson<OKResponse>(
         `${Endpoints.Notification}/${installationId}/output/${outputId}/send`, {
             method: 'POST', body: JSON.stringify(data)
         });

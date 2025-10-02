@@ -22,12 +22,17 @@ import type { EmptyUser, User } from './user';
 
 export const clone = <T, >(model: T): T => {
     if (typeof model === 'object' && model !== null) {
+        // Use unknown to avoid unsafe any, then assert to T
         return Object.assign({}, ...Object.keys(model).map(
-            (key) => ({[key]: clone(model[key as keyof T])})
-        ));
+            (key) => ({[key]: clone((model as Record<string, unknown>)[key])})
+        )) as T;
     }
 
-    return (Array.isArray(model)) ? (model.map((v) => clone(v)) as T) : model;
+    if (Array.isArray(model)) {
+        // Use unknown in map callback to avoid unsafe any
+        return (model.map((v: unknown) => clone(v)) as unknown) as T;
+    }
+    return model;
 };
 
 const emptyIdentifier: Identifier = {
@@ -149,7 +154,7 @@ const notificationOutputExecutor = {
     name: '',
     organization_id: 0,
     config: {},
-    secret: undefined
+    secret: undefined as string | undefined
 };
 
 const role = {

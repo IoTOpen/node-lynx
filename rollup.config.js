@@ -4,11 +4,12 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import dts from 'rollup-plugin-dts';
 import terser from '@rollup/plugin-terser';
-import { createRequire } from 'node:module';
 import { visualizer } from 'rollup-plugin-visualizer';
+import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
 const packageJson = require('./package.json');
+const manifestExternals = new Set(Object.keys(packageJson.dependencies ?? {}));
 
 // NOTE: Check if the build is for production to apply optimizations.
 const isProduction = process.env.NODE_ENV === 'production';
@@ -21,7 +22,7 @@ export default [
         file: packageJson.main,
         format: 'cjs',
         sourcemap: true,
-        exports: 'named' // Explicit named exports for CJS
+        exports: 'named',
       },
       {
         file: packageJson.module,
@@ -44,29 +45,32 @@ export default [
         compress: {
           drop_console: true,
           drop_debugger: true,
-        }
+        },
       })] : []),
       // In development builds only
       ...(process.env.ANALYZE === 'true' ? [
         visualizer({
           filename: 'dist/bundle-analysis.html',
-          open: true
-        })
-      ] : [])
+          open: true,
+        }),
+      ] : []),
     ],
-    // NOTE: Exclude external dependencies from the bundle using a function
-    // for more precise control over what gets bundled.
+    // NOTE: Exclude runtime deps so consumers manage versions and tree-shaking.
     external: (id) => {
-      // Keep specified dependencies external
-      if (/^cross-fetch/.test(id)) {
-        return true;
-      }
-      // Keep Node.js built-ins external
       if (id.startsWith('node:')) {
         return true;
       }
-      return false;
-    }
+
+      if (manifestExternals.has(id)) {
+        return true;
+      }
+
+      const normalizedId = id.startsWith('@')
+        ? id.split('/').slice(0, 2).join('/')
+        : id.split('/')[0];
+
+      return manifestExternals.has(normalizedId);
+    },
   },
   // Build step for generating TypeScript type declaration files (.d.ts).
   {

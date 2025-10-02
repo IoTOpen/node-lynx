@@ -39,25 +39,25 @@ export function GetLog (
     aggr_interval?: string
 ) {
     const now = new Date().getTime() / 1000;
-    from = from ? from : now - (60 * 60 * 24);
-    to = to ? to : now;
+    const fromVal = from ?? (now - (60 * 60 * 24));
+    const toVal = to ?? now;
 
     const params: Record<string, string> = {
-        from: from.toString(),
-        to: to.toString(),
+        from: fromVal.toString(),
+        to: toVal.toString(),
         limit: limit.toString(),
         offset: offset.toString(),
         order,
     };
 
     if (topics) {
-        params.topics = topics.join(',');
+        params['topics'] = topics.join(',');
     }
     if (aggr_method) {
-        params.aggr_method = aggr_method;
+        params['aggr_method'] = aggr_method;
     }
     if (aggr_interval) {
-        params.aggr_interval = aggr_interval;
+        params['aggr_interval'] = aggr_interval;
     }
 
     const qs = `?${new URLSearchParams(params).toString()}`;

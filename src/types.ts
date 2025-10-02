@@ -49,7 +49,7 @@ export interface SearchOptions {
     metadata?: Record<string, string>; // Optional key-value pairs for metadata filtering
     limit?: number; // Optional limit for results
     offset?: number; // Optional offset for pagination
-    signal?: AbortSignal; // Add this line
+    signal?: AbortSignal;
 }
 
 // Structure of a single search result item
@@ -57,7 +57,7 @@ export interface SearchResultItem {
     id: string;
     type: string;
     name?: string;
-    [key: string]: any; // Allow for other properties
+    [key: string]: unknown;
 }
 
 // Structure of the overall search response
@@ -69,7 +69,6 @@ export interface SearchResultsData {
     q: string;
     types?: string[];
     metadata?: Record<string, string>;
-    // ... any other top-level properties from the API response
 }
 
 export type PermissionMap = Record<string, boolean>;
