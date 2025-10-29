@@ -1,51 +1,33 @@
-import type {LynxClient} from './client';
-import type {CreationDate, Identifier, OKResponse} from './types';
-import {Endpoints} from './util';
+import type { LynxClient } from './client';
+import type { CreationDate, Identifier, OKResponse } from './types';
+import { Endpoints } from './util';
+import { ALLOWED_EXTENSIONS, ALLOWED_MIME_TYPES, EXT_TO_MIMES, MAX_FILE_SIZE } from './file_rules.js';
 
-// Hardened file upload: extension, mime, and size validation (client-side)
-const ALLOWED_EXTENSIONS = [
-    'jpg', 'jpeg', 'png', 'svg', 'webp', 'bmp', 'gif', 'pdf', 'docx',
-    'txt', 'csv', 'json', 'xml', 'md',
-    'odt', 'ods', 'odp', 'odg'
-];
-const ALLOWED_MIME_TYPES = [
-    'image/jpeg',
-    'image/png',
-    'image/svg+xml',
-    'image/webp',
-    'image/bmp',
-    'image/gif',
-    'application/pdf',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-    'text/plain',
-    'text/csv',
-    'application/json',
-    'application/xml',
-    'text/xml',
-    'text/markdown',
-    'application/vnd.oasis.opendocument.text',
-    'application/vnd.oasis.opendocument.spreadsheet',
-    'application/vnd.oasis.opendocument.presentation',
-    'application/vnd.oasis.opendocument.graphics'
-];
-const MAX_FILE_SIZE = 30 * 1024 * 1024; // 30 MB
-
-function getFileExtension(filename: string): string {
+function getFileExtension (filename: string): string {
     const parts = filename.split('.');
     return parts.length > 1 ? parts.pop()!.toLowerCase() : '';
 }
 
-function validateFile(file: Blob, filename: string, mime: string) {
-    // Extension
+// Validate file using shared ruleset
+function validateFile (file: Blob, filename: string, mime: string) {
     const ext = getFileExtension(filename);
+    if (!ext) {
+        throw new Error('File must have an extension.');
+    }
     if (!ALLOWED_EXTENSIONS.includes(ext)) {
         throw new Error(`File extension .${ext} is not allowed.`);
     }
-    // MIME type
     if (!ALLOWED_MIME_TYPES.includes(mime)) {
         throw new Error(`MIME type ${mime} is not allowed.`);
     }
-    // Size
+    // Optionally: check that ext/mime match (if EXT_TO_MIMES is used)
+    const extKey = `.${ext}`;
+    if (Object.prototype.hasOwnProperty.call(EXT_TO_MIMES, extKey)) {
+        const mimes = EXT_TO_MIMES[extKey];
+        if (!mimes || !mimes.includes(mime)) {
+            throw new Error(`Extension .${ext} does not match MIME type ${mime}.`);
+        }
+    }
     if (file.size > MAX_FILE_SIZE) {
         throw new Error(`File size exceeds limit (${MAX_FILE_SIZE} bytes).`);
     }
@@ -61,15 +43,15 @@ export interface EmptyFile {
 
 export type File = EmptyFile & Identifier & CreationDate
 
-export function GetFilesInstallation(this: LynxClient, installationId: number) {
+export function GetFilesInstallation (this: LynxClient, installationId: number) {
     return this.requestJson<File[]>(`${Endpoints.File}/installation/${installationId}`);
 }
 
-export function GetFileInstallation(this: LynxClient, installationId: number, fileId: number) {
+export function GetFileInstallation (this: LynxClient, installationId: number, fileId: number) {
     return this.requestJson<File>(`${Endpoints.File}/installation/${installationId}/${fileId}`);
 }
 
-export function CreateFileInstallation(this: LynxClient, installationId: number, file: Blob) {
+export function CreateFileInstallation (this: LynxClient, installationId: number, file: Blob) {
     const filename = (file as any).name || 'upload';
     const mime = file.type || '';
     validateFile(file, filename, mime);
@@ -80,7 +62,7 @@ export function CreateFileInstallation(this: LynxClient, installationId: number,
     });
 }
 
-export function UpdateFileInstallation(this: LynxClient, installationId: number, fileId: number, file: Blob) {
+export function UpdateFileInstallation (this: LynxClient, installationId: number, fileId: number, file: Blob) {
     const filename = (file as any).name || 'upload';
     const mime = file.type || '';
     validateFile(file, filename, mime);
@@ -91,21 +73,21 @@ export function UpdateFileInstallation(this: LynxClient, installationId: number,
     });
 }
 
-export function DeleteFileInstallation (this: LynxClient, installationId: number, fileId: number){
+export function DeleteFileInstallation (this: LynxClient, installationId: number, fileId: number) {
     return this.requestJson<OKResponse>(`${Endpoints.File}/installation/${installationId}/${fileId}`, {
         method: 'DELETE'
     });
 }
 
-export function GetFilesOrganization(this: LynxClient, organizationId: number){
+export function GetFilesOrganization (this: LynxClient, organizationId: number) {
     return this.requestJson<File[]>(`${Endpoints.File}/organization/${organizationId}`);
 }
 
-export function GetFileOrganization(this: LynxClient, organizationId: number, fileId: number){
+export function GetFileOrganization (this: LynxClient, organizationId: number, fileId: number) {
     return this.requestJson<File>(`${Endpoints.File}/organization/${organizationId}/${fileId}`);
 }
 
-export function CreateFileOrganization(this: LynxClient, organizationId: number, file: Blob) {
+export function CreateFileOrganization (this: LynxClient, organizationId: number, file: Blob) {
     const filename = (file as any).name || 'upload';
     const mime = file.type || '';
     validateFile(file, filename, mime);
@@ -116,7 +98,7 @@ export function CreateFileOrganization(this: LynxClient, organizationId: number,
     });
 }
 
-export function UpdateFileOrganization(this: LynxClient, organizationId: number, fileId: number, file: Blob) {
+export function UpdateFileOrganization (this: LynxClient, organizationId: number, fileId: number, file: Blob) {
     const filename = (file as any).name || 'upload';
     const mime = file.type || '';
     validateFile(file, filename, mime);
@@ -127,12 +109,14 @@ export function UpdateFileOrganization(this: LynxClient, organizationId: number,
     });
 }
 
-export function DeleteFileOrganization(this: LynxClient, organizationId: number, fileId: number){
+export function DeleteFileOrganization (this: LynxClient, organizationId: number, fileId: number) {
     return this.requestJson<OKResponse>(`${Endpoints.File}/organization/${organizationId}/${fileId}`, {
         method: 'DELETE'
     });
 }
 
-export function DownloadFile(this: LynxClient, hash: string){
+export function DownloadFile (this: LynxClient, hash: string) {
     return this.requestBlob(`${Endpoints.File}/download/${hash}`);
 }
+
+// NOTE: File validation rules are now loaded from src/file_rules.ts. Update that file to change allowed types.
