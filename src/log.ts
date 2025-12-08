@@ -16,7 +16,7 @@ export enum LogOrder {
     Asc = 'asc'
 }
 
-export function GetStatus (this: LynxClient, installationId: number, topicFilter?: string[]) {
+export function GetStatus(this: LynxClient, installationId: number, topicFilter?: string[]) {
     const qs = topicFilter ? `?${topicFilter.reduce((prev, cur, id) => {
         if (id !== 0) {
             prev += '&';
@@ -26,7 +26,7 @@ export function GetStatus (this: LynxClient, installationId: number, topicFilter
     return this.requestJson<LogEntry[]>(`${Endpoints.Status}/${installationId}${qs}`);
 }
 
-export function GetLog (
+export function GetLog(
     this: LynxClient,
     installationId: number,
     from?: number,

@@ -1,6 +1,6 @@
-import type {LynxClient} from './client';
-import type {OKResponse} from './types';
-import {Endpoints} from './util';
+import type { LynxClient } from './client';
+import type { OKResponse } from './types';
+import { Endpoints } from './util';
 
 export interface GatewayInformation {
     client_id: number

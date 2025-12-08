@@ -1,6 +1,6 @@
-import type {LynxClient} from './client';
-import type {CreationDate, Identifier, Metadata, MetaObject, OKResponse, WithMeta} from './types';
-import {Endpoints} from './util';
+import type { LynxClient } from './client';
+import type { CreationDate, Identifier, Metadata, MetaObject, OKResponse, WithMeta } from './types';
+import { Endpoints } from './util';
 
 export type EmptyDevicex = WithMeta & {
     installation_id: number
@@ -19,7 +19,7 @@ export function GetDevice(this: LynxClient, installationId: number, id: number) 
 }
 
 export function CreateDevice(this: LynxClient, dev: EmptyDevicex, silent = false) {
-    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}` : '';
+    const qs = silent ? `?${new URLSearchParams({ silent: String(silent) })}` : '';
     return this.requestJson<Devicex>(
         `${Endpoints.DeviceX}/${dev.installation_id}${qs}`, {
             method: 'POST',
@@ -28,7 +28,7 @@ export function CreateDevice(this: LynxClient, dev: EmptyDevicex, silent = false
 }
 
 export function UpdateDevice(this: LynxClient, dev: Devicex, silent = false) {
-    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}` : '';
+    const qs = silent ? `?${new URLSearchParams({ silent: String(silent) })}` : '';
     return this.requestJson<Devicex>(
         `${Endpoints.DeviceX}/${dev.installation_id}/${dev.id}${qs}`, {
             method: 'PUT',
@@ -37,7 +37,7 @@ export function UpdateDevice(this: LynxClient, dev: Devicex, silent = false) {
 }
 
 export function DeleteDevice(this: LynxClient, dev: Devicex, silent = false) {
-    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}` : '';
+    const qs = silent ? `?${new URLSearchParams({ silent: String(silent) })}` : '';
     return this.requestJson<OKResponse>(
         `${Endpoints.DeviceX}/${dev.installation_id}/${dev.id}${qs}`, {
             method: 'DELETE'
@@ -49,7 +49,7 @@ export function GetDeviceMeta(this: LynxClient, installationID: number, deviceID
 }
 
 export function CreateDeviceMeta(this: LynxClient, installationID: number, deviceID: number, key: string, data: MetaObject, silent = false) {
-    const qs = `?${new URLSearchParams({silent: String(silent)})}`;
+    const qs = `?${new URLSearchParams({ silent: String(silent) })}`;
     const path = `${Endpoints.DeviceX}/${installationID}/${deviceID}/meta/${encodeURIComponent(key)}${qs}`;
     return this.requestJson<MetaObject>(path, {
         method: 'POST', body: JSON.stringify(data)
@@ -57,7 +57,7 @@ export function CreateDeviceMeta(this: LynxClient, installationID: number, devic
 }
 
 export function UpdateDeviceMeta(this: LynxClient, installationID: number, deviceID: number, key: string, data: MetaObject, silent = false, createMissing = false) {
-    const qs = `?${new URLSearchParams({silent: String(silent), create_missing: String(createMissing)})}`;
+    const qs = `?${new URLSearchParams({ silent: String(silent), create_missing: String(createMissing) })}`;
     const path = `${Endpoints.DeviceX}/${installationID}/${deviceID}/meta/${encodeURIComponent(key)}${qs}`;
     return this.requestJson<MetaObject>(path, {
         method: 'PUT', body: JSON.stringify(data)
@@ -65,7 +65,7 @@ export function UpdateDeviceMeta(this: LynxClient, installationID: number, devic
 }
 
 export function DeleteDeviceMeta(this: LynxClient, installationID: number, deviceID: number, key: string, silent = false) {
-    const qs = `?${new URLSearchParams({silent: String(silent)})}`;
+    const qs = `?${new URLSearchParams({ silent: String(silent) })}`;
     const path = `${Endpoints.DeviceX}/${installationID}/${deviceID}/meta/${encodeURIComponent(key)}${qs}`;
     return this.requestJson<MetaObject>(path, {
         method: 'DELETE'

@@ -1,6 +1,6 @@
-import type {LynxClient} from './client';
-import type {Identifier, OKResponse} from './types';
-import {Endpoints} from './util';
+import type { LynxClient } from './client';
+import type { Identifier, OKResponse } from './types';
+import { Endpoints } from './util';
 
 export interface EmptyNotificationMessage {
     installation_id: number
@@ -15,7 +15,7 @@ export function GetNotificationMessages(this: LynxClient, installationId: number
         `${Endpoints.Notification}/${installationId}/message`);
 }
 
-export function GetNotificationMessage (this: LynxClient, installationId: number, id: number){
+export function GetNotificationMessage(this: LynxClient, installationId: number, id: number){
     return this.requestJson<NotificationMessage>(
         `${Endpoints.Notification}/${installationId}/message/${id}`);
 }

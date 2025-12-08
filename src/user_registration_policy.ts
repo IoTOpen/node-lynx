@@ -1,6 +1,6 @@
-import type {LynxClient} from './client';
-import type {Identifier, OKResponse} from './types';
-import {Endpoints} from './util';
+import type { LynxClient } from './client';
+import type { Identifier, OKResponse } from './types';
+import { Endpoints } from './util';
 
 export interface EmptyUserRegistrationPolicy {
     email_pattern: string

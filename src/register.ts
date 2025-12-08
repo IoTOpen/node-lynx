@@ -1,6 +1,6 @@
-import type {LynxClient} from './client';
-import type {Address, OKResponse} from './types';
-import {Endpoints} from './util';
+import type { LynxClient } from './client';
+import type { Address, OKResponse } from './types';
+import { Endpoints } from './util';
 
 export interface UserRegistration {
     first_name: string

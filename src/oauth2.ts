@@ -1,7 +1,7 @@
-import type {LynxClient} from './client';
-import type {OKResponse} from './types';
-import type {User} from './user';
-import {Endpoints} from './util';
+import type { LynxClient } from './client';
+import type { OKResponse } from './types';
+import type { User } from './user';
+import { Endpoints } from './util';
 
 export interface EmptyOAuth2Client {
     name: string

@@ -1,4 +1,4 @@
-import {Login, Login2FA, Logout, ResetPassword, ResetPasswordUpdate} from './auth';
+import { Login, Login2FA, Logout, ResetPassword, ResetPasswordUpdate } from './auth';
 import {
     CreateDevice,
     CreateDeviceMeta,
@@ -67,7 +67,7 @@ import {
     ListInstallations,
     UpdateInstallation, UpdateInstallationMeta
 } from './installation';
-import {GetLog, GetStatus} from './log';
+import { GetLog, GetStatus } from './log';
 import {
     CreateNotificationExecutorAdmin,
     CreateNotificationMessage,
@@ -103,12 +103,12 @@ import {
     GetOrganizations,
     UpdateOrganization, UpdateOrganizationMeta
 } from './organization';
-import {GetPermissions} from './permission';
-import {Register} from './register';
-import {CreateRole, DeleteRole, GetRole, GetRoles, UpdateRole} from './role';
-import {CreateSchedule, DeleteSchedule, GetSchedule, GetSchedules, UpdateSchedule} from './schedule';
+import { GetPermissions } from './permission';
+import { Register } from './register';
+import { CreateRole, DeleteRole, GetRole, GetRoles, UpdateRole } from './role';
+import { CreateSchedule, DeleteSchedule, GetSchedule, GetSchedules, UpdateSchedule } from './schedule';
 import { Search } from './search';
-import {CreateToken, DeleteToken, GetTokens} from './token';
+import { CreateToken, DeleteToken, GetTokens } from './token';
 import {
     CreateTopicBlacklistEntry,
     DeleteTopicBlacklistEntry,
@@ -116,7 +116,7 @@ import {
     GetTopicBlacklistEntry,
     UpdateTopicBlacklistEntry,
 } from './topic_blacklist';
-import {GetTrace} from './trace';
+import { GetTrace } from './trace';
 import type { SearchOptions, SearchResultsData } from './types';
 import {
     ChangePassword,
@@ -138,7 +138,7 @@ import {
     GetUserRegistrationPolicy,
     UpdateUserRegistrationPolicy
 } from './user_registration_policy';
-import {request, requestBlob, requestJson, requestNull} from './util';
+import { request, requestBlob, requestJson, requestNull } from './util';
 
 export class LynxClient {
     baseURL: string;
@@ -265,7 +265,6 @@ export class LynxClient {
     removeEdgeAppInstance = RemoveEdgeAppInstance;
     downloadEdgeApp = DownloadEdgeApp;
     getEdgeAppOrganization = GetEdgeAppOrganization;
-
 
     getRoles = GetRoles;
     getRole = GetRole;

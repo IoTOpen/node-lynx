@@ -1,7 +1,7 @@
 import 'cross-fetch/polyfill';
 
-import type {LynxClient} from './client';
-import type {ErrorResponse} from './types';
+import type { LynxClient } from './client';
+import type { ErrorResponse } from './types';
 
 export enum Endpoints {
     Auth = '/api/v2/auth',
@@ -48,7 +48,7 @@ export function request(this: LynxClient, info: string, init?: RequestInit) {
 
 export function requestJson<T>(this: LynxClient, endpoint: string, options?: RequestInit): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
-    return this.request(url, options).then(async (res) => {
+    return this.request(url, options).then(async(res) => {
         if (res.status >= 200 && res.status < 300) {
             return await res.json() as T;
         }
@@ -61,7 +61,7 @@ export function requestJson<T>(this: LynxClient, endpoint: string, options?: Req
 
 export function requestBlob(this: LynxClient, endpoint: string, options?: RequestInit) {
     const url = `${this.baseURL}${endpoint}`;
-    return this.request(url, options).then(async (res) => {
+    return this.request(url, options).then(async(res) => {
         if (res.status >= 200 && res.status < 300) {
             return await res.blob();
         }
@@ -74,7 +74,7 @@ export function requestBlob(this: LynxClient, endpoint: string, options?: Reques
 
 export function requestNull<T>(this: LynxClient, endpoint: string, options?: RequestInit): Promise<T | null> {
     const url = `${this.baseURL}${endpoint}`;
-    return this.request(url, options).then(async (res) => {
+    return this.request(url, options).then(async(res) => {
         if (res.status === 204) {
             return null;
         }

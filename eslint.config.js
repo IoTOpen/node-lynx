@@ -1,13 +1,12 @@
 // ESLint flat config for ESLint v9+
 
-import { defineConfig } from 'eslint/config';
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import importPlugin from 'eslint-plugin-import';
 import globals from 'globals';
 
-export default defineConfig([
+export default [
   {
     ignores: [
       '**/dist/**',
@@ -15,33 +14,26 @@ export default defineConfig([
       '**/coverage/**',
       '**/*.d.ts',
       '**/build/**',
-      'eslint.config.js',
-      'eslint.config.mjs',
+      '*.config.{js,mjs,cjs}',
     ],
   },
-  // Base config for all files
-  {
-    ...js.configs.recommended,
-    languageOptions: {
-      ecmaVersion: '2022',
-      sourceType: 'module',
-      globals: { ...globals.node },
-    },
-  },
-  // TypeScript config for .ts files
+  // Base config
+  js.configs.recommended,
+  // TypeScript configs
+  ...tseslint.configs.recommended,
+  ...tseslint.configs.strictTypeChecked,
+  ...tseslint.configs.stylisticTypeChecked,
+  // TypeScript-specific rules
   {
     files: ['src/**/*.ts'],
-    extends: [
-      ...tseslint.configs.recommended,
-      ...tseslint.configs.strictTypeChecked,
-      ...tseslint.configs.stylisticTypeChecked,
-    ],
     plugins: {
       '@typescript-eslint': tseslint.plugin,
       'simple-import-sort': simpleImportSort,
       'import': importPlugin,
     },
     languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
       parser: tseslint.parser,
       parserOptions: {
         project: true,
@@ -49,8 +41,16 @@ export default defineConfig([
       },
       globals: { ...globals.node },
     },
+    settings: {
+      'import/resolver': {
+        typescript: {
+          project: './tsconfig.json',
+          alwaysTryTypes: true,
+        },
+      },
+    },
     rules: {
-      // Allow numbers and booleans in template literals (relax restrict-template-expressions)
+      // Allow numbers and booleans in template literals
       '@typescript-eslint/restrict-template-expressions': ['error', {
         allowNumber: true,
         allowBoolean: true,
@@ -61,8 +61,28 @@ export default defineConfig([
       'import/first': 'error',
       'import/no-duplicates': 'error',
       'import/no-cycle': 'error',
-      'import/no-unresolved': 'off', // TS handles resolution
+      // TypeScript performs module resolution/type checking; avoid false positives
+      'import/no-unresolved': 'off',
       'import/newline-after-import': ['error', { count: 1 }],
+      'import/no-extraneous-dependencies': [
+        'error',
+        {
+          devDependencies: [
+            '**/*.{test,spec}.ts',
+            '**/*.{test,spec}.{ts,js}',
+            '**/*.{test,spec}.{ts,tsx,js,jsx}',
+            '**/*.stories.{ts,tsx,js,jsx}',
+            '**/*.d.ts',
+            '**/scripts/**',
+            '**/setupTests.{js,ts}',
+            '*.config.{js,ts,mjs,cjs}',
+          ],
+          optionalDependencies: false,
+          peerDependencies: true,
+          includeTypes: true,
+          packageDir: './',
+        },
+      ],
       // Sorting
       'simple-import-sort/imports': ['error', {
         groups: [
@@ -70,16 +90,20 @@ export default defineConfig([
           ['^@?\\w'],
           ['^src/', '^@/'],
           ['^\\u0000'],
-          ['^\.\./'],
-          ['^\.'],
+          ['^\\.\\./'],
+          ['^\\.'],
           ['^.+\\.css$'],
         ],
       }],
       'simple-import-sort/exports': 'error',
-      // Style (not using Prettier)
+      // Avoid excessive blank lines
+      'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
+      // Style
       'comma-spacing': ['error', { before: false, after: true }],
+      'space-before-function-paren': ['error', 'never'],
       'quotes': ['error', 'single'],
       'semi': ['error', 'always'],
+      'object-curly-spacing': ['error', 'always'],
       // TypeScript safety
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-unused-vars': [
@@ -100,7 +124,7 @@ export default defineConfig([
       ],
       '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
       '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
-      '@typescript-eslint/no-shadow': ['error', { allow: ['err', 'error'] }],
+      '@typescript-eslint/no-shadow': ['error', { allow: ['err', 'error', 'errors', 'e'] }],
       '@typescript-eslint/switch-exhaustiveness-check': 'error',
       '@typescript-eslint/prefer-nullish-coalescing': 'error',
       '@typescript-eslint/prefer-optional-chain': 'error',
@@ -122,4 +146,14 @@ export default defineConfig([
       'arrow-body-style': ['error', 'as-needed'],
     },
   },
-]);
+  // Test files
+  {
+    files: ['**/*.{test,spec}.ts'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-non-null-assertion': 'off',
+      '@typescript-eslint/no-floating-promises': 'off',
+      'no-console': 'off',
+    },
+  },
+];

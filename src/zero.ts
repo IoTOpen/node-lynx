@@ -9,13 +9,13 @@ import type {
     EmptyNotificationMessage, EmptyNotificationOutput, EmptyNotificationOutputExecutor,
     NotificationMessage, NotificationOutput, NotificationOutputExecutor
 } from './notification';
-import type {EmptyOAuth2Client, OAuth2Client} from './oauth2';
+import type { EmptyOAuth2Client, OAuth2Client } from './oauth2';
 import type { EmptyOrganization, Organization, OrganizationSimple } from './organization';
 import type { EmptyRole, Role } from './role';
 import type { EmptySchedule, Schedule } from './schedule';
 import type { EmptyToken, Token } from './token';
 import type { EmptyTopicBlacklist, TopicBlacklist } from './topic_blacklist';
-import type { Trace} from './trace';
+import type { Trace } from './trace';
 import { TraceAction, TraceObjectType } from './trace';
 import type { CreationDate, Identifier, WithMeta } from './types';
 import type { EmptyUser, User } from './user';
@@ -24,7 +24,7 @@ export const clone = <T, >(model: T): T => {
     if (typeof model === 'object' && model !== null) {
         // Use unknown to avoid unsafe any, then assert to T
         return Object.assign({}, ...Object.keys(model).map(
-            (key) => ({[key]: clone((model as Record<string, unknown>)[key])})
+            (key) => ({ [key]: clone((model as Record<string, unknown>)[key]) })
         )) as T;
     }
 
@@ -249,7 +249,6 @@ const organizationSimple = {
     parent: ''
 };
 
-
 const oauth2Client = {
     id: '',
     client_secret: '',
@@ -278,43 +277,42 @@ const emptyOAuth2Client = {
     kid: ''
 };
 
-
 export const zero = {
-    getEmptyDevicex: (): EmptyDevicex => clone({...devicex, ...emptyWithMeta}),
-    getDevicex: (): Devicex => clone({...devicex, ...emptyWithMeta, ...emptyIdentifier, ...emptyCreationDate}),
-    getEmptyEdgeApp: (): EmptyEdgeApp => clone({...edgeApp}),
-    getEdgeApp: (): EdgeApp => clone({...edgeApp, ...emptyIdentifier, ...emptyCreationDate}),
-    getEmptyEdgeAppInstance: (): EmptyEdgeAppInstance => clone({...edgeAppInstance}),
-    getEdgeAppInstance: (): EdgeAppInstance => clone({...edgeAppInstance, ...emptyIdentifier, ...emptyCreationDate}),
-    getEmptyFile: (): EmptyFile => clone({...emptyFile}),
-    getFile: (): (EmptyFile & Identifier & CreationDate)  => clone({...emptyFile, ...emptyIdentifier, ...emptyCreationDate}),
-    getEmptyFunctionx: (): EmptyFunctionx => clone({...functionx, ...emptyWithMeta}),
-    getFunctionx: (): Functionx => clone({...functionx, ...emptyWithMeta, ...emptyIdentifier, ...emptyCreationDate}),
-    getGatewayInformation: (): GatewayInformation => clone({...gatewayInformation}),
-    getInstallationInfo: (): InstallationInfo => clone({...installationInfo}),
-    getEmptyInstallation: (): EmptyInstallation => clone({...installation, ...emptyWithMeta}),
-    getInstallation: (): Installation => clone({...installation, ...emptyWithMeta, ...emptyIdentifier, client_id: 0, created: 0}),
-    getLogEntry: (): LogEntry => clone({...logEntry}),
-    getEmptyNotificationMessage: (): EmptyNotificationMessage => clone({...notificationMessage}),
-    getNotificationMessage: (): NotificationMessage => clone({...notificationMessage, ...emptyIdentifier}),
-    getEmptyNotificationOutput: (): EmptyNotificationOutput => clone({...notificationOutput}),
-    getNotificationOutput: (): NotificationOutput => clone({...notificationOutput, ...emptyIdentifier}),
-    getEmptyNotificationOutputExecutor: (): EmptyNotificationOutputExecutor =>clone({...notificationOutputExecutor}),
-    getNotificationOutputExecutor: (): NotificationOutputExecutor =>clone({...notificationOutputExecutor, ...emptyIdentifier}),
-    getEmptyOrganization: (): EmptyOrganization => clone({...organization, ...emptyWithMeta}),
-    getOrganization: (): Organization => clone({...organization, ...emptyWithMeta, ...emptyIdentifier}),
-    getOrganizationSimple: (): OrganizationSimple => clone({...organizationSimple}),
-    getEmptyRole: (): EmptyRole => clone({...role}),
-    getRole: (): Role => clone({...role, ...emptyIdentifier}),
-    getEmptySchedule: (): EmptySchedule => clone({...schedule}),
-    getSchedule: (): Schedule => clone({...schedule, ...emptyIdentifier, ...{ created_at: 0, updated_at: 0 }}),
-    getEmptyToken: (): EmptyToken => clone({...token}),
-    getToken: (): Token => clone({...token, ...zeroToken, ...emptyIdentifier}),
-    getEmptyTopicBlacklist: (): EmptyTopicBlacklist => clone({...topicBlacklist}),
-    getBlacklist: (): TopicBlacklist => clone({...topicBlacklist, ...emptyIdentifier}),
-    getTrace: (): Trace => clone({...trace}),
-    getEmptyUser: (): EmptyUser => clone({...user, ...emptyWithMeta}),
-    getUser: (): User => clone({...user, ...emptyWithMeta, ...emptyIdentifier}),
-    getOAuth2Client: (): OAuth2Client => clone({...oauth2Client}),
-    getEmptyOAuth2Client: (): EmptyOAuth2Client => clone({...emptyOAuth2Client}),
+    getEmptyDevicex: (): EmptyDevicex => clone({ ...devicex, ...emptyWithMeta }),
+    getDevicex: (): Devicex => clone({ ...devicex, ...emptyWithMeta, ...emptyIdentifier, ...emptyCreationDate }),
+    getEmptyEdgeApp: (): EmptyEdgeApp => clone({ ...edgeApp }),
+    getEdgeApp: (): EdgeApp => clone({ ...edgeApp, ...emptyIdentifier, ...emptyCreationDate }),
+    getEmptyEdgeAppInstance: (): EmptyEdgeAppInstance => clone({ ...edgeAppInstance }),
+    getEdgeAppInstance: (): EdgeAppInstance => clone({ ...edgeAppInstance, ...emptyIdentifier, ...emptyCreationDate }),
+    getEmptyFile: (): EmptyFile => clone({ ...emptyFile }),
+    getFile: (): (EmptyFile & Identifier & CreationDate)  => clone({ ...emptyFile, ...emptyIdentifier, ...emptyCreationDate }),
+    getEmptyFunctionx: (): EmptyFunctionx => clone({ ...functionx, ...emptyWithMeta }),
+    getFunctionx: (): Functionx => clone({ ...functionx, ...emptyWithMeta, ...emptyIdentifier, ...emptyCreationDate }),
+    getGatewayInformation: (): GatewayInformation => clone({ ...gatewayInformation }),
+    getInstallationInfo: (): InstallationInfo => clone({ ...installationInfo }),
+    getEmptyInstallation: (): EmptyInstallation => clone({ ...installation, ...emptyWithMeta }),
+    getInstallation: (): Installation => clone({ ...installation, ...emptyWithMeta, ...emptyIdentifier, client_id: 0, created: 0 }),
+    getLogEntry: (): LogEntry => clone({ ...logEntry }),
+    getEmptyNotificationMessage: (): EmptyNotificationMessage => clone({ ...notificationMessage }),
+    getNotificationMessage: (): NotificationMessage => clone({ ...notificationMessage, ...emptyIdentifier }),
+    getEmptyNotificationOutput: (): EmptyNotificationOutput => clone({ ...notificationOutput }),
+    getNotificationOutput: (): NotificationOutput => clone({ ...notificationOutput, ...emptyIdentifier }),
+    getEmptyNotificationOutputExecutor: (): EmptyNotificationOutputExecutor =>clone({ ...notificationOutputExecutor }),
+    getNotificationOutputExecutor: (): NotificationOutputExecutor =>clone({ ...notificationOutputExecutor, ...emptyIdentifier }),
+    getEmptyOrganization: (): EmptyOrganization => clone({ ...organization, ...emptyWithMeta }),
+    getOrganization: (): Organization => clone({ ...organization, ...emptyWithMeta, ...emptyIdentifier }),
+    getOrganizationSimple: (): OrganizationSimple => clone({ ...organizationSimple }),
+    getEmptyRole: (): EmptyRole => clone({ ...role }),
+    getRole: (): Role => clone({ ...role, ...emptyIdentifier }),
+    getEmptySchedule: (): EmptySchedule => clone({ ...schedule }),
+    getSchedule: (): Schedule => clone({ ...schedule, ...emptyIdentifier, ...{ created_at: 0, updated_at: 0 } }),
+    getEmptyToken: (): EmptyToken => clone({ ...token }),
+    getToken: (): Token => clone({ ...token, ...zeroToken, ...emptyIdentifier }),
+    getEmptyTopicBlacklist: (): EmptyTopicBlacklist => clone({ ...topicBlacklist }),
+    getBlacklist: (): TopicBlacklist => clone({ ...topicBlacklist, ...emptyIdentifier }),
+    getTrace: (): Trace => clone({ ...trace }),
+    getEmptyUser: (): EmptyUser => clone({ ...user, ...emptyWithMeta }),
+    getUser: (): User => clone({ ...user, ...emptyWithMeta, ...emptyIdentifier }),
+    getOAuth2Client: (): OAuth2Client => clone({ ...oauth2Client }),
+    getEmptyOAuth2Client: (): EmptyOAuth2Client => clone({ ...emptyOAuth2Client }),
 };

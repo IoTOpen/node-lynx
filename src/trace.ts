@@ -1,7 +1,7 @@
-import type {LynxClient} from './client';
-import {LogOrder} from './log';
-import type {PaginatedResponse} from './types';
-import {Endpoints} from './util';
+import type { LynxClient } from './client';
+import { LogOrder } from './log';
+import type { PaginatedResponse } from './types';
+import { Endpoints } from './util';
 
 export enum TraceObjectType {
     Installation = 'installation',

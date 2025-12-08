@@ -1,4 +1,4 @@
-import {sprintf} from 'sprintf-js';
+import { sprintf } from 'sprintf-js';
 
 import type { Functionx } from './functionx';
 import type { LogEntry } from './log';
