@@ -99,7 +99,10 @@ export default [
       // Avoid excessive blank lines
       'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
       // Style
-      'comma-spacing': ['error', { before: false, after: true }],
+      'comma-spacing': [
+        'error',
+        { before: false, after: true }
+      ],
       'space-before-function-paren': ['error', 'never'],
       'quotes': ['error', 'single'],
       'semi': ['error', 'always'],
