@@ -56,8 +56,7 @@
   "type": "module",
   "engines": {
     "node": "22.x"
-  }
-  ,
+  },
   "files": [
     "dist"
   ]
