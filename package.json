@@ -13,7 +13,7 @@
     "build:analyze": "ANALYZE=true rollup -c",
     "dev:ts": "rollup -c -w",
     "clean": "rm -rf dist",
-    "prepare": "rm -rf dist/ && rollup -c"
+    "prepare": "rollup -c"
   },
   "repository": {
     "type": "git",
@@ -57,4 +57,8 @@
   "engines": {
     "node": "22.x"
   }
+  ,
+  "files": [
+    "dist"
+  ]
 }
