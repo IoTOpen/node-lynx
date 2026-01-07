@@ -13,7 +13,7 @@
     "build:analyze": "ANALYZE=true rollup -c",
     "dev:ts": "rollup -c -w",
     "clean": "rm -rf dist",
-    "prepare": "rollup -c"
+    "prepack": "rollup -c"
   },
   "repository": {
     "type": "git",
