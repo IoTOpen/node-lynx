@@ -38,9 +38,9 @@ export function request(this: LynxClient, info: string, init?: RequestInit) {
     const headers = conf.headers as Record<string, string>;
     if (this.apiKey && this.apiKey !== '') {
         if (this.bearer) {
-            headers['Authorization'] = `Bearer ${this.apiKey}`;
+            headers['Authorization'] ??= `Bearer ${this.apiKey}`;
         } else {
-            headers['X-API-Key'] = this.apiKey;
+            headers['X-API-Key'] ??= this.apiKey;
         }
     }
     return fetch(info, conf);
