@@ -10,10 +10,40 @@ export interface LoginResult {
 }
 
 export function Login(this: LynxClient, username: string, password: string): Promise<LoginResult> {
+    const encodeBasic = (u: string, p: string): string => {
+        const creds = `${u}:${p}`;
+        // Try Node Buffer (server/node environments) with a typed narrow
+        const globalWithBuffer = globalThis as unknown as { Buffer?: { from: (input: string, enc?: string) => { toString: (enc?: string) => string } } };
+        const nodeBuf = globalWithBuffer.Buffer;
+        if (nodeBuf && typeof nodeBuf.from === 'function') {
+            try {
+                return nodeBuf.from(creds, 'utf8').toString('base64');
+            } catch (_) {
+                // fallthrough to other methods
+            }
+        }
+        // Try browser btoa with proper UTF-8 handling using TextEncoder
+        if (typeof btoa === 'function' && typeof TextEncoder !== 'undefined') {
+            try {
+                const encoder = new TextEncoder();
+                const bytes = encoder.encode(creds);
+                let binary = '';
+                for (const b of bytes) {
+                    binary += String.fromCharCode(b);
+                }
+                return btoa(binary);
+            } catch (_) {
+                // fallthrough
+            }
+        }
+        // Fallback to js-base64
+        return Base64.encode(creds);
+    };
+
     return this.requestJson(Endpoints.Auth, {
         method: 'POST',
         headers: {
-            'Authorization': `Basic ${Base64.encode(`${username}:${password}`)}`
+            'Authorization': `Basic ${encodeBasic(username, password)}`
         }
     });
 }
