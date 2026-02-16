@@ -9,9 +9,9 @@
     "lint": "eslint src --max-warnings 0 && pnpm type-check",
     "lint:fix": "eslint src --max-warnings 0 --fix && pnpm type-check",
     "type-check": "tsc --noEmit",
-    "build": "rollup -c",
-    "build:analyze": "ANALYZE=true rollup -c",
-    "dev:ts": "rollup -c -w",
+    "build": "vite build --config ./vite.config.ts",
+    "build:analyze": "ANALYZE=true vite build --config ./vite.config.ts",
+    "dev:ts": "vite",
     "clean": "rm -rf dist",
     "prepare": "node scripts/prepare.cjs",
     "prepack": "node scripts/prepare.cjs"
@@ -46,7 +46,9 @@
     "rollup-plugin-dts": "^6.3.0",
     "rollup-plugin-visualizer": "^6.0.5",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.55.0"
+    "typescript-eslint": "^8.55.0",
+    "vite": "^7.3.1",
+    "vite-plugin-dts": "^4.1.0"
   },
   "dependencies": {
     "cross-fetch": "^4.1.0",
