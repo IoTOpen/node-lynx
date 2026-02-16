@@ -14,7 +14,7 @@
     "dev:ts": "rollup -c -w",
     "clean": "rm -rf dist",
     "prepare": "node scripts/prepare.cjs",
-    "prepack": "rollup -c"
+    "prepack": "node scripts/prepare.cjs"
   },
   "repository": {
     "type": "git",
