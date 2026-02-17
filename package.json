@@ -28,7 +28,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/IoTOpen/react-lynx.git"
+    "url": "https://github.com/IoTOpen/node-lynx.git"
   },
   "keywords": [
     "lynx",
