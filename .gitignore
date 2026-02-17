@@ -75,6 +75,6 @@ node_modules/
 lynx-*.tgz
 lib/
 dist/
-.github/*
+.github
 /.pnpm-store
 .pnpm-store/

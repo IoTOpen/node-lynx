@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/IoTOpen/node-lynx.git"
+    "url": "https://github.com/IoTOpen/react-lynx.git"
   },
   "keywords": [
     "lynx",
@@ -39,7 +39,7 @@
     "@typescript-eslint/parser": "^8.56.0",
     "eslint": "^9.39.2",
     "eslint-import-resolver-typescript": "^3.10.1",
-    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-import-x": "^4.16.1",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "globals": "^16.5.0",
     "typescript": "^5.9.3",
