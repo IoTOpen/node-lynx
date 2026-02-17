@@ -1,14 +1,14 @@
 {
   "name": "@iotopen/node-lynx",
-  "version": "2.6.0-rc.1",
+  "version": "2.6.0-rc.2",
   "description": "IoT Open Lynx API package for node",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "pnpm": {
     "onlyBuiltDependencies": [
-    "esbuild",
-    "unrs-resolver"
+      "esbuild",
+      "unrs-resolver"
     ]
   },
   "scripts": {
