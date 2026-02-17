@@ -76,3 +76,5 @@ lynx-*.tgz
 lib/
 dist/
 .github/*
+/.pnpm-store
+.pnpm-store/

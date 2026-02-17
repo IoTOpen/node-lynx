@@ -15,6 +15,8 @@ export default [
       '**/*.d.ts',
       '**/build/**',
       '*.config.{js,mjs,cjs}',
+      '**/.pnpm-store/**',
+      '.vscode/**',
     ],
   },
   // Base config
