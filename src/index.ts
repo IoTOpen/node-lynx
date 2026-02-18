@@ -46,3 +46,4 @@ export type { EmptyTopicBlacklist, TopicBlacklist } from './topic_blacklist';
 export type { Trace } from './trace';
 export type { EmptyUser, User } from './user';
 export type { EmptyUserRegistrationPolicy, UserRegistrationPolicy } from './user_registration_policy';
+export { HTTPError } from './util';

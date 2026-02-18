@@ -1,6 +1,6 @@
 import type { LynxClient } from './client';
 import type { Identifier, Metadata, MetaObject, OKResponse, WithMeta } from './types';
-import { Endpoints } from './util';
+import { buildQuery, Endpoints } from './util';
 
 export interface InstallationInfo {
     id: number
@@ -31,7 +31,7 @@ export function GetInstallationRow(this: LynxClient, installationId: number) {
 }
 
 export function ListInstallations(this: LynxClient, filter?: Metadata) {
-    const qs = filter ? `?${new URLSearchParams(filter).toString()}` : '';
+    const qs = buildQuery(filter);
     return this.requestJson<Installation[]>(`${Endpoints.Installation}${qs}`);
 }
 
@@ -79,7 +79,7 @@ export function GetInstallationMeta(this: LynxClient, installationID: number, ke
 }
 
 export function CreateInstallationMeta(this: LynxClient, installationID: number, key: string, data: MetaObject, silent = false) {
-    const qs = silent ? `?${new URLSearchParams({ silent: String(silent) })}` : '';
+    const qs = silent ? buildQuery({ silent: String(silent) }) : '';
     const path = `${Endpoints.Installation}/${installationID}/meta/${encodeURIComponent(key)}${qs}`;
     return this.requestJson<MetaObject>(path, {
         method: 'POST', body: JSON.stringify(data)
@@ -87,7 +87,7 @@ export function CreateInstallationMeta(this: LynxClient, installationID: number,
 }
 
 export function UpdateInstallationMeta(this: LynxClient, installationID: number, key: string, data: MetaObject, silent = false, createMissing = false) {
-    const qs = `?${new URLSearchParams({ silent: String(silent), create_missing: String(createMissing) })}`;
+    const qs = buildQuery({ silent: String(silent), create_missing: String(createMissing) });
     const path = `${Endpoints.Installation}/${installationID}/meta/${encodeURIComponent(key)}${qs}`;
     return this.requestJson<MetaObject>(path, {
         method: 'PUT', body: JSON.stringify(data)
@@ -95,7 +95,7 @@ export function UpdateInstallationMeta(this: LynxClient, installationID: number,
 }
 
 export function DeleteInstallationMeta(this: LynxClient, installationID: number, _functionID: number, key: string, silent = false) {
-    const qs = silent ? `?${new URLSearchParams({ silent: String(silent) })}` : '';
+    const qs = silent ? buildQuery({ silent: String(silent) }) : '';
     const path = `${Endpoints.Installation}/${installationID}/meta/${encodeURIComponent(key)}${qs}`;
     return this.requestJson<MetaObject>(path, {
         method: 'DELETE'

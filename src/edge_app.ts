@@ -1,6 +1,6 @@
 import type { LynxClient } from './client';
 import type { CreationDate, Identifier, Metadata, OKResponse } from './types';
-import { Endpoints } from './util';
+import { buildQuery, Endpoints } from './util';
 
 export interface Publisher {
     id: number
@@ -33,7 +33,7 @@ export function GetEdgeAppPublisher(this: LynxClient, organizationId: number) {
 }
 
 export function GetEdgeAppOrganization(this: LynxClient, organizationId: number, available?: boolean) {
-    const qs = available ? `?${new URLSearchParams({ available: String(available) })}` : '';
+    const qs = available ? buildQuery({ available: String(available) }) : '';
     const path = `${Endpoints.EdgeApp}/organization/${organizationId}${qs}`;
     return this.requestJson<EdgeApp[]>(path);
 }

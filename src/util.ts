@@ -1,5 +1,3 @@
-import 'cross-fetch/polyfill';
-
 import type { LynxClient } from './client';
 import type { ErrorResponse } from './types';
 
@@ -30,6 +28,89 @@ export enum Endpoints {
     OAuth2Admin = '/api/v2/admin/oauth2',
 }
 
+export function buildQuery(params?: Record<string, unknown> | URLSearchParams): string {
+    if (!params) {
+        return '';
+    }
+
+    if (params instanceof URLSearchParams) {
+        const s = params.toString();
+        return s ? `?${s}` : '';
+    }
+
+    const search = new URLSearchParams();
+
+    function normalize(v: unknown): string {
+        if (v === undefined || v === null) {
+            return '';
+        }
+
+        const t = typeof v;
+        switch (t) {
+            case 'string': {
+                return v as string;
+            }
+            case 'number': {
+                return String(v as number);
+            }
+            case 'bigint': {
+                return String(v as bigint);
+            }
+            case 'boolean': {
+                return String(v as boolean);
+            }
+            case 'symbol': {
+                return (v as symbol).toString();
+            }
+            case 'function': {
+                return (v as (...args: unknown[]) => unknown).toString();
+            }
+            case 'undefined': {
+                return '';
+            }
+            case 'object': {
+                if (v instanceof Date) {
+                    return v.toISOString();
+                }
+                return JSON.stringify(v);
+            }
+            default: {
+                return '';
+            }
+        }
+    }
+
+    for (const [key, value] of Object.entries(params)) {
+        if (value === undefined || value === null) {
+            continue;
+        }
+
+        if (Array.isArray(value)) {
+            for (const item of value) {
+                if (item === undefined || item === null) {continue;}
+                search.append(key, normalize(item));
+            }
+            continue;
+        }
+
+        search.append(key, normalize(value));
+    }
+
+    const qs = search.toString();
+    return qs ? `?${qs}` : '';
+}
+
+export class HTTPError extends Error {
+    status: number;
+    body?: unknown;
+    constructor(message: string, status: number, body?: unknown) {
+        super(message);
+        this.status = status;
+        this.body = body;
+        Object.setPrototypeOf(this, HTTPError.prototype);
+    }
+}
+
 export function request(this: LynxClient, info: string, init?: RequestInit) {
     const conf: RequestInit = {
         ...init,
@@ -54,8 +135,7 @@ export function requestJson<T>(this: LynxClient, endpoint: string, options?: Req
         }
 
         const err = await res.json() as ErrorResponse;
-        err.status = res.status;
-    throw new Error(err.message);
+        throw new HTTPError(err.message, res.status, err);
     });
 }
 
@@ -67,8 +147,7 @@ export function requestBlob(this: LynxClient, endpoint: string, options?: Reques
         }
 
         const err = await res.json() as ErrorResponse;
-        err.status = res.status;
-    throw new Error(err.message);
+        throw new HTTPError(err.message, res.status, err);
     });
 }
 
@@ -80,7 +159,7 @@ export function requestNull<T>(this: LynxClient, endpoint: string, options?: Req
         }
         if (res.status !== 200) {
             const err = await res.json() as ErrorResponse;
-            throw new Error(err.message);
+            throw new HTTPError(err.message, res.status, err);
         }
         return await res.json() as T;
     });

@@ -16,13 +16,16 @@ export function GetTopicBlacklist(this: LynxClient) {
     return this.requestJson<TopicBlacklist[]>(Endpoints.TopicBlacklist);
 }
 
-export function GetTopicBlacklistEntry(this: LynxClient, id: number) {
+export function GetTopicBlacklistEntry(this: LynxClient, id: number | string) {
     return this.requestJson<TopicBlacklist>(`${Endpoints.TopicBlacklist}/${id}`);
 }
 
 export function CreateTopicBlacklistEntry(this: LynxClient, entry: EmptyTopicBlacklist) {
     return this.requestJson<TopicBlacklist>(Endpoints.TopicBlacklist, {
         method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
         body: JSON.stringify(entry),
     });
 }
@@ -30,12 +33,15 @@ export function CreateTopicBlacklistEntry(this: LynxClient, entry: EmptyTopicBla
 export function UpdateTopicBlacklistEntry(this: LynxClient, entry: TopicBlacklist) {
     return this.requestJson<TopicBlacklist>(`${Endpoints.TopicBlacklist}/${entry.id}`, {
         method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
         body: JSON.stringify(entry),
     });
 }
 
-export function DeleteTopicBlacklistEntry(this: LynxClient, entry: TopicBlacklist) {
-    return this.requestJson<OKResponse>(`${Endpoints.TopicBlacklist}/${entry.id}`, {
+export function DeleteTopicBlacklistEntry(this: LynxClient, id: number | string) {
+    return this.requestJson<OKResponse>(`${Endpoints.TopicBlacklist}/${id}`, {
         method: 'DELETE',
     });
 }

@@ -2,7 +2,6 @@
 
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
-import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import importPlugin from 'eslint-plugin-import-x';
 import globals from 'globals';
 
@@ -30,7 +29,6 @@ export default [
     files: ['src/**/*.ts'],
     plugins: {
       '@typescript-eslint': tseslint.plugin,
-      'simple-import-sort': simpleImportSort,
       'import': importPlugin,
     },
     languageOptions: {
@@ -54,11 +52,13 @@ export default [
     rules: {
       // Allow numbers and booleans in template literals
       '@typescript-eslint/restrict-template-expressions': ['error', {
-        allowNumber: true,
-        allowBoolean: true,
-        allowAny: false,
-        allowNullish: false,
-      }],
+        "allowNumber": true,
+        "allowBoolean": true,
+        "allowAny": false,
+        "allowNullish": true,
+        "allowRegExp": true
+      }
+    ],
       // Import hygiene
       'import/first': 'error',
       'import/no-duplicates': 'error',
@@ -85,19 +85,18 @@ export default [
           packageDir: './',
         },
       ],
-      // Sorting
-      'simple-import-sort/imports': ['error', {
-        groups: [
-          ['^node:'],
-          ['^@?\\w'],
-          ['^src/', '^@/'],
-          ['^\\u0000'],
-          ['^\\.\\./'],
-          ['^\\.'],
-          ['^.+\\.css$'],
+      // Import ordering using import-x/import plugin
+      'import/order': ['error', {
+        groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object'],
+        pathGroups: [
+          { pattern: 'src/**', group: 'internal' },
+          { pattern: '@/**', group: 'internal' },
+          { pattern: '*.css', group: 'index', position: 'after' },
         ],
+        pathGroupsExcludedImportTypes: ['builtin'],
+        'newlines-between': 'always',
+        alphabetize: { order: 'asc', caseInsensitive: true },
       }],
-      'simple-import-sort/exports': 'error',
       // Avoid excessive blank lines
       'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
       // Style
