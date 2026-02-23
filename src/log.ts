@@ -1,6 +1,6 @@
 import type { LynxClient } from './client';
 import type { PaginatedResponse } from './types';
-import { Endpoints } from './util';
+import { Endpoints, buildQuery } from './util';
 
 export interface LogEntry {
     client_id: number
@@ -17,12 +17,7 @@ export enum LogOrder {
 }
 
 export function GetStatus(this: LynxClient, installationId: number, topicFilter?: string[]) {
-    const qs = topicFilter ? `?${topicFilter.reduce((prev, cur, id) => {
-        if (id !== 0) {
-            prev += '&';
-        }
-        return `${prev}topics=${cur}`;
-    }, '')}` : '';
+    const qs = topicFilter ? buildQuery({ topics: topicFilter }) : '';
     return this.requestJson<LogEntry[]>(`${Endpoints.Status}/${installationId}${qs}`);
 }
 
@@ -50,9 +45,6 @@ export function GetLog(
         order,
     };
 
-    if (topics) {
-        params['topics'] = topics.join(',');
-    }
     if (aggr_method) {
         params['aggr_method'] = aggr_method;
     }
@@ -60,6 +52,12 @@ export function GetLog(
         params['aggr_interval'] = aggr_interval;
     }
 
-    const qs = `?${new URLSearchParams(params).toString()}`;
+    // Build URLSearchParams and append topics as repeated `topics=` entries
+    const sp = new URLSearchParams(params);
+    if (topics) {
+        topics.forEach(t => { sp.append('topics', t); });
+    }
+
+    const qs = `?${sp.toString()}`;
     return this.requestJson<PaginatedResponse<LogEntry>>(`${Endpoints.LogV3}/${installationId}${qs}`);
 }
