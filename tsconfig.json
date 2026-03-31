@@ -1,21 +1,16 @@
 {
   "compilerOptions": {
-    // Language & environment
-    "target": "ES2022",
-    "lib": [
-      "ES2023"
-    ],
-    // Modules & resolution
+    "target": "es2022",
+    "lib": ["es2023"],
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "declaration": true,
+    "rootDir": "./src",
     "outDir": "./dist",
     "sourceMap": true,
-    // Type checking (strict + safe defaults)
+    "types": ["node"],
     "strict": true,
     "strictNullChecks": true,
     "noUnusedLocals": true,
@@ -26,16 +21,8 @@
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
-    // Emit
     "isolatedModules": true
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "build",
-    "coverage"
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "build", "coverage"]
 }

@@ -1,21 +1,21 @@
-import { defineConfig } from 'vite'
-import dts from 'vite-plugin-dts'
-import { readFileSync } from 'fs'
-import { builtinModules } from 'module'
-import path from 'path'
+import { defineConfig } from 'vite';
+import dts from 'vite-plugin-dts';
+import { readFileSync } from 'fs';
+import { builtinModules } from 'module';
+import path from 'path';
 
-const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf-8'))
+const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf-8'));
 
-const deps = Object.keys(pkg.dependencies || {})
-const peers = Object.keys(pkg.peerDependencies || {})
-const builtins = new Set(builtinModules)
+const deps = Object.keys(pkg.dependencies || {});
+const peers = Object.keys(pkg.peerDependencies || {});
+const builtins = new Set(builtinModules);
 
 function isExternal(id: string) {
-  if (!id) return false
-  if (builtins.has(id) || id.startsWith('node:')) return true
-  for (const d of deps) if (id === d || id.startsWith(d + '/')) return true
-  for (const p of peers) if (id === p || id.startsWith(p + '/')) return true
-  return false
+  if (!id) return false;
+  if (builtins.has(id) || id.startsWith('node:')) return true;
+  for (const d of deps) if (id === d || id.startsWith(`${d}/`)) return true;
+  for (const p of peers) if (id === p || id.startsWith(`${p}/`)) return true;
+  return false;
 }
 
 export default defineConfig({
@@ -26,11 +26,11 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
       formats: ['cjs', 'es'],
-      fileName: (format) => (format === 'cjs' ? 'index.cjs' : 'index.js')
+      fileName: (format) => (format === 'cjs' ? 'index.cjs' : 'index.js'),
     },
-    rollupOptions: {
-      external: isExternal
-    }
+    rolldownOptions: {
+      external: isExternal,
+    },
   },
-  plugins: [dts({ insertTypesEntry: true })]
-})
+  plugins: [dts({ insertTypesEntry: true })],
+});
