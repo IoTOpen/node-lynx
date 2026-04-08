@@ -33,7 +33,7 @@ export function GetEdgeAppPublisher(this: LynxClient, organizationId: number) {
 }
 
 export function GetEdgeAppOrganization(this: LynxClient, organizationId: number, available?: boolean) {
-    const qs = available ? buildQuery({ available: String(available) }) : '';
+    const qs = buildQuery({ available });
     const path = `${Endpoints.EdgeApp}/organization/${organizationId}${qs}`;
     return this.requestJson<EdgeApp[]>(path);
 }

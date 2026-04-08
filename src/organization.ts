@@ -1,6 +1,6 @@
 import type { LynxClient } from './client';
 import type { Address, Identifier, MetaObject, OKResponse, WithMeta } from './types';
-import { Endpoints } from './util';
+import { buildQuery, Endpoints } from './util';
 
 export interface OrganizationChild {
     id: number
@@ -10,7 +10,7 @@ export interface OrganizationChild {
 export interface OrganizationSimple {
     id: number
     name: string
-    parent: string
+    parent: number
 }
 
 export type EmptyOrganization = WithMeta & {
@@ -30,7 +30,7 @@ export type Organization = EmptyOrganization & Identifier
 export type MinimalOrg<T extends boolean> = T extends true ? OrganizationSimple : Organization;
 export function GetOrganizations<T extends boolean = false>(this: LynxClient, minimal?: T) {
     if (minimal) {
-        const qs = `?minimal=${minimal}`;
+        const qs = buildQuery({ minimal: String(minimal) });
         return this.requestJson<OrganizationSimple[]>(`${Endpoints.Organization}${qs}`) as Promise<MinimalOrg<T>[]>;
     }
     return this.requestJson<Organization[]>(Endpoints.Organization) as Promise<MinimalOrg<T>[]>;

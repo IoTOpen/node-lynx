@@ -21,16 +21,15 @@ import type { CreationDate, Identifier, WithMeta } from './types';
 import type { EmptyUser, User } from './user';
 
 export const clone = <T, >(model: T): T => {
+    if (Array.isArray(model)) {
+        return model.map((value: unknown) => clone(value)) as T;
+    }
+
     if (typeof model === 'object' && model !== null) {
         // Use unknown to avoid unsafe any, then assert to T
         return Object.assign({}, ...Object.keys(model).map(
             (key) => ({ [key]: clone((model as Record<string, unknown>)[key]) })
         )) as T;
-    }
-
-    if (Array.isArray(model)) {
-        // Use unknown in map callback to avoid unsafe any
-        return (model.map((v: unknown) => clone(v)) as unknown) as T;
     }
     return model;
 };
@@ -246,7 +245,7 @@ const gatewayInformation = {
 const organizationSimple = {
     id: 0,
     name: '',
-    parent: ''
+    parent: 0
 };
 
 const oauth2Client = {

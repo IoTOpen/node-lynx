@@ -21,7 +21,7 @@ export type EmptyInstallation = WithMeta & {
 export type Installation = EmptyInstallation & Identifier & { client_id: number, created: number }
 
 export function GetInstallations(this: LynxClient, assignedOnly?: boolean) {
-    const qs = assignedOnly ? `?assigned=${assignedOnly}` : '';
+    const qs = buildQuery({ assigned: assignedOnly });
     return this.requestJson<InstallationInfo[]>(`${Endpoints.InstallationInfo}${qs}`);
 }
 
@@ -49,7 +49,7 @@ export function GetInstallation(this: LynxClient, id: number) {
 }
 
 export function GetInstallationByClientId(this: LynxClient, clientId: number, assignedOnly?: boolean) {
-    const qs = assignedOnly ? `?assigned=${assignedOnly}` : '';
+    const qs = buildQuery({ assigned: assignedOnly });
     return this.requestJson<InstallationInfo>(`${Endpoints.InstallationInfo}/${clientId}${qs}`);
 }
 

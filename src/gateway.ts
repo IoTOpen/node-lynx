@@ -16,7 +16,7 @@ export interface GatewayInformation {
 
 export interface GatewayRegistrationPolicy {
     allow_unregistered: boolean
-    default_organization_id: 10
+    default_organization_id: number
 }
 
 export function GetGatewayRegistrationPolicy(this: LynxClient) {
