@@ -1,43 +1,67 @@
-// Make sure all types including the new search ones are exported
-// Export other necessary modules/functions if not covered by './types'
-
 import { LogOrder } from './log';
 import { Permissions } from './permissions';
 import { TraceAction, TraceObjectType } from './trace';
 import { clone, zero } from './zero';
 
- export * from './client';
-export * from './types';
+export { LynxClient } from './client';
+export type {
+    Address,
+    CreationDate,
+    ErrorResponse,
+    Identifier,
+    MetaObject,
+    Metadata,
+    OKResponse,
+    PaginatedResponse,
+    PermissionMap,
+    SearchOptions,
+    SearchResultItem,
+    SearchResultsData,
+    WithMeta,
+} from './types';
 
 export { clone, LogOrder, Permissions, TraceAction, TraceObjectType, zero };
 export type { LoginResult } from './auth';
 export type { Devicex, EmptyDevicex } from './devicex';
 export type {
-EdgeApp,
-EdgeAppInput,     EdgeAppInstance,     EdgeAppOptions,     EdgeAppVersion,
-EmptyEdgeApp, EmptyEdgeAppInstance,
-Guide,
-    Publisher } from './edge_app';
+    EdgeApp,
+    EdgeAppInput,
+    EdgeAppInstance,
+    EdgeAppOptions,
+    EdgeAppVersion,
+    EmptyEdgeApp,
+    EmptyEdgeAppInstance,
+    Guide,
+    Publisher,
+} from './edge_app';
 export type { EmptyFile, File } from './file';
 export {
     formatFunctionMessageStatus,
     formatFunctionValue,
     formatFunctionValueStatus,
     getFunctionStates,
-    getFunctionTimestampStatus } from './function_helpers';
+    getFunctionTimestampStatus,
+} from './function_helpers';
 export type { EmptyFunctionx, Functionx } from './functionx';
 export type { GatewayInformation, GatewayRegistrationPolicy } from './gateway';
 export type { EmptyInstallation, Installation, InstallationInfo } from './installation';
 export type { LogEntry } from './log';
 export type {
-    EmptyNotificationMessage,     EmptyNotificationOutput,     EmptyNotificationOutputExecutor, NotificationMessage,
-NotificationOutput,
-NotificationOutputExecutor
+    EmptyNotificationMessage,
+    EmptyNotificationOutput,
+    EmptyNotificationOutputExecutor,
+    NotificationMessage,
+    NotificationOutput,
+    NotificationOutputExecutor,
 } from './notification';
 export type { ConsentAcceptResponse, EmptyOAuth2Client, OAuth2Client, OAuth2Consent, OAuth2Scope } from './oauth2';
 export type {
-    EmptyOrganization, MinimalOrg,
-Organization,     OrganizationChild, OrganizationSimple } from './organization';
+    EmptyOrganization,
+    MinimalOrg,
+    Organization,
+    OrganizationChild,
+    OrganizationSimple,
+} from './organization';
 export type { UserRegistration } from './register';
 export type { EmptyRole, Role } from './role';
 export type { EmptySchedule, Schedule } from './schedule';

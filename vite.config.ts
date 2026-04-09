@@ -32,5 +32,5 @@ export default defineConfig({
       external: isExternal,
     },
   },
-  plugins: [dts({ insertTypesEntry: true })],
+  plugins: [dts({ insertTypesEntry: true, rollupTypes: true })],
 });

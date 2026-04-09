@@ -21,8 +21,8 @@
     "dev:ts": "vite",
     "clean": "rm -rf dist",
     "prepare": "node scripts/prepare.cjs",
-    "prepack": "node scripts/prepare.cjs",
-    "prepublishOnly": "pnpm run build",
+    "prepack": "node scripts/prepare.cjs && node scripts/verify-dist.cjs",
+    "prepublishOnly": "pnpm run build && node scripts/verify-dist.cjs",
     "publish:prerelease": "pnpm version prerelease --preid=rc && pnpm run build && npm publish --tag rc"
   },
   "publishConfig": {
@@ -59,7 +59,7 @@
   },
   "type": "module",
   "engines": {
-    "node": ">=20.19.0"
+    "node": ">=20.19.0 <25"
   },
   "exports": {
     ".": {
