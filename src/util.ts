@@ -50,13 +50,13 @@ export function buildQuery(params?: Record<string, unknown> | URLSearchParams): 
                 return v as string;
             }
             case 'number': {
-                return String(v as number);
+                return (v as number).toString();
             }
             case 'bigint': {
-                return String(v as bigint);
+                return (v as bigint).toString();
             }
             case 'boolean': {
-                return String(v as boolean);
+                return (v as boolean).toString();
             }
             case 'symbol': {
                 return (v as symbol).toString();

@@ -1,20 +1,23 @@
 import { defineConfig } from 'vite';
-import dts from 'vite-plugin-dts';
+import dts from 'unplugin-dts/vite';
 import { readFileSync } from 'fs';
 import { builtinModules } from 'module';
-import path from 'path';
+import { fileURLToPath } from 'url';
 
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf-8'));
 
-const deps = Object.keys(pkg.dependencies || {});
-const peers = Object.keys(pkg.peerDependencies || {});
-const builtins = new Set(builtinModules);
+const external = new Set([
+  ...Object.keys(pkg.dependencies || {}),
+  ...Object.keys(pkg.peerDependencies || {}),
+]);
 
-function isExternal(id: string) {
+function isExternal(id: string): boolean {
   if (!id) return false;
-  if (builtins.has(id) || id.startsWith('node:')) return true;
-  for (const d of deps) if (id === d || id.startsWith(`${d}/`)) return true;
-  for (const p of peers) if (id === p || id.startsWith(`${p}/`)) return true;
+  if (builtinModules.includes(id) || id.startsWith('node:')) return true;
+  for (const dep of external) {
+    if (id === dep || id.startsWith(`${dep}/`)) return true;
+  }
   return false;
 }
 
@@ -23,14 +26,15 @@ export default defineConfig({
     sourcemap: true,
     target: 'es2022',
     outDir: 'dist',
+    minify: false,
     lib: {
-      entry: path.resolve(__dirname, 'src/index.ts'),
+      entry: `${__dirname}/src/index.ts`,
       formats: ['cjs', 'es'],
       fileName: (format) => (format === 'cjs' ? 'index.cjs' : 'index.js'),
     },
-    rolldownOptions: {
+    rollupOptions: {
       external: isExternal,
     },
   },
-  plugins: [dts({ insertTypesEntry: true, rollupTypes: true })],
+  plugins: [dts({ bundleTypes: true })],
 });
