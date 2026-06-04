@@ -1,6 +1,6 @@
 {
   "name": "@iotopen/node-lynx",
-  "version": "2.6.0-rc.13",
+  "version": "2.6.0-rc.14",
   "description": "IoT Open Lynx API package for node",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
