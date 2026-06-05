@@ -79,3 +79,5 @@ dist/
 /.pnpm-store
 .pnpm-store/
 iotopen-node-lynx-*.tgz
+scripts/
+.vscode/
