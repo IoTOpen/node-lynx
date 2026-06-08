@@ -1,6 +1,3 @@
-// File validation rules for Lynx API (converted from file_rules.json)
-// This file is intended for import in TypeScript/JavaScript projects.
-
 export const ALLOWED_EXTENSIONS: string[] = [
     'jpg', 'jpeg', 'png', 'gif', 'svg', 'webp', 'bmp', 'tif', 'tiff',
     'pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'md', 'txt', 'json',

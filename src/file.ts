@@ -158,5 +158,3 @@ export function DeleteFileOrganization(this: LynxClient, organizationId: number,
 export function DownloadFile(this: LynxClient, hash: string) {
     return this.requestBlob(`${Endpoints.File}/download/${hash}`);
 }
-
-// NOTE: File validation rules are now loaded from src/file_rules.ts. Update that file to change allowed types.

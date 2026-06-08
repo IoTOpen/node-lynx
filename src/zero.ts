@@ -26,7 +26,6 @@ export const clone = <T, >(model: T): T => {
     }
 
     if (typeof model === 'object' && model !== null) {
-        // Use unknown to avoid unsafe any, then assert to T
         return Object.assign({}, ...Object.keys(model).map(
             (key) => ({ [key]: clone((model as Record<string, unknown>)[key]) })
         )) as T;
