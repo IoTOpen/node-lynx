@@ -26,7 +26,6 @@ const importDevDeps = [
 ];
 
 const baseRules = {
-  // Allow numbers and booleans in template literals via TS rule
   '@typescript-eslint/restrict-template-expressions': ['error', {
     allowNumber: true,
     allowBoolean: true,
@@ -35,7 +34,6 @@ const baseRules = {
     allowRegExp: true,
   }],
 
-  // Import hygiene
   'import/first': 'error',
   'import/no-duplicates': 'error',
   'import/no-cycle': 'error',
@@ -76,7 +74,6 @@ const baseRules = {
 
 const typescriptRules = {
   ...baseRules,
-  // TypeScript safety specifics
   '@typescript-eslint/no-explicit-any': 'error',
   '@typescript-eslint/no-unused-vars': ['error', { args: 'all', argsIgnorePattern: '^_', caughtErrors: 'all', caughtErrorsIgnorePattern: '^_', destructuredArrayIgnorePattern: '^_', varsIgnorePattern: '^_', ignoreRestSiblings: true }],
   '@typescript-eslint/no-empty-function': ['error', { allow: ['arrowFunctions', 'methods'] }],
@@ -126,7 +123,6 @@ export default [
     },
     rules: typescriptRules,
   },
-  // Test files override
   {
     files: ['**/*.{test,spec}.ts'],
     rules: {
