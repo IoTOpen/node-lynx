@@ -27,6 +27,37 @@ export enum Endpoints {
     OAuth2Admin = '/api/v2/admin/oauth2',
 }
 
+function normalize(v: unknown): string {
+    if (v === null || v === undefined) {
+        return '';
+    }
+
+    if (v instanceof Date) {
+        return v.toISOString();
+    }
+
+    switch (typeof v) {
+        case 'string':
+            return v;
+        case 'number':
+            return v.toString();
+        case 'bigint':
+            return v.toString();
+        case 'boolean':
+            return v.toString();
+        case 'object':
+            return JSON.stringify(v);
+        case 'function':
+            return '';
+        case 'symbol':
+            return '';
+        case 'undefined':
+            return '';
+        default:
+            return '';
+    }
+}
+
 export function buildQuery(params?: Record<string, unknown> | URLSearchParams): string {
     if (!params) {
         return '';
@@ -39,46 +70,6 @@ export function buildQuery(params?: Record<string, unknown> | URLSearchParams): 
 
     const search = new URLSearchParams();
 
-    function normalize(v: unknown): string {
-        if (v === undefined || v === null) {
-            return '';
-        }
-
-        const t = typeof v;
-        switch (t) {
-            case 'string': {
-                return v as string;
-            }
-            case 'number': {
-                return (v as number).toString();
-            }
-            case 'bigint': {
-                return (v as bigint).toString();
-            }
-            case 'boolean': {
-                return (v as boolean).toString();
-            }
-            case 'symbol': {
-                return (v as symbol).toString();
-            }
-            case 'function': {
-                return (v as (...args: unknown[]) => unknown).toString();
-            }
-            case 'undefined': {
-                return '';
-            }
-            case 'object': {
-                if (v instanceof Date) {
-                    return v.toISOString();
-                }
-                return JSON.stringify(v);
-            }
-            default: {
-                return '';
-            }
-        }
-    }
-
     for (const [key, value] of Object.entries(params)) {
         if (value === undefined || value === null) {
             continue;
@@ -86,7 +77,9 @@ export function buildQuery(params?: Record<string, unknown> | URLSearchParams): 
 
         if (Array.isArray(value)) {
             for (const item of value) {
-                if (item === undefined || item === null) {continue;}
+                if (item === undefined || item === null) {
+                    continue;
+                }
                 search.append(key, normalize(item));
             }
             continue;
@@ -102,8 +95,10 @@ export function buildQuery(params?: Record<string, unknown> | URLSearchParams): 
 export class HTTPError extends Error {
     status: number;
     body?: unknown;
+
     constructor(message: string, status: number, body?: unknown) {
         super(message);
+        this.name = 'HTTPError';
         this.status = status;
         this.body = body;
         Object.setPrototypeOf(this, HTTPError.prototype);
@@ -116,7 +111,7 @@ export function request(this: LynxClient, info: string, init?: RequestInit) {
         headers: new Headers(init?.headers),
     };
     const headers = conf.headers as Headers;
-    if (this.apiKey && this.apiKey !== '') {
+    if (this.apiKey) {
         if (this.bearer) {
             if (!headers.has('Authorization')) {
                 headers.set('Authorization', `Bearer ${this.apiKey}`);
@@ -175,40 +170,42 @@ function getErrorMessage(body: unknown, status: number, statusText: string): str
     return statusText || `HTTP ${status}`;
 }
 
-export function requestJson<T>(this: LynxClient, endpoint: string, options?: RequestInit): Promise<T> {
+export async function requestJson<T>(this: LynxClient, endpoint: string, options?: RequestInit): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
-    return this.request(url, jsonRequestInit(options)).then(async(res) => {
-        if (res.status >= 200 && res.status < 300) {
-            return await res.json() as T;
-        }
+    const res = await this.request(url, jsonRequestInit(options));
 
-        const err = await readErrorBody(res);
-        throw new HTTPError(getErrorMessage(err, res.status, res.statusText), res.status, err);
-    });
+    if (res.status >= 200 && res.status < 300) {
+        return res.json() as Promise<T>;
+    }
+
+    const err = await readErrorBody(res);
+    throw new HTTPError(getErrorMessage(err, res.status, res.statusText), res.status, err);
 }
 
-export function requestBlob(this: LynxClient, endpoint: string, options?: RequestInit) {
+export async function requestBlob(this: LynxClient, endpoint: string, options?: RequestInit): Promise<Blob> {
     const url = `${this.baseURL}${endpoint}`;
-    return this.request(url, options).then(async(res) => {
-        if (res.status >= 200 && res.status < 300) {
-            return await res.blob();
-        }
+    const res = await this.request(url, options);
 
-        const err = await readErrorBody(res);
-        throw new HTTPError(getErrorMessage(err, res.status, res.statusText), res.status, err);
-    });
+    if (res.status >= 200 && res.status < 300) {
+        return res.blob();
+    }
+
+    const err = await readErrorBody(res);
+    throw new HTTPError(getErrorMessage(err, res.status, res.statusText), res.status, err);
 }
 
-export function requestNull<T>(this: LynxClient, endpoint: string, options?: RequestInit): Promise<T | null> {
+export async function requestNull<T>(this: LynxClient, endpoint: string, options?: RequestInit): Promise<T | null> {
     const url = `${this.baseURL}${endpoint}`;
-    return this.request(url, jsonRequestInit(options)).then(async(res) => {
-        if (res.status === 204) {
-            return null;
-        }
-        if (res.status !== 200) {
-            const err = await readErrorBody(res);
-            throw new HTTPError(getErrorMessage(err, res.status, res.statusText), res.status, err);
-        }
-        return await res.json() as T;
-    });
+    const res = await this.request(url, jsonRequestInit(options));
+
+    if (res.status === 204) {
+        return null;
+    }
+
+    if (res.status >= 200 && res.status < 300) {
+        return res.json() as Promise<T>;
+    }
+
+    const err = await readErrorBody(res);
+    throw new HTTPError(getErrorMessage(err, res.status, res.statusText), res.status, err);
 }
