@@ -1,75 +1,75 @@
 {
   "name": "@iotopen/node-lynx",
-  "version": "2.6.0-rc.16",
+  "version": "2.6.0-rc.14",
   "description": "IoT Open Lynx API package for node",
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "unrs-resolver"
-    ]
+  "type": "module",
+  "main": "dist/cjs/index.cjs",
+  "module": "dist/esm/index.js",
+  "types": "dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types":   "./dist/src/index.d.ts",
+      "import":  "./dist/esm/index.js",
+      "require": "./dist/cjs/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20.19.0 <25"
   },
   "scripts": {
-    "lint": "eslint src --max-warnings 0 && pnpm type-check",
-    "lint:fix": "eslint src --max-warnings 0 --fix && pnpm type-check",
-    "test": "vitest",
-    "type-check": "tsc --noEmit",
-    "build": "vite build --config ./vite.config.ts",
-    "build:analyze": "ANALYZE=true vite build --config ./vite.config.ts",
-    "dev:ts": "vite",
-    "clean": "rm -rf dist",
-    "prepare": "node scripts/prepare.cjs",
-    "prepack": "node scripts/prepare.cjs && node scripts/verify-dist.cjs",
-    "prepublishOnly": "pnpm run build && node scripts/verify-dist.cjs",
-    "publish:prerelease": "pnpm version prerelease --preid=rc && pnpm run build && npm publish --tag rc"
+    "lint":              "eslint src --max-warnings 0 && pnpm type-check",
+    "lint:fix":          "eslint src --max-warnings 0 --fix && pnpm type-check",
+    "test":              "vitest",
+    "type-check":        "tsc --noEmit",
+    "build":             "vite build --config ./vite.config.ts",
+    "build:analyze":     "ANALYZE=true vite build --config ./vite.config.ts",
+    "dev:ts":            "vite",
+    "clean":             "rm -rf dist",
+    "prepare":           "node scripts/prepare.cjs",
+    "prepack":           "node scripts/prepare.cjs && node scripts/verify-dist.cjs",
+    "prepublishOnly":    "pnpm run build && node scripts/verify-dist.cjs",
+    "publish:prerelease":"pnpm version prerelease --preid=rc && pnpm run build && npm publish --tag rc"
   },
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/IoTOpen/node-lynx.git"
+    "url":  "https://github.com/IoTOpen/node-lynx.git"
   },
   "keywords": [
     "lynx",
     "iot",
     "IoT Open"
   ],
-  "author": "IoT Open",
+  "author":  "IoT Open",
   "license": "Apache 2.0",
-  "devDependencies": {
-    "@eslint/js": "^10.0.1",
-    "@microsoft/api-extractor": "^7.58.7",
-    "@types/node": "^22.19.20",
-    "@types/sprintf-js": "^1.1.4",
-    "eslint": "^10.4.1",
-    "eslint-import-resolver-typescript": "^4.4.5",
-    "eslint-plugin-import-x": "^4.16.2",
-    "globals": "^17.6.0",
-    "typescript": "^6.0.3",
-    "typescript-eslint": "^8.60.1",
-    "unplugin-dts": "^1.0.2",
-    "vite": "^8.0.16",
-    "vitest": "^4.1.8"
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "unrs-resolver"
+    ]
   },
   "dependencies": {
-    "js-base64": "^3.7.8",
+    "js-base64":  "^3.7.8",
     "sprintf-js": "^1.1.3"
   },
-  "type": "module",
-  "engines": {
-    "node": ">=20.19.0 <25"
-  },
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    }
-  },
-  "files": [
-    "dist"
-  ]
+  "devDependencies": {
+    "@eslint/js":                        "^10.0.1",
+    "@microsoft/api-extractor":          "^7.58.7",
+    "@types/node":                       "^22.19.20",
+    "@types/sprintf-js":                 "^1.1.4",
+    "eslint":                            "^10.4.1",
+    "eslint-import-resolver-typescript": "^4.4.5",
+    "eslint-plugin-import-x":            "^4.16.2",
+    "globals":                           "^17.6.0",
+    "typescript":                        "^6.0.3",
+    "typescript-eslint":                 "^8.60.1",
+    "unplugin-dts":                      "^1.0.2",
+    "vite":                              "^8.0.16",
+    "vitest":                            "^4.1.8"
+  }
 }
