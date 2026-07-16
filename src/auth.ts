@@ -1,5 +1,3 @@
-import { Base64 } from 'js-base64';
-
 import type { LynxClient } from './client';
 import type { OKResponse } from './types';
 import { Endpoints } from './util';
@@ -12,7 +10,8 @@ export interface LoginResult {
 /**
  * Encodes credentials into a Base64 Basic Auth string.
  */
-const encodeBasic = (u: string, p: string): string => Base64.encode(`${u}:${p}`);
+const encodeBasic = (username: string, password: string): string =>
+    Buffer.from(`${username}:${password}`, 'utf8').toString('base64');
 
 export function Login(this: LynxClient, username: string, password: string): Promise<LoginResult> {
     return this.requestJson<LoginResult>(Endpoints.Auth, {
