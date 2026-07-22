@@ -11,7 +11,7 @@ export interface LoginResult {
  * Encodes credentials into a Base64 Basic Auth string.
  */
 const encodeBasic = (username: string, password: string): string =>
-    Buffer.from(`${username}:${password}`, 'utf8').toString('base64');
+    globalThis.btoa(Array.from(new TextEncoder().encode(`${username}:${password}`), (byte) => String.fromCharCode(byte)).join(''));
 
 export function Login(this: LynxClient, username: string, password: string): Promise<LoginResult> {
     return this.requestJson<LoginResult>(Endpoints.Auth, {
