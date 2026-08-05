@@ -105,7 +105,9 @@ export class HTTPError extends Error {
     }
 }
 
-export function request(this: LynxClient, info: string, init?: RequestInit) {
+type FetchInput = Parameters<typeof fetch>[0];
+
+export function request(this: LynxClient, info: FetchInput | URL, init?: RequestInit) {
     const conf: RequestInit = {
         ...init,
         headers: new Headers(init?.headers),

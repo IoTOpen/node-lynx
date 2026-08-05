@@ -37,18 +37,15 @@ function getFileExtension(filename: string): string {
  */
 function validateFile(file: Blob, filename: string, mime: string) {
     const ext = getFileExtension(filename);
-    if (!ext) {
-        throw new Error('File must have an extension.');
-    }
-    if (!ALLOWED_EXTENSIONS.includes(ext)) {
+    if (ext && !ALLOWED_EXTENSIONS.includes(ext)) {
         throw new Error(`File extension .${ext} is not allowed.`);
     }
-    if (!ALLOWED_MIME_TYPES.includes(mime)) {
+    if (mime && !ALLOWED_MIME_TYPES.includes(mime)) {
         throw new Error(`MIME type ${mime} is not allowed.`);
     }
     // Check that ext/mime match to prevent MIME type spoofing
     const extKey = `.${ext}`;
-    if (Object.prototype.hasOwnProperty.call(EXT_TO_MIMES, extKey)) {
+    if (ext && mime && Object.prototype.hasOwnProperty.call(EXT_TO_MIMES, extKey)) {
         const mimes = EXT_TO_MIMES[extKey];
         if (!mimes?.includes(mime)) {
             throw new Error(`Extension .${ext} does not match MIME type ${mime}.`);
@@ -96,7 +93,7 @@ export function CreateFileInstallation(this: LynxClient, installationId: number,
     const mime = getMimeType(file);
     validateFile(file, filename, mime);
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', file, filename);
     return this.requestJson<File>(`${Endpoints.File}/installation/${installationId}`, {
         method: 'POST', body: formData
     });
@@ -107,7 +104,7 @@ export function UpdateFileInstallation(this: LynxClient, installationId: number,
     const mime = getMimeType(file);
     validateFile(file, filename, mime);
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', file, filename);
     return this.requestJson<File>(`${Endpoints.File}/installation/${installationId}/${fileId}`, {
         method: 'PUT', body: formData
     });
@@ -132,7 +129,7 @@ export function CreateFileOrganization(this: LynxClient, organizationId: number,
     const mime = getMimeType(file);
     validateFile(file, filename, mime);
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', file, filename);
     return this.requestJson<File>(`${Endpoints.File}/organization/${organizationId}`, {
         method: 'POST', body: formData
     });
@@ -143,7 +140,7 @@ export function UpdateFileOrganization(this: LynxClient, organizationId: number,
     const mime = getMimeType(file);
     validateFile(file, filename, mime);
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', file, filename);
     return this.requestJson<File>(`${Endpoints.File}/organization/${organizationId}/${fileId}`, {
         method: 'PUT', body: formData
     });

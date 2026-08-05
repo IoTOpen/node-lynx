@@ -31,8 +31,9 @@
     "clean": "rm -rf dist",
     "prepare": "node scripts/prepare.cjs",
     "prepack": "node scripts/prepare.cjs && node scripts/verify-dist.cjs",
-    "prepublishOnly": "pnpm run build && node scripts/verify-dist.cjs",
-    "publish:prerelease": "pnpm version prerelease --preid=rc && pnpm run build && npm publish --tag rc"
+    "prepublishOnly": "pnpm test --run && pnpm lint",
+    "release:check": "pnpm test --run && pnpm lint && pnpm run build && node scripts/verify-dist.cjs",
+    "publish:prerelease": "pnpm run release:check && pnpm version prerelease --preid=rc && npm publish --tag rc"
   },
   "publishConfig": {
     "access": "public"
@@ -57,14 +58,14 @@
     "@types/node": "^22.20.1",
     "@types/sprintf-js": "^1.1.4",
     "@typescript/native-preview": "7.0.0-dev.20260707.2",
-    "eslint": "^10.7.0",
+    "eslint": "^10.8.0",
     "eslint-import-resolver-typescript": "^4.4.5",
     "eslint-plugin-import-x": "^4.17.1",
-    "globals": "^17.7.0",
+    "globals": "^17.9.0",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.65.0",
+    "typescript-eslint": "^8.66.0",
     "unplugin-dts": "^1.0.3",
-    "vite": "^8.1.5",
+    "vite": "^8.2.0",
     "vitest": "^4.1.10"
   }
 }

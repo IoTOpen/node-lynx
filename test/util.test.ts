@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { LynxClient } from '../src/client';
+import { LynxClient } from '../src/client';
 import { HTTPError, request, requestBlob, requestJson, requestNull } from '../src/util';
 
 afterEach(() => {
@@ -8,6 +8,21 @@ afterEach(() => {
 });
 
 describe('util.ts', () => {
+  it('accepts fetch RequestInfo values on the public client request method', async () => {
+    const fetchMock = vi.fn(async () => new Response(null, { status: 204 }));
+    vi.stubGlobal('fetch', fetchMock);
+
+    const client = new LynxClient();
+    const url = new URL('https://example.test/api/test');
+    const requestInput = new Request(url);
+
+    await client.request(url);
+    await client.request(requestInput);
+
+    expect(fetchMock).toHaveBeenNthCalledWith(1, url, expect.any(Object));
+    expect(fetchMock).toHaveBeenNthCalledWith(2, requestInput, expect.any(Object));
+  });
+
   it('adds auth headers without clobbering caller headers', async () => {
     const fetchMock = vi.fn(async () => new Response(JSON.stringify({ ok: true }), { status: 200 }));
     vi.stubGlobal('fetch', fetchMock);
