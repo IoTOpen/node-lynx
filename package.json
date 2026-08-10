@@ -33,7 +33,8 @@
     "prepack": "node scripts/prepare.cjs && node scripts/verify-dist.cjs",
     "prepublishOnly": "pnpm test --run && pnpm lint",
     "release:check": "pnpm test --run && pnpm lint && pnpm run build && node scripts/verify-dist.cjs",
-    "publish:prerelease": "pnpm run release:check && pnpm version prerelease --preid=rc && npm publish --tag rc"
+    "publish:prerelease": "pnpm run release:check && pnpm version prerelease --preid=rc && npm publish --tag rc",
+    "publish:release": "pnpm run release:check && npm version patch && npm publish --tag latest && git push --follow-tags"
   },
   "publishConfig": {
     "access": "public"
