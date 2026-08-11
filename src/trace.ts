@@ -1,7 +1,7 @@
-import {Endpoints} from './util';
-import {LogOrder} from './log';
-import {PaginatedResponse} from './types';
-import {LynxClient} from './client';
+import type { LynxClient } from './client';
+import { LogOrder } from './log';
+import type { PaginatedResponse } from './types';
+import { Endpoints } from './util';
 
 export enum TraceObjectType {
     Installation = 'installation',
@@ -34,7 +34,7 @@ export enum TraceAction {
     Auth = 'auth'
 }
 
-export type Trace = {
+export interface Trace {
     id: number
     path: string
     method: string
@@ -48,24 +48,28 @@ export type Trace = {
 
 export function GetTrace(this: LynxClient, from?: number, to?: number, limit = 1000, offset = 0, order = LogOrder.Desc, objectType?: TraceObjectType, objectId?: number, id?: string, actions: TraceAction[] | TraceAction = []) {
     const now = new Date().getTime() / 1000;
-    from = from ? from : now - (60 * 60 * 24);
-    to = to ? to : now;
+    const fromVal = from ?? (now - (60 * 60 * 24));
+    const toVal = to ?? now;
 
-    const params: { [key: string]: string } = {
-        from: from.toString(), to: to.toString(), limit: limit.toString(), offset: offset.toString(), order: order
+    const params: Record<string, string> = {
+        from: fromVal.toString(),
+        to: toVal.toString(),
+        limit: limit.toString(),
+        offset: offset.toString(),
+        order
     };
 
     if (typeof actions === 'string') {
-        params.action = actions;
+        params['action'] = actions;
     } else if (actions.length > 0) {
-        params.action = actions.join(',');
+        params['action'] = actions.join(',');
     }
 
     if (objectType && objectId) {
-        params.object_type = objectType;
-        params.object_id = objectId.toString();
+        params['object_type'] = objectType;
+        params['object_id'] = objectId.toString();
     } else if (id) {
-        params.id = id;
+        params['id'] = id;
     }
 
     const qs = `?${new URLSearchParams(params).toString()}`;

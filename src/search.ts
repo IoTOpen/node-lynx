@@ -1,5 +1,5 @@
-import { LynxClient } from './client';
-import { SearchOptions, SearchResultsData } from './types';
+import type { LynxClient } from './client';
+import type { SearchOptions, SearchResultsData } from './types';
 
 /**
  * Performs a search across various resource types based on query, types, and metadata.
@@ -10,7 +10,6 @@ import { SearchOptions, SearchResultsData } from './types';
  * @throws Will throw an error if the request fails or the response format is invalid.
  */
 export async function Search(this: LynxClient, options: SearchOptions): Promise<SearchResultsData> {
-    // This will now use the global URLSearchParams available in browsers and modern Node.js
     const params = new URLSearchParams({ q: options.q });
 
     if (options.types && options.types.length > 0) {
@@ -20,9 +19,11 @@ export async function Search(this: LynxClient, options: SearchOptions): Promise<
     if (options.metadata) {
         for (const key in options.metadata) {
             // Automatically prefix metadata keys if they don't already start with 'metadata.'
-            // Adjust this logic if your API expects keys differently.
             const fullKey = key.startsWith('metadata.') ? key : `metadata.${key}`;
-            params.append(fullKey, options.metadata[key]);
+            const value = options.metadata[key];
+            if (typeof value === 'string') {
+                params.append(fullKey, value);
+            }
         }
     }
 
@@ -37,11 +38,10 @@ export async function Search(this: LynxClient, options: SearchOptions): Promise<
 
     // Pass the signal to requestJson.
     // requestJson in util.ts already accepts RequestInit, which includes 'signal'.
-    const responseData = await this.requestJson<SearchResultsData>(path, { signal: options.signal });
+    const responseData = await this.requestJson<SearchResultsData>(path, { signal: options.signal ?? null });
 
     // Basic validation of the response structure
-    if (!responseData || typeof responseData.total !== 'number' || !Array.isArray(responseData.results)) {
-        // Consider using a more specific error type if you have one defined
+    if (typeof responseData.total !== 'number' || !Array.isArray(responseData.results)) {
         throw new Error('Invalid search response format received from API');
     }
 

@@ -1,43 +1,43 @@
-export type Metadata = { [key: string]: string }
+export type Metadata = Record<string, string>;
 
-export type WithMeta = {
+export interface WithMeta {
     meta: Metadata
     protected_meta: Metadata
 }
 
-export type Address = {
+export interface Address {
     address: string
     city: string
     country: string
     zip: string
 }
 
-export type Identifier = {
+export interface Identifier {
     id: number
 }
 
-export type CreationDate = {
+export interface CreationDate {
     created: number
     updated: number
 }
 
-export type PaginatedResponse<T> = {
+export interface PaginatedResponse<T> {
     total: number
     last_time: number
     count: number
     data: T[]
 }
 
-export type ErrorResponse = {
+export interface ErrorResponse {
     message: string
     status: number
 }
 
-export type OKResponse = {
+export interface OKResponse {
     message: string
 }
 
-export type MetaObject = {
+export interface MetaObject {
     value: string
     protected: boolean
 }
@@ -49,7 +49,7 @@ export interface SearchOptions {
     metadata?: Record<string, string>; // Optional key-value pairs for metadata filtering
     limit?: number; // Optional limit for results
     offset?: number; // Optional offset for pagination
-    signal?: AbortSignal; // Add this line
+    signal?: AbortSignal;
 }
 
 // Structure of a single search result item
@@ -57,7 +57,7 @@ export interface SearchResultItem {
     id: string;
     type: string;
     name?: string;
-    [key: string]: any; // Allow for other properties
+    [key: string]: unknown;
 }
 
 // Structure of the overall search response
@@ -69,7 +69,6 @@ export interface SearchResultsData {
     q: string;
     types?: string[];
     metadata?: Record<string, string>;
-    // ... any other top-level properties from the API response
 }
 
-export type PermissionMap = { [key: string]: boolean }
+export type PermissionMap = Record<string, boolean>;

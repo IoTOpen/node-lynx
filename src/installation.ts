@@ -1,15 +1,15 @@
-import {Endpoints} from './util';
-import {Identifier, Metadata, WithMeta, OKResponse, MetaObject} from './types';
-import {LynxClient} from './client';
+import type { LynxClient } from './client';
+import type { Identifier, Metadata, MetaObject, OKResponse, WithMeta } from './types';
+import { buildQuery, Endpoints } from './util';
 
-export type InstallationInfo = {
+export interface InstallationInfo {
     id: number
     name: string
     client_id: number
     organization_id: number
     capabilities: string[]
     assigned: boolean
-};
+}
 
 export type EmptyInstallation = WithMeta & {
     name: string
@@ -21,7 +21,7 @@ export type EmptyInstallation = WithMeta & {
 export type Installation = EmptyInstallation & Identifier & { client_id: number, created: number }
 
 export function GetInstallations(this: LynxClient, assignedOnly?: boolean) {
-    const qs = assignedOnly ? `?assigned=${assignedOnly}` : '';
+    const qs = buildQuery({ assigned: assignedOnly });
     return this.requestJson<InstallationInfo[]>(`${Endpoints.InstallationInfo}${qs}`);
 }
 
@@ -31,14 +31,14 @@ export function GetInstallationRow(this: LynxClient, installationId: number) {
 }
 
 export function ListInstallations(this: LynxClient, filter?: Metadata) {
-    const qs = filter ? `?${new URLSearchParams(filter).toString()}` : '';
+    const qs = buildQuery(filter);
     return this.requestJson<Installation[]>(`${Endpoints.Installation}${qs}`);
 }
 
 export function GetInstallation(this: LynxClient, id: number) {
     return this.requestJson<InstallationInfo[]>(`${Endpoints.InstallationInfo}?assigned=false`)
         .then((res) => {
-            const installations = res as InstallationInfo[];
+            const installations = res;
             for (const installation of installations) {
                 if (installation.id === id) {
                     return installation;
@@ -49,7 +49,7 @@ export function GetInstallation(this: LynxClient, id: number) {
 }
 
 export function GetInstallationByClientId(this: LynxClient, clientId: number, assignedOnly?: boolean) {
-    const qs = assignedOnly ? `?assigned=${assignedOnly}` : '';
+    const qs = buildQuery({ assigned: assignedOnly });
     return this.requestJson<InstallationInfo>(`${Endpoints.InstallationInfo}/${clientId}${qs}`);
 }
 
@@ -79,7 +79,7 @@ export function GetInstallationMeta(this: LynxClient, installationID: number, ke
 }
 
 export function CreateInstallationMeta(this: LynxClient, installationID: number, key: string, data: MetaObject, silent = false) {
-    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}` : '';
+    const qs = silent ? buildQuery({ silent: String(silent) }) : '';
     const path = `${Endpoints.Installation}/${installationID}/meta/${encodeURIComponent(key)}${qs}`;
     return this.requestJson<MetaObject>(path, {
         method: 'POST', body: JSON.stringify(data)
@@ -87,15 +87,15 @@ export function CreateInstallationMeta(this: LynxClient, installationID: number,
 }
 
 export function UpdateInstallationMeta(this: LynxClient, installationID: number, key: string, data: MetaObject, silent = false, createMissing = false) {
-    const qs = `?${new URLSearchParams({silent: String(silent), create_missing: String(createMissing)})}`;
+    const qs = buildQuery({ silent: String(silent), create_missing: String(createMissing) });
     const path = `${Endpoints.Installation}/${installationID}/meta/${encodeURIComponent(key)}${qs}`;
     return this.requestJson<MetaObject>(path, {
         method: 'PUT', body: JSON.stringify(data)
     });
 }
 
-export function DeleteInstallationMeta(this: LynxClient, installationID: number, functionID: number, key: string, silent = false) {
-    const qs = silent ? `?${new URLSearchParams({silent: String(silent)})}` : '';
+export function DeleteInstallationMeta(this: LynxClient, installationID: number, _functionID: number, key: string, silent = false) {
+    const qs = silent ? buildQuery({ silent: String(silent) }) : '';
     const path = `${Endpoints.Installation}/${installationID}/meta/${encodeURIComponent(key)}${qs}`;
     return this.requestJson<MetaObject>(path, {
         method: 'DELETE'

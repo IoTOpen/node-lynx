@@ -1,8 +1,8 @@
-import {Endpoints} from './util';
-import {Identifier, OKResponse} from './types';
-import {LynxClient} from './client';
+import type { LynxClient } from './client';
+import type { Identifier, OKResponse } from './types';
+import { Endpoints } from './util';
 
-export type EmptySchedule = {
+export interface EmptySchedule {
     installation_id: number
     executor: string
     day_of_week: string

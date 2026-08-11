@@ -1,25 +1,29 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "declaration": true,
-    "module": "esnext",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowSyntheticDefaultImports": true,
-    "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node",
+    "target": "es2022",
+    "lib": ["es2023"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "declarationDir": "./dist/src",
+    "rootDir": "./src",
     "outDir": "./dist",
-    "sourceMap": true
+    "sourceMap": true,
+    "types": ["node"],
+    "strict": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "isolatedModules": true
   },
-  "include": [
-    "src/"
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "build", "coverage"]
 }

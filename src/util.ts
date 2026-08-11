@@ -1,6 +1,4 @@
-import {ErrorResponse} from './types';
-import {LynxClient} from './client';
-import 'cross-fetch/polyfill';
+import type { LynxClient } from './client';
 
 export enum Endpoints {
     Auth = '/api/v2/auth',
@@ -29,56 +27,187 @@ export enum Endpoints {
     OAuth2Admin = '/api/v2/admin/oauth2',
 }
 
-export function request(this: LynxClient, info: RequestInfo, init?: RequestInit) {
-    const conf = {
+function normalize(v: unknown): string {
+    if (v === null || v === undefined) {
+        return '';
+    }
+
+    if (v instanceof Date) {
+        return v.toISOString();
+    }
+
+    switch (typeof v) {
+        case 'string':
+            return v;
+        case 'number':
+            return v.toString();
+        case 'bigint':
+            return v.toString();
+        case 'boolean':
+            return v.toString();
+        case 'object':
+            return JSON.stringify(v);
+        case 'function':
+            return '';
+        case 'symbol':
+            return '';
+        case 'undefined':
+            return '';
+        default:
+            return '';
+    }
+}
+
+export function buildQuery(params?: Record<string, unknown> | URLSearchParams): string {
+    if (!params) {
+        return '';
+    }
+
+    if (params instanceof URLSearchParams) {
+        const s = params.toString();
+        return s ? `?${s}` : '';
+    }
+
+    const search = new URLSearchParams();
+
+    for (const [key, value] of Object.entries(params)) {
+        if (value === undefined || value === null) {
+            continue;
+        }
+
+        if (Array.isArray(value)) {
+            for (const item of value) {
+                if (item === undefined || item === null) {
+                    continue;
+                }
+                search.append(key, normalize(item));
+            }
+            continue;
+        }
+
+        search.append(key, normalize(value));
+    }
+
+    const qs = search.toString();
+    return qs ? `?${qs}` : '';
+}
+
+export class HTTPError extends Error {
+    status: number;
+    body?: unknown;
+
+    constructor(message: string, status: number, body?: unknown) {
+        super(message);
+        this.name = 'HTTPError';
+        this.status = status;
+        this.body = body;
+        Object.setPrototypeOf(this, HTTPError.prototype);
+    }
+}
+
+type FetchInput = Parameters<typeof fetch>[0];
+
+export function request(this: LynxClient, info: FetchInput | URL, init?: RequestInit) {
+    const conf: RequestInit = {
         ...init,
-    } as RequestInit;
-    if (this.apiKey && this.apiKey !== '') {
-        if (!conf.headers) conf.headers = {};
-        if(this.bearer) {
-            (conf.headers as any)['Authorization'] = `Bearer ${this.apiKey}`;
+        headers: new Headers(init?.headers),
+    };
+    const headers = conf.headers as Headers;
+    if (this.apiKey) {
+        if (this.bearer) {
+            if (!headers.has('Authorization')) {
+                headers.set('Authorization', `Bearer ${this.apiKey}`);
+            }
         } else {
-            (conf.headers as any)['X-API-Key'] = this.apiKey;
+            if (!headers.has('X-API-Key')) {
+                headers.set('X-API-Key', this.apiKey);
+            }
         }
     }
     return fetch(info, conf);
 }
 
-export function requestJson<T>(this: LynxClient, endpoint: string, options?: RequestInit): Promise<T> {
-    const url = `${this.baseURL}${endpoint}`;
-    return this.request(url, options).then(async (res) => {
-        if (res.status >= 200 && res.status < 300) {
-            return await res.json() as T;
-        }
+function jsonRequestInit(options?: RequestInit): RequestInit {
+    const headers = new Headers(options?.headers);
+    if (typeof options?.body === 'string' && !headers.has('Content-Type')) {
+        headers.set('Content-Type', 'application/json');
+    }
 
-        const err = await res.json() as ErrorResponse;
-        err.status = res.status;
-        throw err;
-    });
+    return {
+        ...options,
+        headers,
+    };
 }
 
-export function requestBlob(this: LynxClient, endpoint: string, options?: RequestInit) {
-    const url = `${this.baseURL}${endpoint}`;
-    return this.request(url, options).then(async (res) => {
-        if (res.status >= 200 && res.status < 300) {
-            return await res.blob();
-        }
+async function readErrorBody(res: Response): Promise<unknown> {
+    const cloned = res.clone();
 
-        const err = await res.json() as ErrorResponse;
-        err.status = res.status;
-        throw err;
-    });
+    try {
+        return await res.json();
+    } catch {
+        try {
+            const text = await cloned.text();
+            return text === '' ? undefined : text;
+        } catch {
+            return undefined;
+        }
+    }
 }
 
-export function requestNull<T>(this: LynxClient, endpoint: string, options?: RequestInit): Promise<T | null> {
+function getErrorMessage(body: unknown, status: number, statusText: string): string {
+    if (typeof body === 'string') {
+        const trimmed = body.trim();
+        if (trimmed !== '') {
+            return trimmed;
+        }
+    }
+
+    if (body && typeof body === 'object') {
+        const message = (body as { message?: unknown }).message;
+        if (typeof message === 'string' && message.trim() !== '') {
+            return message;
+        }
+    }
+
+    return statusText || `HTTP ${status}`;
+}
+
+export async function requestJson<T>(this: LynxClient, endpoint: string, options?: RequestInit): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
-    return this.request(url, options).then(async (res) => {
-        if (res.status === 204) {
-            return null;
-        }
-        if (res.status !== 200) {
-            throw await res.json() as ErrorResponse;
-        }
-        return await res.json() as T;
-    });
+    const res = await this.request(url, jsonRequestInit(options));
+
+    if (res.status >= 200 && res.status < 300) {
+        return res.json() as Promise<T>;
+    }
+
+    const err = await readErrorBody(res);
+    throw new HTTPError(getErrorMessage(err, res.status, res.statusText), res.status, err);
+}
+
+export async function requestBlob(this: LynxClient, endpoint: string, options?: RequestInit): Promise<Blob> {
+    const url = `${this.baseURL}${endpoint}`;
+    const res = await this.request(url, options);
+
+    if (res.status >= 200 && res.status < 300) {
+        return res.blob();
+    }
+
+    const err = await readErrorBody(res);
+    throw new HTTPError(getErrorMessage(err, res.status, res.statusText), res.status, err);
+}
+
+export async function requestNull<T>(this: LynxClient, endpoint: string, options?: RequestInit): Promise<T | null> {
+    const url = `${this.baseURL}${endpoint}`;
+    const res = await this.request(url, jsonRequestInit(options));
+
+    if (res.status === 204) {
+        return null;
+    }
+
+    if (res.status >= 200 && res.status < 300) {
+        return res.json() as Promise<T>;
+    }
+
+    const err = await readErrorBody(res);
+    throw new HTTPError(getErrorMessage(err, res.status, res.statusText), res.status, err);
 }

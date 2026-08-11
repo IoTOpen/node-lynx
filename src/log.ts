@@ -1,8 +1,8 @@
-import { Endpoints } from './util';
-import { PaginatedResponse } from './types';
-import { LynxClient } from './client';
+import type { LynxClient } from './client';
+import type { PaginatedResponse } from './types';
+import { Endpoints, buildQuery } from './util';
 
-export type LogEntry = {
+export interface LogEntry {
     client_id: number
     installation_id: number
     timestamp: number
@@ -16,17 +16,12 @@ export enum LogOrder {
     Asc = 'asc'
 }
 
-export function GetStatus (this: LynxClient, installationId: number, topicFilter?: string[]) {
-    const qs = topicFilter ? `?${topicFilter.reduce((prev, cur, id) => {
-        if (id !== 0) {
-            prev += '&';
-        }
-        return `${prev}topics=${cur}`;
-    }, '')}` : '';
+export function GetStatus(this: LynxClient, installationId: number, topicFilter?: string[]) {
+    const qs = topicFilter ? buildQuery({ topics: topicFilter }) : '';
     return this.requestJson<LogEntry[]>(`${Endpoints.Status}/${installationId}${qs}`);
 }
 
-export function GetLog (
+export function GetLog(
     this: LynxClient,
     installationId: number,
     from?: number,
@@ -39,27 +34,30 @@ export function GetLog (
     aggr_interval?: string
 ) {
     const now = new Date().getTime() / 1000;
-    from = from ? from : now - (60 * 60 * 24);
-    to = to ? to : now;
+    const fromVal = from ?? (now - (60 * 60 * 24));
+    const toVal = to ?? now;
 
-    const params: { [key: string]: string } = {
-        from: from.toString(),
-        to: to.toString(),
+    const params: Record<string, string> = {
+        from: fromVal.toString(),
+        to: toVal.toString(),
         limit: limit.toString(),
         offset: offset.toString(),
-        order: order,
+        order,
     };
 
-    if (topics) {
-        params.topics = topics.join(',');
-    }
     if (aggr_method) {
-        params.aggr_method = aggr_method;
+        params['aggr_method'] = aggr_method;
     }
     if (aggr_interval) {
-        params.aggr_interval = aggr_interval;
+        params['aggr_interval'] = aggr_interval;
     }
 
-    const qs = `?${new URLSearchParams(params).toString()}`;
+    // Build URLSearchParams and append topics as repeated `topics=` entries
+    const sp = new URLSearchParams(params);
+    if (topics) {
+        topics.forEach(t => { sp.append('topics', t); });
+    }
+
+    const qs = `?${sp.toString()}`;
     return this.requestJson<PaginatedResponse<LogEntry>>(`${Endpoints.LogV3}/${installationId}${qs}`);
 }

@@ -1,7 +1,7 @@
-import {Endpoints} from './util';
-import {LynxClient} from './client';
-import {PermissionMap} from './types';
+import type { LynxClient } from './client';
+import type { PermissionMap } from './types';
+import { Endpoints } from './util';
 
-export function GetPermissions (this: LynxClient) {
+export function GetPermissions(this: LynxClient) {
     return this.requestJson<PermissionMap>(Endpoints.Permission);
 }

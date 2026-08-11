@@ -1,16 +1,16 @@
-import {Endpoints} from './util';
-import {Address, Identifier, WithMeta, OKResponse, MetaObject} from './types';
-import {LynxClient} from './client';
+import type { LynxClient } from './client';
+import type { Address, Identifier, MetaObject, OKResponse, WithMeta } from './types';
+import { buildQuery, Endpoints } from './util';
 
-export type OrganizationChild = {
+export interface OrganizationChild {
     id: number
     name: string
 }
 
-export type OrganizationSimple = {
+export interface OrganizationSimple {
     id: number
     name: string
-    parent: string
+    parent: number
 }
 
 export type EmptyOrganization = WithMeta & {
@@ -30,10 +30,10 @@ export type Organization = EmptyOrganization & Identifier
 export type MinimalOrg<T extends boolean> = T extends true ? OrganizationSimple : Organization;
 export function GetOrganizations<T extends boolean = false>(this: LynxClient, minimal?: T) {
     if (minimal) {
-        const qs = `?minimal=${minimal}`;
-        return <Promise<MinimalOrg<T>[]>>this.requestJson<OrganizationSimple[]>(`${Endpoints.Organization}${qs}`);
+        const qs = buildQuery({ minimal: String(minimal) });
+        return this.requestJson<OrganizationSimple[]>(`${Endpoints.Organization}${qs}`) as Promise<MinimalOrg<T>[]>;
     }
-    return <Promise<MinimalOrg<T>[]>>this.requestJson<Organization[]>(Endpoints.Organization);
+    return this.requestJson<Organization[]>(Endpoints.Organization) as Promise<MinimalOrg<T>[]>;
 }
 
 export function GetOrganization(this: LynxClient, id: number) {
@@ -67,7 +67,7 @@ export function GetOrganizationMeta(this: LynxClient, userID: number, key: strin
 }
 
 export function CreateOrganizationMeta(this: LynxClient, orgID: number, key: string, data: MetaObject, silent = false) {
-    const qs = `?${new URLSearchParams({silent: String(silent)})}`;
+    const qs = `?${new URLSearchParams({ silent: String(silent) }).toString()}`;
     const path = `${Endpoints.Organization}/${orgID}/meta/${encodeURIComponent(key)}${qs}`;
     return this.requestJson<MetaObject>(path, {
         method: 'POST', body: JSON.stringify(data)
@@ -75,7 +75,7 @@ export function CreateOrganizationMeta(this: LynxClient, orgID: number, key: str
 }
 
 export function UpdateOrganizationMeta(this: LynxClient, orgID: number, key: string, data: MetaObject, silent = false, createMissing = false) {
-    const qs = `?${new URLSearchParams({silent: String(silent), create_missing: String(createMissing)})}`;
+    const qs = `?${new URLSearchParams({ silent: String(silent), create_missing: String(createMissing) }).toString()}`;
     const path = `${Endpoints.Organization}/${orgID}/meta/${encodeURIComponent(key)}${qs}`;
     return this.requestJson<MetaObject>(path, {
         method: 'PUT', body: JSON.stringify(data)
@@ -83,7 +83,7 @@ export function UpdateOrganizationMeta(this: LynxClient, orgID: number, key: str
 }
 
 export function DeleteOrganizationMeta(this: LynxClient, orgID: number, key: string, silent = false) {
-    const qs = `?${new URLSearchParams({silent: String(silent)})}`;
+    const qs = `?${new URLSearchParams({ silent: String(silent) }).toString()}`;
     const path = `${Endpoints.Organization}/${orgID}/meta/${encodeURIComponent(key)}${qs}`;
     return this.requestJson<MetaObject>(path, {
         method: 'DELETE'
