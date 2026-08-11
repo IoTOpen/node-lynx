@@ -1,5 +1,4 @@
 import { defineConfig } from 'vite';
-import dts from 'unplugin-dts/vite';
 import { readFileSync } from 'fs';
 import { builtinModules } from 'module';
 import { fileURLToPath } from 'url';
@@ -36,5 +35,4 @@ export default defineConfig({
             external: isExternal,
         },
     },
-    plugins: [dts({ bundleTypes: true, outDirs: ['dist/src'] })],
 });
