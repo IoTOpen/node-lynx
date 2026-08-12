@@ -31,7 +31,8 @@ export function GetLog(
     order = LogOrder.Desc,
     topics?: string[],
     aggr_method?: string,
-    aggr_interval?: string
+    aggr_interval?: string,
+    options?: RequestInit
 ) {
     const now = new Date().getTime() / 1000;
     const fromVal = from ?? (now - (60 * 60 * 24));
@@ -59,5 +60,5 @@ export function GetLog(
     }
 
     const qs = `?${sp.toString()}`;
-    return this.requestJson<PaginatedResponse<LogEntry>>(`${Endpoints.LogV3}/${installationId}${qs}`);
+    return this.requestJson<PaginatedResponse<LogEntry>>(`${Endpoints.LogV3}/${installationId}${qs}`, options);
 }
