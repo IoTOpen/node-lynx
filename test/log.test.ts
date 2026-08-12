@@ -54,4 +54,18 @@ describe('log.ts', () => {
     expect(sp.get('aggr_method')).toBe('avg');
     expect(sp.get('aggr_interval')).toBe('1m');
   });
+
+  it('GetLog should forward request options', async () => {
+    const requestJson = vi.fn(async () => ({ data: [] }));
+    const client: any = { requestJson };
+    const controller = new AbortController();
+
+    await GetLog.call(client, 7, 1600000000, 1600000100, 10, 0, LogOrder.Desc, [], undefined, undefined, {
+      signal: controller.signal,
+    });
+
+    expect(requestJson).toHaveBeenCalledWith(expect.stringContaining(`${Endpoints.LogV3}/7?`), {
+      signal: controller.signal,
+    });
+  });
 });
