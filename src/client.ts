@@ -1,4 +1,12 @@
-import { Login, Login2FA, Logout, ResetPassword, ResetPasswordUpdate } from './auth';
+import {
+    ConfirmTOTPEnrollment,
+    EnrollTOTP,
+    Login,
+    Login2FA,
+    Logout,
+    ResetPassword,
+    ResetPasswordUpdate
+} from './auth';
 import {
     CreateDevice,
     CreateDeviceMeta,
@@ -161,6 +169,8 @@ export class LynxClient {
     login = Login;
     login2fa = Login2FA;
     logout = Logout;
+    enrollTOTP = EnrollTOTP;
+    confirmTOTPEnrollment = ConfirmTOTPEnrollment;
     resetPassword = ResetPassword;
     resetPasswordUpdate = ResetPasswordUpdate;
 

@@ -7,6 +7,16 @@ export interface LoginResult {
     next_step?: string;
 }
 
+export interface TOTPEnrollmentResponse {
+    secret: string;
+    url: string;
+    qrCode: string;
+}
+
+export interface TOTPEnrollmentConfirmation {
+    backupCodes: string[];
+}
+
 /**
  * Encodes credentials into a Base64 Basic Auth string.
  */
@@ -33,6 +43,26 @@ export function Login2FA(this: LynxClient, token: string, challenge: string): Pr
         headers: {
             'Content-Type': 'application/json',
             'X-API-Key': token,
+        },
+    });
+}
+
+export function EnrollTOTP(this: LynxClient, password: string): Promise<TOTPEnrollmentResponse> {
+    return this.requestJson<TOTPEnrollmentResponse>(`${Endpoints.Auth}/totp/enroll`, {
+        method: 'POST',
+        body: JSON.stringify({ password }),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+}
+
+export function ConfirmTOTPEnrollment(this: LynxClient, code: string): Promise<TOTPEnrollmentConfirmation> {
+    return this.requestJson<TOTPEnrollmentConfirmation>(`${Endpoints.Auth}/totp/enroll`, {
+        method: 'PUT',
+        body: JSON.stringify({ code }),
+        headers: {
+            'Content-Type': 'application/json',
         },
     });
 }

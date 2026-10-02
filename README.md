@@ -65,6 +65,18 @@ const { token } = await unauthenticated.login(username, password);
 const client = new LynxClient('https://lynx.example.com', token);
 ```
 
+To enroll the authenticated user in TOTP, start enrollment with the current
+password, add the returned secret to an authenticator app, then confirm with a
+six-digit code. Display the QR code in a protected enrollment view without
+logging it. The confirmation returns backup codes that should be stored
+securely; they are only shown once.
+
+```ts
+const enrollment = await client.enrollTOTP(password);
+
+const { backupCodes } = await client.confirmTOTPEnrollment(authenticatorCode);
+```
+
 The client also exposes `requestJson`, `requestBlob`, and `requestNull` for API
 routes that are not covered by a convenience method.
 
