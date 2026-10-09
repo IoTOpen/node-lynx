@@ -1,5 +1,6 @@
 import {
     ConfirmTOTPEnrollment,
+    DisableTOTP,
     EnrollTOTP,
     GetTOTPStatus,
     Login,
@@ -138,6 +139,8 @@ import {
     GetUserMeta,
     GetUsers,
     GetUserTokens,
+    GetUserTOTPStatus,
+    ResetUserTOTP,
     UpdateUser, UpdateUserMeta
 } from './user';
 import {
@@ -173,6 +176,7 @@ export class LynxClient {
     enrollTOTP = EnrollTOTP;
     confirmTOTPEnrollment = ConfirmTOTPEnrollment;
     getTOTPStatus = GetTOTPStatus;
+    disableTOTP = DisableTOTP;
     resetPassword = ResetPassword;
     resetPasswordUpdate = ResetPasswordUpdate;
 
@@ -251,6 +255,8 @@ export class LynxClient {
     getUser = GetUser;
     getUsers = GetUsers;
     getUserTokens = GetUserTokens;
+    getUserTOTPStatus = GetUserTOTPStatus;
+    resetUserTOTP = ResetUserTOTP;
     createUser = CreateUser;
     updateUser = UpdateUser;
     deleteUser = DeleteUser;

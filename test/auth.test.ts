@@ -99,4 +99,32 @@ describe('TOTP', () => {
         expect(captured.options?.method).toBe('GET');
         expect(new Headers(captured.options?.headers).get('X-API-Key')).toBe('api-token');
     });
+
+    it('disables TOTP with password and second factor and resolves null on 204', async () => {
+        const fetchMock = vi.fn(async (_input: RequestInfo | URL, _options?: RequestInit) => new Response(null, { status: 204 }));
+        vi.stubGlobal('fetch', fetchMock);
+        const client = new LynxClient(baseUrl, 'api-token');
+
+        await expect(client.disableTOTP('current-password', '012345')).resolves.toBeNull();
+
+        const [input, options] = fetchMock.mock.calls[0] ?? [];
+        expect(input).toBe(`${baseUrl}/api/v2/auth/totp`);
+        expect(options?.method).toBe('DELETE');
+        expect(options?.body).toBe(JSON.stringify({ password: 'current-password', code: '012345' }));
+        expect(new Headers(options?.headers).get('Content-Type')).toBe('application/json');
+        expect(new Headers(options?.headers).get('X-API-Key')).toBe('api-token');
+    });
+
+    it('throws HTTPError when the password or second factor is rejected', async () => {
+        stubFetch(401, { message: 'unauthorized' });
+        const client = new LynxClient(baseUrl, 'api-token');
+
+        const error = await client.disableTOTP('wrong-password', '000000').then(
+            () => undefined,
+            (e: unknown) => e,
+        );
+
+        expect(error).toBeInstanceOf(HTTPError);
+        expect(error).toMatchObject({ status: 401 });
+    });
 });

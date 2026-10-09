@@ -77,6 +77,19 @@ export function GetTOTPStatus(this: LynxClient): Promise<TOTPStatus> {
     return this.requestJson<TOTPStatus>(`${Endpoints.Auth}/totp/status`, { method: 'GET' });
 }
 
+/**
+ * Removes the active TOTP factor. Requires the account password and a current TOTP or unused backup code.
+ */
+export function DisableTOTP(this: LynxClient, password: string, code: string): Promise<null> {
+    return this.requestNull<null>(`${Endpoints.Auth}/totp`, {
+        method: 'DELETE',
+        body: JSON.stringify({ password, code }),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+}
+
 export function ResetPassword(this: LynxClient, email: string): Promise<OKResponse> {
     return this.requestJson<OKResponse>(`${Endpoints.Auth}/reset_password`, {
         method: 'POST',
