@@ -1,6 +1,7 @@
 import {
     ConfirmTOTPEnrollment,
     EnrollTOTP,
+    GetTOTPStatus,
     Login,
     Login2FA,
     Logout,
@@ -171,6 +172,7 @@ export class LynxClient {
     logout = Logout;
     enrollTOTP = EnrollTOTP;
     confirmTOTPEnrollment = ConfirmTOTPEnrollment;
+    getTOTPStatus = GetTOTPStatus;
     resetPassword = ResetPassword;
     resetPasswordUpdate = ResetPasswordUpdate;
 

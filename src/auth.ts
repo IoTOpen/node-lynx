@@ -18,6 +18,11 @@ export interface TOTPEnrollmentConfirmation {
     backupCodes: string[];
 }
 
+export interface TOTPStatus {
+    enabled: boolean;
+    enrolled_at?: string;
+}
+
 /**
  * Encodes credentials into a Base64 Basic Auth string.
  */
@@ -66,6 +71,10 @@ export function ConfirmTOTPEnrollment(this: LynxClient, code: string): Promise<T
             'Content-Type': 'application/json',
         },
     });
+}
+
+export function GetTOTPStatus(this: LynxClient): Promise<TOTPStatus> {
+    return this.requestJson<TOTPStatus>(`${Endpoints.Auth}/totp/status`, { method: 'GET' });
 }
 
 export function ResetPassword(this: LynxClient, email: string): Promise<OKResponse> {

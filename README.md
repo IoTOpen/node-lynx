@@ -90,6 +90,17 @@ const enrollment = await client.enrollTOTP(password);
 const { backupCodes } = await client.confirmTOTPEnrollment(authenticatorCode);
 ```
 
+Use `getTOTPStatus()` to check whether TOTP is active. `enrolled_at` is set when
+confirmation succeeds, not when enrollment starts.
+
+```ts
+const { enabled, enrolled_at } = await client.getTOTPStatus();
+```
+
+Enrollment confirmation failures include a `reason` in `HTTPError.body`:
+`totp_setup_expired` (start enrollment again), `totp_no_pending_setup` (call
+`enrollTOTP()` first), or `totp_invalid_code` (ask for a current code).
+
 The client also exposes `requestJson`, `requestBlob`, and `requestNull` for API
 routes that are not covered by a convenience method.
 

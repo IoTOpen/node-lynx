@@ -21,7 +21,7 @@ export type {
 } from './types';
 
 export { clone, LogOrder, Permissions, TraceAction, TraceObjectType, zero };
-export type { LoginResult, TOTPEnrollmentConfirmation, TOTPEnrollmentResponse } from './auth';
+export type { LoginResult, TOTPEnrollmentConfirmation, TOTPEnrollmentResponse, TOTPStatus } from './auth';
 export type { Devicex, EmptyDevicex } from './devicex';
 export type {
     EdgeApp,
