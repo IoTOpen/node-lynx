@@ -4,7 +4,8 @@ import { Endpoints } from './util';
 
 export interface LoginResult {
     token: string;
-    next_step?: string;
+    next_step?: 'challenge' | 'reset_password';
+    method?: 'totp' | 'sms';
 }
 
 export interface TOTPEnrollmentResponse {

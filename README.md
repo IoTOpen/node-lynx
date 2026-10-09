@@ -56,14 +56,27 @@ in environment variables or another secret store.
 
 ## Authentication
 
-For username/password authentication, call `login()` and use the returned token
-to create an authenticated client:
+For username/password authentication, call `login()` and check `next_step`. When
+it is `challenge`, the returned token is a challenge token, not a session token.
+Ask the user for the code matching `method` (`totp` for an authenticator app,
+`sms` for a text message), then exchange it with `login2fa()`:
 
 ```ts
 const unauthenticated = new LynxClient('https://lynx.example.com');
-const { token } = await unauthenticated.login(username, password);
+const login = await unauthenticated.login(username, password);
+
+let token = login.token;
+if (login.next_step === 'challenge') {
+	const verified = await unauthenticated.login2fa(login.token, code);
+	token = verified.token;
+}
+
 const client = new LynxClient('https://lynx.example.com', token);
 ```
+
+Backup codes are accepted by `login2fa()` in place of a TOTP code. When
+`next_step` is `reset_password`, the token is only valid for changing the
+password with `resetPasswordUpdate(token, newPassword)`.
 
 To enroll the authenticated user in TOTP, start enrollment with the current
 password, add the returned secret to an authenticator app, then confirm with a
