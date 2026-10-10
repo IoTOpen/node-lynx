@@ -1,3 +1,4 @@
+import type { TOTPStatus } from './auth';
 import type { LynxClient } from './client';
 import type { Token } from './token';
 import type { Address, Identifier, Metadata, MetaObject, OKResponse, WithMeta } from './types';
@@ -35,6 +36,21 @@ export function GetUsers(this: LynxClient, filter?: Metadata) {
 
 export function GetUserTokens(this: LynxClient, id: number | 'me') {
     return this.requestJson<Token[]>(`${Endpoints.User}/${id}/security/token`);
+}
+
+/**
+ * Administrator view of another user's TOTP status. Users checking their own status use getTOTPStatus.
+ */
+export function GetUserTOTPStatus(this: LynxClient, id: number): Promise<TOTPStatus> {
+    return this.requestJson<TOTPStatus>(`${Endpoints.User}/${id}/security/totp`, { method: 'GET' });
+}
+
+/**
+ * Administrator reset of another user's TOTP factor, for users locked out of a lost device.
+ * The server rejects self-targeting; use disableTOTP for the caller's own account.
+ */
+export function ResetUserTOTP(this: LynxClient, id: number): Promise<null> {
+    return this.requestNull<null>(`${Endpoints.User}/${id}/security/totp`, { method: 'DELETE' });
 }
 
 export function CreateUser(this: LynxClient, user: EmptyUser) {

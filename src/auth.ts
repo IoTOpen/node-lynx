@@ -4,7 +4,23 @@ import { Endpoints } from './util';
 
 export interface LoginResult {
     token: string;
-    next_step?: string;
+    next_step?: 'challenge' | 'reset_password';
+    method?: 'totp' | 'sms';
+}
+
+export interface TOTPEnrollmentResponse {
+    secret: string;
+    url: string;
+    qrCode: string;
+}
+
+export interface TOTPEnrollmentConfirmation {
+    backupCodes: string[];
+}
+
+export interface TOTPStatus {
+    enabled: boolean;
+    enrolled_at?: string;
 }
 
 /**
@@ -33,6 +49,43 @@ export function Login2FA(this: LynxClient, token: string, challenge: string): Pr
         headers: {
             'Content-Type': 'application/json',
             'X-API-Key': token,
+        },
+    });
+}
+
+export function EnrollTOTP(this: LynxClient, password: string): Promise<TOTPEnrollmentResponse> {
+    return this.requestJson<TOTPEnrollmentResponse>(`${Endpoints.Auth}/totp/enroll`, {
+        method: 'POST',
+        body: JSON.stringify({ password }),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+}
+
+export function ConfirmTOTPEnrollment(this: LynxClient, code: string): Promise<TOTPEnrollmentConfirmation> {
+    return this.requestJson<TOTPEnrollmentConfirmation>(`${Endpoints.Auth}/totp/enroll`, {
+        method: 'PUT',
+        body: JSON.stringify({ code }),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+}
+
+export function GetTOTPStatus(this: LynxClient): Promise<TOTPStatus> {
+    return this.requestJson<TOTPStatus>(`${Endpoints.Auth}/totp/status`, { method: 'GET' });
+}
+
+/**
+ * Removes the active TOTP factor. Requires the account password and a current TOTP or unused backup code.
+ */
+export function DisableTOTP(this: LynxClient, password: string, code: string): Promise<null> {
+    return this.requestNull<null>(`${Endpoints.Auth}/totp`, {
+        method: 'DELETE',
+        body: JSON.stringify({ password, code }),
+        headers: {
+            'Content-Type': 'application/json',
         },
     });
 }
