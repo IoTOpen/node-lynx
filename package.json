@@ -26,8 +26,6 @@
     "type-check": "tsc --noEmit",
     "type-check:fast": "tsgo --noEmit",
     "build": "vite build --config ./vite.config.ts && tsc --emitDeclarationOnly",
-    "build:analyze": "ANALYZE=true vite build --config ./vite.config.ts",
-    "dev:ts": "vite",
     "clean": "rm -rf dist",
     "prepare": "node scripts/prepare.cjs",
     "prepack": "node scripts/prepare.cjs && node scripts/verify-dist.cjs",
