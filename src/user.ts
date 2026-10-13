@@ -38,17 +38,12 @@ export function GetUserTokens(this: LynxClient, id: number | 'me') {
     return this.requestJson<Token[]>(`${Endpoints.User}/${id}/security/token`);
 }
 
-/**
- * Administrator view of another user's TOTP status. Users checking their own status use getTOTPStatus.
- */
+/** Administrator view of another user's TOTP status. Throws 400 for higher-privileged targets, 403 without permission, and 404 for unknown users. */
 export function GetUserTOTPStatus(this: LynxClient, id: number): Promise<TOTPStatus> {
     return this.requestJson<TOTPStatus>(`${Endpoints.User}/${id}/security/totp`, { method: 'GET' });
 }
 
-/**
- * Administrator reset of another user's TOTP factor, for users locked out of a lost device.
- * The server rejects self-targeting with 400 and returns 404 when TOTP is not enabled; use disableTOTP for the caller's own account.
- */
+/** Administrator reset of another user's TOTP. Throws 400 for self-targeting, 403 without permission, and 404 when TOTP is not enabled. */
 export function ResetUserTOTP(this: LynxClient, id: number): Promise<null> {
     return this.requestNull<null>(`${Endpoints.User}/${id}/security/totp`, { method: 'DELETE' });
 }

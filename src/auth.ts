@@ -53,6 +53,7 @@ export function Login2FA(this: LynxClient, token: string, challenge: string): Pr
     });
 }
 
+/** Starts enrollment and returns the secret, otpauth URL, and QR code. Throws 401 for a wrong password and 409 when TOTP is already enabled. */
 export function EnrollTOTP(this: LynxClient, password: string): Promise<TOTPEnrollmentResponse> {
     return this.requestJson<TOTPEnrollmentResponse>(`${Endpoints.Auth}/totp/enroll`, {
         method: 'POST',
@@ -63,6 +64,7 @@ export function EnrollTOTP(this: LynxClient, password: string): Promise<TOTPEnro
     });
 }
 
+/** Activates enrollment and returns backup codes shown once. Throws 400 with a reason, or 409 when TOTP is already enabled. */
 export function ConfirmTOTPEnrollment(this: LynxClient, code: string): Promise<TOTPEnrollmentConfirmation> {
     return this.requestJson<TOTPEnrollmentConfirmation>(`${Endpoints.Auth}/totp/enroll`, {
         method: 'PUT',
@@ -73,13 +75,12 @@ export function ConfirmTOTPEnrollment(this: LynxClient, code: string): Promise<T
     });
 }
 
+/** Returns `{ enabled: false }` without `enrolled_at` when TOTP is not enabled. */
 export function GetTOTPStatus(this: LynxClient): Promise<TOTPStatus> {
     return this.requestJson<TOTPStatus>(`${Endpoints.Auth}/totp/status`, { method: 'GET' });
 }
 
-/**
- * Removes the active TOTP factor. Requires the account password and a current TOTP or unused backup code.
- */
+/** Removes the active TOTP factor and all backup codes. Throws 401 for a wrong password or code and 404 when TOTP is not enabled. */
 export function DisableTOTP(this: LynxClient, password: string, code: string): Promise<null> {
     return this.requestNull<null>(`${Endpoints.Auth}/totp`, {
         method: 'DELETE',

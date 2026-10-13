@@ -38,6 +38,38 @@ describe('ResetUserTOTP', () => {
         expect(error).toBeInstanceOf(HTTPError);
         expect(error).toMatchObject({ status: 403 });
     });
+
+    it('throws HTTPError when the target user has no TOTP to reset', async () => {
+        vi.stubGlobal(
+            'fetch',
+            vi.fn(async () => new Response(JSON.stringify({ message: 'not found' }), { status: 404, headers: { 'Content-Type': 'application/json' } })),
+        );
+        const client = new LynxClient(baseUrl, 'api-token');
+
+        const error = await client.resetUserTOTP(7).then(
+            () => undefined,
+            (e: unknown) => e,
+        );
+
+        expect(error).toBeInstanceOf(HTTPError);
+        expect(error).toMatchObject({ status: 404 });
+    });
+
+    it('throws HTTPError when the caller resets their own TOTP', async () => {
+        vi.stubGlobal(
+            'fetch',
+            vi.fn(async () => new Response(JSON.stringify({ message: 'use disable instead' }), { status: 400, headers: { 'Content-Type': 'application/json' } })),
+        );
+        const client = new LynxClient(baseUrl, 'api-token');
+
+        const error = await client.resetUserTOTP(7).then(
+            () => undefined,
+            (e: unknown) => e,
+        );
+
+        expect(error).toBeInstanceOf(HTTPError);
+        expect(error).toMatchObject({ status: 400 });
+    });
 });
 
 describe('GetUserTOTPStatus', () => {
@@ -52,5 +84,31 @@ describe('GetUserTOTPStatus', () => {
         const [input, options] = fetchMock.mock.calls[0] ?? [];
         expect(input).toBe(`${baseUrl}/api/v2/user/7/security/totp`);
         expect(options?.method).toBe('GET');
+    });
+
+    it('returns enabled false when the target user has no TOTP', async () => {
+        vi.stubGlobal(
+            'fetch',
+            vi.fn(async () => new Response(JSON.stringify({ enabled: false }), { status: 200, headers: { 'Content-Type': 'application/json' } })),
+        );
+        const client = new LynxClient(baseUrl, 'api-token');
+
+        await expect(client.getUserTOTPStatus(7)).resolves.toEqual({ enabled: false });
+    });
+
+    it('throws HTTPError when the caller lacks permission to read status', async () => {
+        vi.stubGlobal(
+            'fetch',
+            vi.fn(async () => new Response(JSON.stringify({ message: 'forbidden' }), { status: 403, headers: { 'Content-Type': 'application/json' } })),
+        );
+        const client = new LynxClient(baseUrl, 'api-token');
+
+        const error = await client.getUserTOTPStatus(7).then(
+            () => undefined,
+            (e: unknown) => e,
+        );
+
+        expect(error).toBeInstanceOf(HTTPError);
+        expect(error).toMatchObject({ status: 403 });
     });
 });

@@ -40,6 +40,31 @@ describe('Login', () => {
     });
 });
 
+describe('Login challenge', () => {
+    it('returns the challenge step when TOTP is required', async () => {
+        stubFetch(200, { token: 'challenge-token', next_step: 'challenge', method: 'totp' });
+        const client = new LynxClient(baseUrl);
+
+        await expect(client.login('user', 'password')).resolves.toEqual({
+            token: 'challenge-token',
+            next_step: 'challenge',
+            method: 'totp',
+        });
+    });
+
+    it('sends the TOTP or backup code with the challenge token', async () => {
+        const captured = stubFetch(200, { token: 'session-token' });
+        const client = new LynxClient(baseUrl);
+
+        await expect(client.login2fa('challenge-token', '012345')).resolves.toEqual({ token: 'session-token' });
+
+        expect(captured.input).toBe(`${baseUrl}/api/v2/auth`);
+        expect(captured.options?.method).toBe('PUT');
+        expect(captured.options?.body).toBe(JSON.stringify({ challenge: '012345' }));
+        expect(new Headers(captured.options?.headers).get('X-API-Key')).toBe('challenge-token');
+    });
+});
+
 describe('TOTP', () => {
     const enrollUrl = `${baseUrl}/api/v2/auth/totp/enroll`;
 
@@ -88,6 +113,45 @@ describe('TOTP', () => {
         expect(error).toMatchObject({ status: 400, body: { reason } });
     });
 
+    it('throws HTTPError when enrollment password is rejected', async () => {
+        stubFetch(401, { message: 'unauthorized' });
+        const client = new LynxClient(baseUrl, 'api-token');
+
+        const error = await client.enrollTOTP('wrong-password').then(
+            () => undefined,
+            (e: unknown) => e,
+        );
+
+        expect(error).toBeInstanceOf(HTTPError);
+        expect(error).toMatchObject({ status: 401 });
+    });
+
+    it('throws HTTPError when enrolling while TOTP is already enabled', async () => {
+        stubFetch(409, { message: 'totp already enabled' });
+        const client = new LynxClient(baseUrl, 'api-token');
+
+        const error = await client.enrollTOTP('current-password').then(
+            () => undefined,
+            (e: unknown) => e,
+        );
+
+        expect(error).toBeInstanceOf(HTTPError);
+        expect(error).toMatchObject({ status: 409 });
+    });
+
+    it('throws HTTPError when confirming while TOTP is already enabled', async () => {
+        stubFetch(409, { message: 'totp already enabled' });
+        const client = new LynxClient(baseUrl, 'api-token');
+
+        const error = await client.confirmTOTPEnrollment('012345').then(
+            () => undefined,
+            (e: unknown) => e,
+        );
+
+        expect(error).toBeInstanceOf(HTTPError);
+        expect(error).toMatchObject({ status: 409 });
+    });
+
     it('reads status from the status endpoint', async () => {
         const response = { enabled: true, enrolled_at: '2026-10-01T12:00:00Z' };
         const captured = stubFetch(200, response);
@@ -126,5 +190,25 @@ describe('TOTP', () => {
 
         expect(error).toBeInstanceOf(HTTPError);
         expect(error).toMatchObject({ status: 401 });
+    });
+
+    it('returns enabled false when TOTP is not enabled', async () => {
+        stubFetch(200, { enabled: false });
+        const client = new LynxClient(baseUrl, 'api-token');
+
+        await expect(client.getTOTPStatus()).resolves.toEqual({ enabled: false });
+    });
+
+    it('throws HTTPError when disabling TOTP that is not enabled', async () => {
+        stubFetch(404, { message: 'not found' });
+        const client = new LynxClient(baseUrl, 'api-token');
+
+        const error = await client.disableTOTP('current-password', '012345').then(
+            () => undefined,
+            (e: unknown) => e,
+        );
+
+        expect(error).toBeInstanceOf(HTTPError);
+        expect(error).toMatchObject({ status: 404 });
     });
 });
