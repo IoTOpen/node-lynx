@@ -101,6 +101,25 @@ Enrollment confirmation failures include a `reason` in `HTTPError.body`:
 `totp_setup_expired` (start enrollment again), `totp_no_pending_setup` (call
 `enrollTOTP()` first), or `totp_invalid_code` (ask for a current code).
 
+To remove TOTP from the authenticated account, call `disableTOTP()` with the
+account password and a current TOTP code or unused backup code. A wrong password
+or code throws `HTTPError` with status `401`. If TOTP is not enabled, it throws
+status `404`.
+
+```ts
+await client.disableTOTP(password, code);
+```
+
+Administrators check another user's TOTP status with `getUserTOTPStatus()` and
+remove a locked-out user's TOTP factor with `resetUserTOTP()`. Both require the
+`user/security/totp/reset` permission. `resetUserTOTP()` rejects the caller's own
+ID with status `400`; use `disableTOTP()` for the caller's own account.
+
+```ts
+const { enabled } = await client.getUserTOTPStatus(userId);
+await client.resetUserTOTP(userId);
+```
+
 The client also exposes `requestJson`, `requestBlob`, and `requestNull` for API
 routes that are not covered by a convenience method.
 

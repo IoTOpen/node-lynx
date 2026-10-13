@@ -47,7 +47,7 @@ export function GetUserTOTPStatus(this: LynxClient, id: number): Promise<TOTPSta
 
 /**
  * Administrator reset of another user's TOTP factor, for users locked out of a lost device.
- * The server rejects self-targeting; use disableTOTP for the caller's own account.
+ * The server rejects self-targeting with 400 and returns 404 when TOTP is not enabled; use disableTOTP for the caller's own account.
  */
 export function ResetUserTOTP(this: LynxClient, id: number): Promise<null> {
     return this.requestNull<null>(`${Endpoints.User}/${id}/security/totp`, { method: 'DELETE' });
