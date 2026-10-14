@@ -43,9 +43,12 @@ export function GetUserTOTPStatus(this: LynxClient, id: number): Promise<TOTPSta
     return this.requestJson<TOTPStatus>(`${Endpoints.User}/${id}/security/totp`, { method: 'GET' });
 }
 
-/** Administrator reset of another user's TOTP. Throws 400 for self-targeting, 403 without permission, and 404 when TOTP is not enabled. */
-export function ResetUserTOTP(this: LynxClient, id: number): Promise<null> {
-    return this.requestNull<null>(`${Endpoints.User}/${id}/security/totp`, { method: 'DELETE' });
+/** Administrator reset of another user's TOTP. Requires the caller's password. Throws 400 for self-targeting or a missing password, 403 for a wrong password or without permission, 404 when TOTP is not enabled, and 429 after too many wrong passwords. */
+export function ResetUserTOTP(this: LynxClient, id: number, password: string): Promise<null> {
+    return this.requestNull<null>(`${Endpoints.User}/${id}/security/totp`, {
+        method: 'DELETE',
+        body: JSON.stringify({ password }),
+    });
 }
 
 export function CreateUser(this: LynxClient, user: EmptyUser) {

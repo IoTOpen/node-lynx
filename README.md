@@ -120,19 +120,21 @@ await client.disableTOTP(password, code);
 
 Administrators check another user's TOTP status with `getUserTOTPStatus()` and
 remove a locked-out user's TOTP factor with `resetUserTOTP()`. Both require the
-`user/security/totp/reset` permission.
+`user/security/totp/reset` permission. `resetUserTOTP()` also requires the
+administrator's current password.
 
 Both calls throw `HTTPError` with status `403` when the caller lacks the
 permission or the target user is outside the caller's organizations. They throw
 `400` when the target user's role has permissions the caller lacks, and `404`
 when the user does not exist. `getUserTOTPStatus()` returns `{ enabled: false }`
-when TOTP is not enabled. `resetUserTOTP()` resolves to `null` on success, throws
-`404` when TOTP is not enabled, and rejects the caller's own ID with `400`. Use
-`disableTOTP()` for the caller's own account.
+when TOTP is not enabled. `resetUserTOTP()` resolves to `null` on success and
+throws `404` when TOTP is not enabled. It throws `400` for the caller's own ID or
+a missing password, `403` for a wrong password, and `429` after five attempts in
+a 15-minute window. Use `disableTOTP()` for the caller's own account.
 
 ```ts
 const { enabled } = await client.getUserTOTPStatus(userId);
-await client.resetUserTOTP(userId);
+await client.resetUserTOTP(userId, adminPassword);
 ```
 
 The client also exposes `requestJson`, `requestBlob`, and `requestNull` for API

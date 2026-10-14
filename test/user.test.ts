@@ -15,11 +15,12 @@ describe('ResetUserTOTP', () => {
         vi.stubGlobal('fetch', fetchMock);
         const client = new LynxClient(baseUrl, 'api-token');
 
-        await expect(client.resetUserTOTP(7)).resolves.toBeNull();
+        await expect(client.resetUserTOTP(7, 'admin-password')).resolves.toBeNull();
 
         const [input, options] = fetchMock.mock.calls[0] ?? [];
         expect(input).toBe(`${baseUrl}/api/v2/user/7/security/totp`);
         expect(options?.method).toBe('DELETE');
+        expect(options?.body).toBe(JSON.stringify({ password: 'admin-password' }));
         expect(new Headers(options?.headers).get('X-API-Key')).toBe('api-token');
     });
 
@@ -30,7 +31,7 @@ describe('ResetUserTOTP', () => {
         );
         const client = new LynxClient(baseUrl, 'api-token');
 
-        const error = await client.resetUserTOTP(7).then(
+        const error = await client.resetUserTOTP(7, 'admin-password').then(
             () => undefined,
             (e: unknown) => e,
         );
@@ -46,7 +47,7 @@ describe('ResetUserTOTP', () => {
         );
         const client = new LynxClient(baseUrl, 'api-token');
 
-        const error = await client.resetUserTOTP(7).then(
+        const error = await client.resetUserTOTP(7, 'admin-password').then(
             () => undefined,
             (e: unknown) => e,
         );
@@ -62,13 +63,29 @@ describe('ResetUserTOTP', () => {
         );
         const client = new LynxClient(baseUrl, 'api-token');
 
-        const error = await client.resetUserTOTP(7).then(
+        const error = await client.resetUserTOTP(7, 'admin-password').then(
             () => undefined,
             (e: unknown) => e,
         );
 
         expect(error).toBeInstanceOf(HTTPError);
         expect(error).toMatchObject({ status: 400 });
+    });
+
+    it('throws HTTPError with status 429 after too many wrong passwords', async () => {
+        vi.stubGlobal(
+            'fetch',
+            vi.fn(async () => new Response(JSON.stringify({ message: 'too many password attempts' }), { status: 429, headers: { 'Content-Type': 'application/json' } })),
+        );
+        const client = new LynxClient(baseUrl, 'api-token');
+
+        const error = await client.resetUserTOTP(7, 'wrong-password').then(
+            () => undefined,
+            (e: unknown) => e,
+        );
+
+        expect(error).toBeInstanceOf(HTTPError);
+        expect(error).toMatchObject({ status: 429 });
     });
 });
 
