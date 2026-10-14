@@ -1,3 +1,4 @@
+import type { TOTPStatus } from './auth';
 import type { LynxClient } from './client';
 import type { Token } from './token';
 import type { Address, Identifier, Metadata, MetaObject, OKResponse, WithMeta } from './types';
@@ -35,6 +36,16 @@ export function GetUsers(this: LynxClient, filter?: Metadata) {
 
 export function GetUserTokens(this: LynxClient, id: number | 'me') {
     return this.requestJson<Token[]>(`${Endpoints.User}/${id}/security/token`);
+}
+
+/** Administrator view of another user's TOTP status. Throws 400 for higher-privileged targets, 403 without permission, and 404 for unknown users. */
+export function GetUserTOTPStatus(this: LynxClient, id: number): Promise<TOTPStatus> {
+    return this.requestJson<TOTPStatus>(`${Endpoints.User}/${id}/security/totp`, { method: 'GET' });
+}
+
+/** Administrator reset of another user's TOTP. Throws 400 for self-targeting, 403 without permission, and 404 when TOTP is not enabled. */
+export function ResetUserTOTP(this: LynxClient, id: number): Promise<null> {
+    return this.requestNull<null>(`${Endpoints.User}/${id}/security/totp`, { method: 'DELETE' });
 }
 
 export function CreateUser(this: LynxClient, user: EmptyUser) {
