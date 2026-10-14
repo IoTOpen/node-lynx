@@ -69,7 +69,7 @@ describe('TOTP', () => {
     const enrollUrl = `${baseUrl}/api/v2/auth/totp/enroll`;
 
     it('starts enrollment with the current password', async () => {
-        const response = { secret: 'secret', url: 'otpauth://totp/account', qrCode: 'png' };
+        const response = { secret: 'secret', url: 'otpauth://totp/account' };
         const captured = stubFetch(200, response);
         const client = new LynxClient(baseUrl, 'api-token');
 

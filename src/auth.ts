@@ -11,9 +11,9 @@ export interface LoginResult {
 export interface TOTPEnrollmentResponse {
     secret: string;
     url: string;
-    qrCode: string;
 }
 
+/** Backup codes are one-time credentials. Display them once and never log them. */
 export interface TOTPEnrollmentConfirmation {
     backupCodes: string[];
 }
@@ -53,7 +53,7 @@ export function Login2FA(this: LynxClient, token: string, challenge: string): Pr
     });
 }
 
-/** Starts enrollment and returns the secret, otpauth URL, and QR code. Throws 401 for a wrong password and 409 when TOTP is already enabled. */
+/** Starts enrollment and returns the secret and otpauth URL. Throws 401 for a wrong password and 409 when TOTP is already enabled. */
 export function EnrollTOTP(this: LynxClient, password: string): Promise<TOTPEnrollmentResponse> {
     return this.requestJson<TOTPEnrollmentResponse>(`${Endpoints.Auth}/totp/enroll`, {
         method: 'POST',

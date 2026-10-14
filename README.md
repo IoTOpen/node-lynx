@@ -79,13 +79,13 @@ Backup codes are accepted by `login2fa()` in place of a TOTP code. When
 password with `resetPasswordUpdate(token, newPassword)`.
 
 To enroll the authenticated user in TOTP, call `enrollTOTP()` with the current
-password. It returns `secret`, `url` (an `otpauth://` URI), and `qrCode`. Add the
-secret or URL to an authenticator app, then call `confirmTOTPEnrollment()` with
-the six-digit code. Display the QR code in a protected enrollment view without
-logging it.
+password. It returns `secret` and `url` (an `otpauth://` URI). Generate the QR
+code from `url` in the frontend, then display it in a protected enrollment view.
+The user can scan the QR code or enter the secret in an authenticator app. Do
+not log the secret or URL. Call `confirmTOTPEnrollment()` with the six-digit code.
 
-The confirmation returns `backupCodes`. Store them securely; they are only shown
-once.
+The confirmation returns `backupCodes`. Display them once, store them securely,
+and never log them.
 
 ```ts
 const enrollment = await client.enrollTOTP(password);
