@@ -3,8 +3,8 @@ import type { OKResponse } from './types';
 import { Endpoints } from './util';
 
 export interface LoginResult {
-    token: string;
-    next_step?: 'challenge' | 'reset_password';
+    token?: string;
+    next_step?: 'challenge' | 'reset_password' | 'totp_onboarding';
     method?: 'totp' | 'sms';
 }
 

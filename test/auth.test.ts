@@ -40,6 +40,17 @@ describe('Login', () => {
     });
 });
 
+describe('Login TOTP onboarding', () => {
+    it('returns the totp_onboarding step when required', async () => {
+        stubFetch(200, { next_step: 'totp_onboarding' });
+        const client = new LynxClient(baseUrl);
+
+        await expect(client.login('user', 'password')).resolves.toEqual({
+            next_step: 'totp_onboarding',
+        });
+    });
+});
+
 describe('Login challenge', () => {
     it('returns the challenge step when TOTP is required', async () => {
         stubFetch(200, { token: 'challenge-token', next_step: 'challenge', method: 'totp' });

@@ -78,6 +78,10 @@ Backup codes are accepted by `login2fa()` in place of a TOTP code. When
 `next_step` is `reset_password`, the token is only valid for changing the
 password with `resetPasswordUpdate(token, newPassword)`.
 
+If `next_step` is `totp_onboarding`, the response may not contain a `token`.
+The user must complete the TOTP enrollment flow before they can proceed to
+access protected resources.
+
 To enroll the authenticated user in TOTP, call `enrollTOTP()` with the current
 password. It returns `secret` and `url` (an `otpauth://` URI). Generate the QR
 code from `url` in the frontend, then display it in a protected enrollment view.
