@@ -19,6 +19,7 @@ export type EmptyOrganization = WithMeta & {
     email: string
     phone: string
     force_sms_login: boolean
+    force_totp_login?: boolean
     parent: number
     children: OrganizationChild[]
     notes: string
@@ -62,8 +63,8 @@ export function DeleteOrganization(this: LynxClient, org: Organization) {
         });
 }
 
-export function GetOrganizationMeta(this: LynxClient, userID: number, key: string) {
-    return this.requestJson<MetaObject>(`${Endpoints.Organization}/${userID}/meta/${encodeURIComponent(key)}`);
+export function GetOrganizationMeta(this: LynxClient, orgID: number, key: string) {
+    return this.requestJson<MetaObject>(`${Endpoints.Organization}/${orgID}/meta/${encodeURIComponent(key)}`);
 }
 
 export function CreateOrganizationMeta(this: LynxClient, orgID: number, key: string, data: MetaObject, silent = false) {
@@ -85,7 +86,7 @@ export function UpdateOrganizationMeta(this: LynxClient, orgID: number, key: str
 export function DeleteOrganizationMeta(this: LynxClient, orgID: number, key: string, silent = false) {
     const qs = `?${new URLSearchParams({ silent: String(silent) }).toString()}`;
     const path = `${Endpoints.Organization}/${orgID}/meta/${encodeURIComponent(key)}${qs}`;
-    return this.requestJson<MetaObject>(path, {
+    return this.requestJson<OKResponse>(path, {
         method: 'DELETE'
     });
 }
