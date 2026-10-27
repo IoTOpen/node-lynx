@@ -61,6 +61,8 @@ export type {
     Organization,
     OrganizationChild,
     OrganizationSimple,
+    OrganizationTOTPInheritance,
+    OrganizationTOTPRequirement,
 } from './organization';
 export type { UserRegistration } from './register';
 export type { EmptyRole, Role } from './role';

@@ -65,7 +65,6 @@ const organization = {
     email: '',
     phone: '',
     force_sms_login: false,
-    force_totp_login: false,
     parent: 0,
     children: [],
     notes: '',

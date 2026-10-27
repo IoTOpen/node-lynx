@@ -6,7 +6,11 @@ import {
   DeleteOrganization,
   DeleteOrganizationMeta,
   GetOrganizationMeta,
+  GetOrganizationTOTPInheritance,
+  GetOrganizationTOTPRequirement,
   GetOrganizations,
+  SetOrganizationTOTPInheritance,
+  SetOrganizationTOTPRequirement,
   UpdateOrganization,
   UpdateOrganizationMeta,
 } from '../src/organization';
@@ -52,7 +56,6 @@ describe('organization.ts', () => {
       email: '',
       phone: '',
       force_sms_login: false,
-      force_totp_login: true,
       parent: 0,
       children: [],
       notes: '',
@@ -66,6 +69,48 @@ describe('organization.ts', () => {
     expect(requestJson).toHaveBeenCalledWith('/api/v2/organization/1', {
       method: 'PUT',
       body: JSON.stringify(organization),
+    });
+  });
+
+  it('gets the organization TOTP requirement from its protected endpoint', async () => {
+    const requestJson = vi.fn(async () => ({ required: true }));
+    const client = { requestJson } as unknown as LynxClient;
+
+    await GetOrganizationTOTPRequirement.call(client, 1);
+
+    expect(requestJson).toHaveBeenCalledWith('/api/v2/organization/1/security/totp');
+  });
+
+  it('sets the organization TOTP requirement through its protected endpoint', async () => {
+    const requestJson = vi.fn(async () => ({ required: true }));
+    const client = { requestJson } as unknown as LynxClient;
+
+    await SetOrganizationTOTPRequirement.call(client, 1, true);
+
+    expect(requestJson).toHaveBeenCalledWith('/api/v2/organization/1/security/totp', {
+      method: 'PUT',
+      body: JSON.stringify({ required: true }),
+    });
+  });
+
+  it('gets the organization TOTP inheritance setting', async () => {
+    const requestJson = vi.fn(async () => ({ inherit: true }));
+    const client = { requestJson } as unknown as LynxClient;
+
+    await GetOrganizationTOTPInheritance.call(client, 1);
+
+    expect(requestJson).toHaveBeenCalledWith('/api/v2/organization/1/security/totp/inheritance');
+  });
+
+  it('sets the organization TOTP inheritance setting', async () => {
+    const requestJson = vi.fn(async () => ({ inherit: false }));
+    const client = { requestJson } as unknown as LynxClient;
+
+    await SetOrganizationTOTPInheritance.call(client, 1, false);
+
+    expect(requestJson).toHaveBeenCalledWith('/api/v2/organization/1/security/totp/inheritance', {
+      method: 'PUT',
+      body: JSON.stringify({ inherit: false }),
     });
   });
 

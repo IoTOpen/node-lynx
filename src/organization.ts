@@ -19,7 +19,6 @@ export type EmptyOrganization = WithMeta & {
     email: string
     phone: string
     force_sms_login: boolean
-    force_totp_login?: boolean
     parent: number
     children: OrganizationChild[]
     notes: string
@@ -27,6 +26,14 @@ export type EmptyOrganization = WithMeta & {
 }
 
 export type Organization = EmptyOrganization & Identifier
+
+export interface OrganizationTOTPRequirement {
+    required: boolean
+}
+
+export interface OrganizationTOTPInheritance {
+    inherit: boolean
+}
 
 export type MinimalOrg<T extends boolean> = T extends true ? OrganizationSimple : Organization;
 export function GetOrganizations<T extends boolean = false>(this: LynxClient, minimal?: T) {
@@ -53,6 +60,30 @@ export function UpdateOrganization(this: LynxClient, org: Organization) {
     return this.requestJson<Organization>(
         `${Endpoints.Organization}/${org.id}`, {
             method: 'PUT', body: JSON.stringify(org)
+        });
+}
+
+export function GetOrganizationTOTPRequirement(this: LynxClient, orgID: number) {
+    return this.requestJson<OrganizationTOTPRequirement>(
+        `${Endpoints.Organization}/${orgID}/security/totp`);
+}
+
+export function SetOrganizationTOTPRequirement(this: LynxClient, orgID: number, required: boolean) {
+    return this.requestJson<OrganizationTOTPRequirement>(
+        `${Endpoints.Organization}/${orgID}/security/totp`, {
+            method: 'PUT', body: JSON.stringify({ required })
+        });
+}
+
+export function GetOrganizationTOTPInheritance(this: LynxClient, orgID: number) {
+    return this.requestJson<OrganizationTOTPInheritance>(
+        `${Endpoints.Organization}/${orgID}/security/totp/inheritance`);
+}
+
+export function SetOrganizationTOTPInheritance(this: LynxClient, orgID: number, inherit: boolean) {
+    return this.requestJson<OrganizationTOTPInheritance>(
+        `${Endpoints.Organization}/${orgID}/security/totp/inheritance`, {
+            method: 'PUT', body: JSON.stringify({ inherit })
         });
 }
 

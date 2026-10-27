@@ -141,6 +141,30 @@ const { enabled } = await client.getUserTOTPStatus(userId);
 await client.resetUserTOTP(userId, adminPassword);
 ```
 
+### Organization TOTP policy
+
+Use `getOrganizationTOTPRequirement(orgId)` and
+`setOrganizationTOTPRequirement(orgId, required)` to manage the organization's
+TOTP requirement. The organization itself is always covered. Descendants are
+covered when inheritance is enabled, which defaults to `true`. Use
+`getOrganizationTOTPInheritance(orgId)` and
+`setOrganizationTOTPInheritance(orgId, inherit)` to read or change that setting.
+
+These calls are limited to the caller's organization tree. GET requests require
+`organization/list` or `organization/list/all`. Setting the requirement needs
+`organization/update` and `organization/security/totp/require`. Setting
+inheritance needs `organization/update` and
+`organization/security/totp/inheritance`. Both special permissions are granted
+to `systemadministrator` by default.
+
+```ts
+const { required } = await client.getOrganizationTOTPRequirement(orgId);
+await client.setOrganizationTOTPRequirement(orgId, true);
+
+const { inherit } = await client.getOrganizationTOTPInheritance(orgId);
+await client.setOrganizationTOTPInheritance(orgId, false);
+```
+
 The client also exposes `requestJson`, `requestBlob`, and `requestNull` for API
 routes that are not covered by a convenience method.
 

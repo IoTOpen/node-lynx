@@ -109,9 +109,9 @@ import {
 import {
     CreateOrganization, CreateOrganizationMeta,
     DeleteOrganization, DeleteOrganizationMeta,
-    GetOrganization, GetOrganizationMeta,
+    GetOrganization, GetOrganizationMeta, GetOrganizationTOTPInheritance, GetOrganizationTOTPRequirement,
     GetOrganizations,
-    UpdateOrganization, UpdateOrganizationMeta
+    SetOrganizationTOTPInheritance, SetOrganizationTOTPRequirement, UpdateOrganization, UpdateOrganizationMeta
 } from './organization';
 import { GetPermissions } from './permission';
 import { Register } from './register';
@@ -234,8 +234,12 @@ export class LynxClient {
 
     getOrganizations = GetOrganizations;
     getOrganization = GetOrganization;
+    getOrganizationTOTPRequirement = GetOrganizationTOTPRequirement;
+    getOrganizationTOTPInheritance = GetOrganizationTOTPInheritance;
     createOrganization = CreateOrganization;
     updateOrganization = UpdateOrganization;
+    setOrganizationTOTPRequirement = SetOrganizationTOTPRequirement;
+    setOrganizationTOTPInheritance = SetOrganizationTOTPInheritance;
     deleteOrganization = DeleteOrganization;
     getOrganizationMeta = GetOrganizationMeta;
     createOrganizationMeta = CreateOrganizationMeta;
