@@ -1,4 +1,14 @@
-import { Login, Login2FA, Logout, ResetPassword, ResetPasswordUpdate } from './auth';
+import {
+    ConfirmTOTPEnrollment,
+    DisableTOTP,
+    EnrollTOTP,
+    GetTOTPStatus,
+    Login,
+    Login2FA,
+    Logout,
+    ResetPassword,
+    ResetPasswordUpdate
+} from './auth';
 import {
     CreateDevice,
     CreateDeviceMeta,
@@ -99,9 +109,9 @@ import {
 import {
     CreateOrganization, CreateOrganizationMeta,
     DeleteOrganization, DeleteOrganizationMeta,
-    GetOrganization, GetOrganizationMeta,
+    GetOrganization, GetOrganizationMeta, GetOrganizationTOTPInheritance, GetOrganizationTOTPRequirement,
     GetOrganizations,
-    UpdateOrganization, UpdateOrganizationMeta
+    SetOrganizationTOTPInheritance, SetOrganizationTOTPRequirement, UpdateOrganization, UpdateOrganizationMeta
 } from './organization';
 import { GetPermissions } from './permission';
 import { Register } from './register';
@@ -129,6 +139,8 @@ import {
     GetUserMeta,
     GetUsers,
     GetUserTokens,
+    GetUserTOTPStatus,
+    ResetUserTOTP,
     UpdateUser, UpdateUserMeta
 } from './user';
 import {
@@ -161,6 +173,10 @@ export class LynxClient {
     login = Login;
     login2fa = Login2FA;
     logout = Logout;
+    enrollTOTP = EnrollTOTP;
+    confirmTOTPEnrollment = ConfirmTOTPEnrollment;
+    getTOTPStatus = GetTOTPStatus;
+    disableTOTP = DisableTOTP;
     resetPassword = ResetPassword;
     resetPasswordUpdate = ResetPasswordUpdate;
 
@@ -218,8 +234,12 @@ export class LynxClient {
 
     getOrganizations = GetOrganizations;
     getOrganization = GetOrganization;
+    getOrganizationTOTPRequirement = GetOrganizationTOTPRequirement;
+    getOrganizationTOTPInheritance = GetOrganizationTOTPInheritance;
     createOrganization = CreateOrganization;
     updateOrganization = UpdateOrganization;
+    setOrganizationTOTPRequirement = SetOrganizationTOTPRequirement;
+    setOrganizationTOTPInheritance = SetOrganizationTOTPInheritance;
     deleteOrganization = DeleteOrganization;
     getOrganizationMeta = GetOrganizationMeta;
     createOrganizationMeta = CreateOrganizationMeta;
@@ -239,6 +259,8 @@ export class LynxClient {
     getUser = GetUser;
     getUsers = GetUsers;
     getUserTokens = GetUserTokens;
+    getUserTOTPStatus = GetUserTOTPStatus;
+    resetUserTOTP = ResetUserTOTP;
     createUser = CreateUser;
     updateUser = UpdateUser;
     deleteUser = DeleteUser;

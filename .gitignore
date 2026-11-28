@@ -80,3 +80,4 @@ dist/
 .pnpm-store/
 iotopen-node-lynx-*.tgz
 .vscode/
+AGENTS.md

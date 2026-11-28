@@ -56,13 +56,113 @@ in environment variables or another secret store.
 
 ## Authentication
 
-For username/password authentication, call `login()` and use the returned token
-to create an authenticated client:
+For username/password authentication, call `login()` and check `next_step`. When
+it is `challenge`, the returned token is a challenge token, not a session token.
+Ask the user for the code matching `method` (`totp` for an authenticator app,
+`sms` for a text message), then exchange it with `login2fa()`:
 
 ```ts
 const unauthenticated = new LynxClient('https://lynx.example.com');
-const { token } = await unauthenticated.login(username, password);
+const login = await unauthenticated.login(username, password);
+
+let token = login.token;
+if (login.next_step === 'challenge') {
+	const verified = await unauthenticated.login2fa(login.token, code);
+	token = verified.token;
+}
+
 const client = new LynxClient('https://lynx.example.com', token);
+```
+
+Backup codes are accepted by `login2fa()` in place of a TOTP code. When
+`next_step` is `reset_password`, the token is only valid for changing the
+password with `resetPasswordUpdate(token, newPassword)`.
+
+If `next_step` is `totp_onboarding`, the response may not contain a `token`.
+The user must complete the TOTP enrollment flow before they can proceed to
+access protected resources.
+
+To enroll the authenticated user in TOTP, call `enrollTOTP()` with the current
+password. It returns `secret` and `url` (an `otpauth://` URI). Generate the QR
+code from `url` in the frontend, then display it in a protected enrollment view.
+The user can scan the QR code or enter the secret in an authenticator app. Do
+not log the secret or URL. Call `confirmTOTPEnrollment()` with the six-digit code.
+
+The confirmation returns `backupCodes`. Display them once, store them securely,
+and never log them.
+
+```ts
+const enrollment = await client.enrollTOTP(password);
+
+const { backupCodes } = await client.confirmTOTPEnrollment(authenticatorCode);
+```
+
+`enrollTOTP()` throws status `401` for a wrong password. Both enrollment calls
+throw status `409` when TOTP is already enabled.
+
+Use `getTOTPStatus()` to check whether TOTP is active. `enrolled_at` is set when
+confirmation succeeds, not when enrollment starts. When TOTP is not enabled, the
+response is `{ enabled: false }`.
+
+```ts
+const { enabled, enrolled_at } = await client.getTOTPStatus();
+```
+
+Enrollment confirmation failures include a `reason` in `HTTPError.body`:
+`totp_setup_expired` (start enrollment again), `totp_no_pending_setup` (call
+`enrollTOTP()` first), or `totp_invalid_code` (ask for a current code).
+
+To remove TOTP from the authenticated account, call `disableTOTP()` with the
+account password and a current TOTP code or unused backup code. A wrong password
+or code throws `HTTPError` with status `401`. If TOTP is not enabled, it throws
+status `404`. Each backup code works once. Disabling deletes all backup codes;
+enroll again to get a new set. Success resolves to `null`.
+
+```ts
+await client.disableTOTP(password, code);
+```
+
+Administrators check another user's TOTP status with `getUserTOTPStatus()` and
+remove a locked-out user's TOTP factor with `resetUserTOTP()`. Both require the
+`user/security/totp/reset` permission. `resetUserTOTP()` also requires the
+administrator's current password.
+
+Both calls throw `HTTPError` with status `403` when the caller lacks the
+permission or the target user is outside the caller's organizations. They throw
+`400` when the target user's role has permissions the caller lacks, and `404`
+when the user does not exist. `getUserTOTPStatus()` returns `{ enabled: false }`
+when TOTP is not enabled. `resetUserTOTP()` resolves to `null` on success and
+throws `404` when TOTP is not enabled. It throws `400` for the caller's own ID or
+a missing password, `403` for a wrong password, and `429` after five attempts in
+a 15-minute window. Use `disableTOTP()` for the caller's own account.
+
+```ts
+const { enabled } = await client.getUserTOTPStatus(userId);
+await client.resetUserTOTP(userId, adminPassword);
+```
+
+### Organization TOTP policy
+
+Use `getOrganizationTOTPRequirement(orgId)` and
+`setOrganizationTOTPRequirement(orgId, required)` to manage the organization's
+TOTP requirement. The organization itself is always covered. Descendants are
+covered when inheritance is enabled, which defaults to `true`. Use
+`getOrganizationTOTPInheritance(orgId)` and
+`setOrganizationTOTPInheritance(orgId, inherit)` to read or change that setting.
+
+These calls are limited to the caller's organization tree. GET requests require
+`organization/list` or `organization/list/all`. Setting the requirement needs
+`organization/update` and `organization/security/totp/require`. Setting
+inheritance needs `organization/update` and
+`organization/security/totp/inheritance`. Both special permissions are granted
+to `systemadministrator` by default.
+
+```ts
+const { required } = await client.getOrganizationTOTPRequirement(orgId);
+await client.setOrganizationTOTPRequirement(orgId, true);
+
+const { inherit } = await client.getOrganizationTOTPInheritance(orgId);
+await client.setOrganizationTOTPInheritance(orgId, false);
 ```
 
 The client also exposes `requestJson`, `requestBlob`, and `requestNull` for API

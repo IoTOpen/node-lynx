@@ -19,11 +19,13 @@ describe('zero.ts', () => {
     const installationInfo = zero.getInstallationInfo();
     const user = zero.getUser();
     const organizationSimple = zero.getOrganizationSimple();
+    const organization = zero.getEmptyOrganization();
 
     expect(Array.isArray(edgeApp.tags)).toBe(true);
     expect(Array.isArray(edgeApp.publisher.apps)).toBe(true);
     expect(Array.isArray(installationInfo.capabilities)).toBe(true);
     expect(Array.isArray(user.assigned_installations)).toBe(true);
     expect(organizationSimple.parent).toBe(0);
+    expect(organization).not.toHaveProperty('force_totp_login');
   });
 });
